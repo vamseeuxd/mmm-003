@@ -1,11 +1,5 @@
 {
-  "targets": {
-    "mmm-003": {
-      "hosting": {
-        "app": [
-          "mmm-003"
-        ]
-      }
-    }
+  "projects": {
+    "default": "mmm-003"
   }
 }
