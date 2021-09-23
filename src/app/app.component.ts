@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-root',
@@ -16,19 +15,4 @@ export class AppComponent {
     {title: 'Spam', url: '/folder/Spam', icon: 'warning'},
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-
-  constructor(private firestore: AngularFirestore) {
-    this.firestore.collection('test').valueChanges().subscribe(value => {
-      debugger;
-    })
-  }
-
-  addRecord() {
-    debugger;
-    this.firestore.collection('test').add({name: 'Katyayini'}).then(value => {
-      debugger;
-    }).catch(reason => {
-      debugger;
-    });
-  }
 }
