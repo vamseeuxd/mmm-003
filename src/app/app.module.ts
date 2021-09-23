@@ -11,7 +11,9 @@ import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
 import {AngularFireModule} from '@angular/fire/compat';
 import {environment} from '../environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFireAuthModule,
     AngularFirestoreModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
+    NgbModule,
   ],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},

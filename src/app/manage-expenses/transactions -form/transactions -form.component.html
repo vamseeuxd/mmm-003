@@ -1,0 +1,117 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Add New Expenses</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="px-5">
+  <form #expensesForm="ngForm" class="px-4 pt-2">
+    <mat-form-field appearance="outline" class="w-100 mb-2">
+      <mat-label>Expenses Title</mat-label>
+      <input #title [(ngModel)]="data.name" autocomplete="off" matInput maxlength="50" name="name"
+             placeholder="Provide Expenses Time" required type="text">
+      <mat-hint align="start">Required & Must be between three and 50 characters long</mat-hint>
+      <mat-hint align="end">{{title.value.length}} / 50</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-2">
+      <mat-label>Expenses Amount</mat-label>
+      <input [(ngModel)]="data.amount" autocomplete="off" matInput name="amount" ngModel placeholder="Expenses Amount"
+             required type="number">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-2">
+      <mat-label>Start Date</mat-label>
+      <input [(ngModel)]="data.startDate" [matDatepicker]="picker" autocomplete="off" matInput maxlength="50"
+             name="startDate" ngModel
+             placeholder="Start Date" required>
+      <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+      <mat-datepicker #picker touchUi></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-2">
+      <mat-label>Repeat</mat-label>
+      <mat-select #repeatOptionInput [(ngModel)]="data.repeatOption" name="repeatOption" required value="never_repeat">
+        <mat-option (click)="data.repeatInterval = 1;oldRepeatOption = data.repeatOption" value="never">Never Repeat
+        </mat-option>
+        <mat-option (click)="data.repeatInterval = 1;oldRepeatOption = data.repeatOption" value="day">
+          {{getRepeatOptionLabel('Day', repeatOptionInput.panelOpen)}}
+        </mat-option>
+        <mat-option (click)="data.repeatInterval = 1;oldRepeatOption = data.repeatOption" value="week">
+          {{getRepeatOptionLabel('Week', repeatOptionInput.panelOpen)}}
+        </mat-option>
+        <mat-option (click)="data.repeatInterval = 1;oldRepeatOption = data.repeatOption" value="month">
+          {{getRepeatOptionLabel('Month', repeatOptionInput.panelOpen)}}
+        </mat-option>
+        <mat-option (click)="data.repeatInterval = 1;oldRepeatOption = data.repeatOption" value="year">
+          {{getRepeatOptionLabel('Year', repeatOptionInput.panelOpen)}}
+        </mat-option>
+        <mat-option (click)="openDialog(repeatOptionModalTemplate)">Custom</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>No of Installments</mat-label>
+      <input [(ngModel)]="data.noOfInstallments" autocomplete="off" matInput maxlength="50" min="1"
+             name="noOfInstallments" ngModel placeholder="No of Installments" required>
+    </mat-form-field>
+
+    <input [ngModel]="data.repeatInterval" name="repeatInterval" type="hidden">
+    <input [ngModel]="data.type" name="type" type="hidden">
+
+    <div class="d-flex">
+      <button (click)="modalController.dismiss('close')" class="ms-auto" mat-raised-button style="width: 80px">Cancel
+      </button>
+      <button (click)="saveExpenses(expensesForm)" [disabled]="expensesForm.invalid" class="ms-3" color="primary"
+              mat-raised-button style="width: 80px">
+        Save
+      </button>
+    </div>
+
+  </form>
+
+  <!--<pre>{{data|json}}</pre>-->
+
+
+</ion-content>
+
+
+<ng-template #repeatOptionModalTemplate>
+  <h1 mat-dialog-title>Repeat every</h1>
+  <div mat-dialog-content>
+    <div class="w-100 mb-3">
+      <form class="row">
+        <div class="col-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select [(ngModel)]="modalData.repeatInterval" [value]="1" name="repeatInterval" required>
+              <mat-option *ngFor="let opt of repeatDropDownConfig[repeatOption.value]" [value]="opt+1"
+                          class="ion-text-center">{{opt + 1}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-9">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select #repeatOption [(ngModel)]="modalData.repeatOption" name="repeatOption" required value="days">
+              <mat-option value="day">Days</mat-option>
+              <mat-option value="week">Weeks</mat-option>
+              <mat-option value="month">Months</mat-option>
+              <mat-option value="year">Years</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="d-flex">
+          <button (click)="data.repeatOption = oldRepeatOption" class="ms-auto" mat-dialog-close mat-raised-button
+                  style="width: 80px">Cancel
+          </button>
+          <button (click)="repeatOptionOkClick()" class="ms-3" color="primary" mat-raised-button style="width: 80px">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- <div mat-dialog-actions>
+     <button mat-button mat-dialog-close>Cancel</button>
+     <button (click)="repeatOptionOkClick()" mat-button>Ok</button>
+   </div>-->
+</ng-template>

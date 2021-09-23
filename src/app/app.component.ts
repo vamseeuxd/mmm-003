@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {LoaderService} from './shared/loader/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -15,4 +16,8 @@ export class AppComponent {
     {title: 'Spam', url: '/folder/Spam', icon: 'warning'},
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+
+  constructor(public loader: LoaderService) {
+    window.loader = loader;
+  }
 }

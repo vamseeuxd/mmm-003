@@ -14,8 +14,9 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+  <pre>{{data$|async|json}}</pre>
+  <ion-fab horizontal="end" slot="fixed" vertical="bottom">
+    <ion-fab-button (click)="addNewExpenses()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
