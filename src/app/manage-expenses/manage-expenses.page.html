@@ -5,10 +5,15 @@
     </ion-buttons>
     <ion-title class="ion-text-center">Manage Transactions</ion-title>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="filterMenu.toggle(true)">
         <ion-icon name="filter-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-item>
+      <app-date-navigator [(selectedDate)]="selectedDate" class="d-block w-100"></app-date-navigator>
+    </ion-item>
   </ion-toolbar>
   <ion-toolbar *ngIf="typeFilter$ | async as type">
     <ion-segment (ionChange)="typeFilterAction.next($event.detail.value)" [ngModel]="type">
@@ -22,7 +27,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" id="transactionsPage">
 
   <pre>{{data$|async|json}}</pre>
   <ion-fab *ngIf="typeFilter$ | async as type" [edge]="false" class="me-5 mb-5" horizontal="end" slot="fixed"
@@ -31,4 +36,23 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+
 </ion-content>
+
+<ion-menu #filterMenu contentId="transactionsPage" menuId="first" side="end">
+  <ion-header *ngIf="typeFilter$ | async as type">
+    <ion-toolbar>
+      <ion-title>{{type|titlecase}} Filter</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

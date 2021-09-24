@@ -16,6 +16,7 @@ import {LoaderService} from '../shared/loader/loader.service';
 })
 export class ManageExpensesPage implements OnInit {
   public folder: string;
+  selectedDate: Date = new Date();
   /*data$: Observable<ITransaction[]>;*/
   typeFilterAction: BehaviorSubject<'expenses' | 'income'> = new BehaviorSubject<'expenses' | 'income'>('expenses');
   typeFilter$: Observable<'expenses' | 'income'> = this.typeFilterAction.asObservable();
@@ -66,7 +67,7 @@ export class ManageExpensesPage implements OnInit {
       // @ts-ignore
       this.dataLoaderId = window.loader.show();
     }
-    this.addNewExpenses('expenses');
+    // this.addNewExpenses('expenses');
   }
 
   async addNewExpenses(type: 'expenses' | 'income') {
