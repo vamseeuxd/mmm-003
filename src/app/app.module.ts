@@ -20,7 +20,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({mode: 'md'}),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,

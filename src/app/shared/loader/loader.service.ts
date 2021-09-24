@@ -45,8 +45,9 @@ export class LoaderService {
   async hide(loaderId: number): Promise<any> | undefined {
     this.loaderRequestsList = this.loaderRequestsList.filter(id => id !== loaderId);
     this.loaderSubject.next(this.loaderRequestsList.length > 0);
-    if (this.loaderRequestsList.length === 0) {
+    if (this.loaderRequestsList.length === 0 && this.loading) {
       await this.loading.dismiss();
+      this.loading = null;
     }
   }
 

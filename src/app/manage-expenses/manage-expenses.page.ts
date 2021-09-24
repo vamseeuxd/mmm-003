@@ -7,6 +7,7 @@ import {ModalController} from '@ionic/angular';
 import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
 import * as moment from 'moment';
 import {ordinalSuffixOf} from '../shared/utils/utils';
+import {LoaderService} from '../shared/loader/loader.service';
 
 @Component({
   selector: 'app-folder',
@@ -16,50 +17,46 @@ import {ordinalSuffixOf} from '../shared/utils/utils';
 export class ManageExpensesPage implements OnInit {
   public folder: string;
   /*data$: Observable<ITransaction[]>;*/
+  typeFilterAction: BehaviorSubject<'expenses' | 'income'> = new BehaviorSubject<'expenses' | 'income'>('expenses');
+  typeFilter$: Observable<'expenses' | 'income'> = this.typeFilterAction.asObservable();
   startFilterAction: BehaviorSubject<number> = new BehaviorSubject<number>(8);
-  startFilter$: Observable<number> = this.startFilterAction.asObservable().pipe(
-    tap(
-      x => {
-        console.log('Start Change', x);
-      }
-    )
-  );
+  startFilter$: Observable<number> = this.startFilterAction.asObservable();
   endFilterAction: BehaviorSubject<number> = new BehaviorSubject<number>(9);
-  endFilter$: Observable<number> = this.endFilterAction.asObservable().pipe(
-    tap(
-      x => {
-        console.log('End Change', x);
-      }
-    )
-  );
-
-  data$ = combineLatest([this.startFilter$, this.endFilter$]).pipe(
+  endFilter$: Observable<number> = this.endFilterAction.asObservable();
+  dataLoaderId = 0;
+  data$ = combineLatest([this.startFilter$, this.endFilter$, this.typeFilter$]).pipe(
     switchMap(
       // eslint-disable-next-line max-len
-      ([start, end]) => this.firestore.collection('transactions', ref => ref.where('type', '==', 'expenses')).valueChanges({idField: 'id'}).pipe(
+      ([start, end, type]) => this.firestore.collection('transactions', ref => {
+        // .................
+        this.dataLoaderId = this.loader.show();
+        return ref.where('type', '==', type);
+      }).valueChanges({idField: 'id'}).pipe(
         switchMap(transactions => of(
           transactions.map((transaction: any) => ({
             ...transaction,
             startDate: moment(transaction.startDate).format('DD-MMM-yyyy'),
             payments: Array.from(Array(Number(transaction.noOfInstallments)).keys()).map(key => ({
               instalment: ordinalSuffixOf(key + 1),
+              // eslint-disable-next-line max-len
               dueDate: moment(transaction.startDate).add(key * transaction.repeatInterval, transaction.repeatOption).format('DD-MMM-yyyy'),
               isPaid: false,
             }))
           }))
-        ))
+        )),
+        tap(x => {
+          this.loader.hide(this.dataLoaderId);
+        })
       )
     )
   );
-  private dataLoaderId = 0;
-
 
   constructor(
     private activatedRoute: ActivatedRoute,
     public modalController: ModalController,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    public loader: LoaderService,
   ) {
-    console.log(moment);
   }
 
   ngOnInit() {
@@ -69,13 +66,16 @@ export class ManageExpensesPage implements OnInit {
       // @ts-ignore
       this.dataLoaderId = window.loader.show();
     }
-    // this.addNewExpenses();
+    this.addNewExpenses('expenses');
   }
 
-  async addNewExpenses() {
+  async addNewExpenses(type: 'expenses' | 'income') {
     const modal = await this.modalController.create({
       component: TransactionsFormComponent,
       backdropDismiss: false,
+      componentProps: {
+        type
+      }
     });
     return await modal.present();
   }

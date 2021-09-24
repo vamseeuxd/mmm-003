@@ -3,20 +3,31 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">Manage Expenses</ion-title>
+    <ion-title class="ion-text-center">Manage Transactions</ion-title>
     <ion-buttons slot="end">
       <ion-button>
         <ion-icon name="filter-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
+  <ion-toolbar *ngIf="typeFilter$ | async as type">
+    <ion-segment (ionChange)="typeFilterAction.next($event.detail.value)" [ngModel]="type">
+      <ion-segment-button value="expenses">
+        <ion-label>Expenses</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="income">
+        <ion-label>Incomes</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
 
   <pre>{{data$|async|json}}</pre>
-  <ion-fab horizontal="end" slot="fixed" vertical="bottom">
-    <ion-fab-button (click)="addNewExpenses()">
+  <ion-fab *ngIf="typeFilter$ | async as type" [edge]="false" class="me-5 mb-5" horizontal="end" slot="fixed"
+           vertical="bottom">
+    <ion-fab-button (click)="addNewExpenses(type)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

@@ -6,11 +6,14 @@
           <ion-list-header>Inbox</ion-list-header>
           <ion-note>hi@ionicframework.com</ion-note>
           <ion-menu-toggle auto-hide="false">
-            <ion-item lines="none" detail="false" (click)="addRecord()"><ion-label>Add Record</ion-label></ion-item>
+            <ion-item (click)="addRecord()" detail="false" lines="none">
+              <ion-label>Add Record</ion-label>
+            </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+          <ion-menu-toggle *ngFor="let p of appPages; let i = index" auto-hide="false">
+            <ion-item [routerLink]="[p.url]" detail="false" lines="none" routerDirection="root"
+                      routerLinkActive="selected">
+              <ion-icon [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'" slot="start"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
@@ -20,7 +23,7 @@
           <ion-list-header>Labels</ion-list-header>
 
           <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+            <ion-icon ios="bookmark-outline" md="bookmark-sharp" slot="start"></ion-icon>
             <ion-label>{{ label }}</ion-label>
           </ion-item>
         </ion-list>
@@ -29,6 +32,16 @@
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>
+
+<div *ngIf="!isProduction" class="fixed-top vw-100 vh-100 text-dark d-flex justify-content-center align-items-center"
+     style="background-color: white;opacity:0.1;pointer-events: none;font-size: 4rem;">
+  <span class="d-inline-block d-sm-none">XS</span>
+  <span class="d-none d-sm-inline-block d-md-none">SM</span>
+  <span class="d-none d-md-inline-block d-lg-none">MD</span>
+  <span class="d-none d-lg-inline-block d-xl-none">LG</span>
+  <span class="d-none d-xl-inline-block d-xxl-none">XL</span>
+  <span class="d-none d-xxl-inline-block">XXL</span>
+</div>
 
 <!--
 https://stackoverflow.com/questions/55487516/between-startdate-and-enddate-firestore

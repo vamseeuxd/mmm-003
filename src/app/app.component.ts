@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {LoaderService} from './shared/loader/loader.service';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,7 @@ import {LoaderService} from './shared/loader/loader.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  readonly isProduction = environment.production;
   public appPages = [
     {title: 'Inbox', url: '/folder/Inbox', icon: 'mail'},
     {title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane'},
