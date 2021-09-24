@@ -34,7 +34,10 @@ export class DateNavigatorComponent implements OnInit {
         date.add(1, 'month');
         break;
     }
+    console.log(date.format('DD-MMMM-yyyy hh-mm-ss'));
     this.selectedDate = date.toDate();
+    this.selectedDate.setDate(1);
+    this.selectedDate.setHours(0, 0, 0, 0);
     this.selectedDateChange.emit(this.selectedDate);
   }
 

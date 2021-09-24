@@ -23,7 +23,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
-      <mat-label>Start Date</mat-label>
+      <mat-label>Start Date {{data.startDate | date:'dd-MMMM-yyyy'}}</mat-label>
       <input (ngModelChange)="updateEndDate()" [(ngModel)]="data.startDate" [matDatepicker]="picker" autocomplete="off"
              matInput maxlength="50"
              name="startDate" ngModel
@@ -63,7 +63,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
-      <mat-label>End Date</mat-label>
+      <mat-label>End Date {{data.endDate | date:'dd-MMMM-yyyy'}}</mat-label>
       <input [(ngModel)]="data.endDate" [matDatepicker]="endDatepicker" autocomplete="off" matInput maxlength="50"
              name="endDate" ngModel placeholder="End Date" readonly required>
       <mat-datepicker-toggle [for]="endDatepicker" disabled matSuffix></mat-datepicker-toggle>

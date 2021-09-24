@@ -40,7 +40,7 @@ import {DateNavigatorComponent} from '../shared/date-navigator/date-navigator.co
     ManageExpensesPage,
     DateNavigatorComponent,
     TransactionsFormComponent
-  ]
+  ],
 })
 export class ManageExpensesPageModule {
 }

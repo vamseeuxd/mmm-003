@@ -34,9 +34,9 @@ export class TransactionsFormComponent implements OnInit {
     type: 'expenses',
     startDate: null,
     endDate: null,
-    repeatInterval: 2,
+    repeatInterval: 1,
     repeatOption: 'month',
-    noOfInstallments: 6,
+    noOfInstallments: 2,
   };
   repeatDropDownConfig = {
     day: [],
@@ -72,16 +72,18 @@ export class TransactionsFormComponent implements OnInit {
   updateEndDate(): void {
     setTimeout(() => {
       const date = moment(this.data.startDate);
-      /*console.log('Repeat Option', this.data.repeatOption);
+      console.log('Repeat Option', this.data.repeatOption);
       console.log('Repeat Interval', this.data.repeatInterval);
       console.log('Start Date', date.format('DD-MMMM-yyyy'));
-      console.log('No of Months', this.data.repeatInterval * this.data.noOfInstallments);*/
+      console.log('No of Months', this.data.repeatInterval * this.data.noOfInstallments);
       const unit: string = this.modalData.repeatOption;
       const duration: any = this.data.repeatInterval * this.data.noOfInstallments - 1;
-      date.add(duration, unit);
+      // @ts-ignore
+      date.add(this.data.noOfInstallments * this.data.repeatInterval, this.data.repeatOption);
+      // date.add(duration, unit);
       this.data.endDate = date.toDate();
-      /*console.log('End Date', date.format('DD-MMMM-yyyy'));
-      console.log('-----------------');*/
+      console.log('End Date', date.format('DD-MMMM-yyyy'));
+      console.log('-----------------');
     }, 50);
   }
 
@@ -112,11 +114,15 @@ export class TransactionsFormComponent implements OnInit {
 
   async saveExpenses(expensesForm: NgForm) {
     const loaderId = window.loader.show();
+    const end = expensesForm.value.endDate.getTime();
+    const start = expensesForm.value.startDate.getTime();
+    console.log(moment(end).format('DD-MMMM-yyyy'));
+    delete expensesForm.value.endDate;
     await this.firestore.collection<ITransaction>('transactions').add({
       ...expensesForm.value,
       dates: {
-        start: expensesForm.value.startDate.getTime(),
-        end: expensesForm.value.endDate.getTime()
+        start,
+        end
       },
       noOfInstallments: Number(expensesForm.value.noOfInstallments),
       startDate: expensesForm.value.startDate.getTime()

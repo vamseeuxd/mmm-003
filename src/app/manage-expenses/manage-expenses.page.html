@@ -10,9 +10,10 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar>
+  <ion-toolbar *ngIf="selectedDate$ | async as startFilter">
     <ion-item>
-      <app-date-navigator [(selectedDate)]="selectedDate" class="d-block w-100"></app-date-navigator>
+      <app-date-navigator (selectedDateChange)="selectedDateAction.next($event)" [selectedDate]="startFilter"
+                          class="d-block w-100"></app-date-navigator>
     </ion-item>
   </ion-toolbar>
   <ion-toolbar *ngIf="typeFilter$ | async as type">

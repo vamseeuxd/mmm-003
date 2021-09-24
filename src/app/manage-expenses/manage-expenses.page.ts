@@ -6,7 +6,6 @@ import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {ModalController} from '@ionic/angular';
 import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
 import * as moment from 'moment';
-import {ordinalSuffixOf} from '../shared/utils/utils';
 import {LoaderService} from '../shared/loader/loader.service';
 
 @Component({
@@ -16,33 +15,40 @@ import {LoaderService} from '../shared/loader/loader.service';
 })
 export class ManageExpensesPage implements OnInit {
   public folder: string;
-  selectedDate: Date = new Date();
-  /*data$: Observable<ITransaction[]>;*/
   typeFilterAction: BehaviorSubject<'expenses' | 'income'> = new BehaviorSubject<'expenses' | 'income'>('expenses');
   typeFilter$: Observable<'expenses' | 'income'> = this.typeFilterAction.asObservable();
-  startFilterAction: BehaviorSubject<number> = new BehaviorSubject<number>(8);
-  startFilter$: Observable<number> = this.startFilterAction.asObservable();
-  endFilterAction: BehaviorSubject<number> = new BehaviorSubject<number>(9);
-  endFilter$: Observable<number> = this.endFilterAction.asObservable();
+  selectedDateAction: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
+  selectedDate$: Observable<Date> = this.selectedDateAction.asObservable();
   dataLoaderId = 0;
-  data$ = combineLatest([this.startFilter$, this.endFilter$, this.typeFilter$]).pipe(
+  data$ = combineLatest([this.selectedDate$, this.typeFilter$]).pipe(
     switchMap(
       // eslint-disable-next-line max-len
-      ([start, end, type]) => this.firestore.collection('transactions', ref => {
+      ([selectedDate, type]) => this.firestore.collection('transactions', ref => {
         // .................
         this.dataLoaderId = this.loader.show();
-        return ref.where('type', '==', type);
+        selectedDate.setDate(1);
+        selectedDate.setHours(0, 0, 0, 0);
+        // eslint-disable-next-line max-len
+        console.log(moment(1609439400000).format('DD-MMMM-yyyy hh-mm-ss'), '>=', moment(selectedDate).format('DD-MMMM-yyyy hh-mm-ss'));
+        console.log(1609439400000, '>=', selectedDate.getTime());
+        return ref.where('type', '==', type)
+          .where('dates.start', '>=', selectedDate.getTime());
+        /*.where('dates.end', '>=', selectedDate.getTime());*/
       }).valueChanges({idField: 'id'}).pipe(
         switchMap(transactions => of(
           transactions.map((transaction: any) => ({
             ...transaction,
+            dates: {
+              start: moment(transaction.dates.start).format('DD-MMMM-yyyy'),
+              end: moment(transaction.dates.end).format('DD-MMMM-yyyy'),
+            },
             startDate: moment(transaction.startDate).format('DD-MMM-yyyy'),
-            payments: Array.from(Array(Number(transaction.noOfInstallments)).keys()).map(key => ({
+            /*payments: Array.from(Array(Number(transaction.noOfInstallments)).keys()).map(key => ({
               instalment: ordinalSuffixOf(key + 1),
               // eslint-disable-next-line max-len
               dueDate: moment(transaction.startDate).add(key * transaction.repeatInterval, transaction.repeatOption).format('DD-MMM-yyyy'),
               isPaid: false,
-            }))
+            }))*/
           }))
         )),
         tap(x => {
