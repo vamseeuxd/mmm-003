@@ -32,9 +32,9 @@
 
 <ion-content [fullscreen]="true" id="transactionsPage">
 
-  <!--<pre>{{transactionService.getTransactions()|async|json}}</pre>-->
+  <pre>{{transactionService.getTransactions()|async|json}}</pre>
 
-  <mat-accordion *ngIf="transactionService.getTransactions()|async as data">
+  <!--<mat-accordion *ngIf="transactionService.getTransactions()|async as data">
     <mat-expansion-panel *ngFor="let transaction of data">
       <mat-expansion-panel-header>
         <mat-panel-title>{{transaction.name}}</mat-panel-title>
@@ -53,7 +53,7 @@
         </ion-list>
       </mat-card>
     </mat-expansion-panel>
-  </mat-accordion>
+  </mat-accordion>-->
 
   <ion-fab *ngIf="transactionService.getSelectedTransactionType() | async as type" [edge]="false" class="me-5 mb-5"
            horizontal="end" slot="fixed"
