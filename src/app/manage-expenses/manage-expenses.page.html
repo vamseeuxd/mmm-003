@@ -17,7 +17,8 @@
     </ion-item>
   </ion-toolbar>
   <ion-toolbar *ngIf="typeFilter$ | async as type">
-    <ion-segment (ionChange)="typeFilterAction.next($event.detail.value)" [ngModel]="type">
+    <ion-segment (ionChange)="onTypeSegmentChange($event)"
+                 [ngModel]="type">
       <ion-segment-button value="expenses">
         <ion-label>Expenses</ion-label>
       </ion-segment-button>
@@ -30,7 +31,30 @@
 
 <ion-content [fullscreen]="true" id="transactionsPage">
 
-  <pre>{{data$|async|json}}</pre>
+  <!--<pre>{{data$|async|json}}</pre>-->
+
+  <mat-accordion *ngIf="data$|async as data">
+    <mat-expansion-panel *ngFor="let transaction of data">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{transaction.name}}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-card>
+        <!--<pre>{{transaction|json}}</pre>-->
+        <ion-list>
+          <ion-item>
+            <ion-label>Amount : {{transaction.amount|currency:'INR'}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Start Date : {{transaction.dates.start}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>End Date : {{transaction.dates.end}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </mat-card>
+    </mat-expansion-panel>
+  </mat-accordion>
+
   <ion-fab *ngIf="typeFilter$ | async as type" [edge]="false" class="me-5 mb-5" horizontal="end" slot="fixed"
            vertical="bottom">
     <ion-fab-button (click)="addNewExpenses(type)">

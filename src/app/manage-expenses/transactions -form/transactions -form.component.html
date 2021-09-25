@@ -58,8 +58,8 @@
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
       <mat-label>No of Installments</mat-label>
       <input (ngModelChange)="updateEndDate()" [(ngModel)]="data.noOfInstallments" autocomplete="off" matInput
-             maxlength="50" min="1"
-             name="noOfInstallments" ngModel placeholder="No of Installments" required>
+             maxlength="50" min="1" name="noOfInstallments"
+             ngModel placeholder="No of Installments" required type="number">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">

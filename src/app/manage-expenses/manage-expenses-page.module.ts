@@ -18,6 +18,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {DateNavigatorComponent} from '../shared/date-navigator/date-navigator.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -34,7 +36,9 @@ import {DateNavigatorComponent} from '../shared/date-navigator/date-navigator.co
     MatSelectModule,
     MatOptionModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatExpansionModule,
+    MatCardModule
   ],
   declarations: [
     ManageExpensesPage,

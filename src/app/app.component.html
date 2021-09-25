@@ -3,11 +3,23 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
+          <ion-list-header *ngIf="loader.user">
+            <img [src]="loader.user.providerData[0].photoURL" class="rounded-circle border me-2" width="40">
+            {{loader.user.providerData[0].displayName}}
+          </ion-list-header>
+          <ion-note *ngIf="loader.user">
+            <p class="m-0 p-0 mb-1">{{loader.user.providerData[0].email}}</p>
+            <p class="m-0 p-0 mb-1">{{loader.user.providerData[0].uid}}</p>
+            <p class="m-0 p-0 mb-1">{{loader.user.providerData[0].phoneNumber}}</p>
+          </ion-note>
           <ion-menu-toggle auto-hide="false">
-            <ion-item (click)="addRecord()" detail="false" lines="none">
-              <ion-label>Add Record</ion-label>
+            <ion-item detail="false" lines="none">
+              <div>
+                <button (click)="logout()" *ngIf="loader.user" class="ms-2" mat-raised-button>Logout</button>
+                <button (click)="login()" *ngIf="!loader.user" class="text-danger ms-2" mat-raised-button><i
+                  class="fa fa-google text-danger me-2" style="font-size: 2rem"></i>Login with Google
+                </button>
+              </div>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle *ngFor="let p of appPages; let i = index" auto-hide="false">

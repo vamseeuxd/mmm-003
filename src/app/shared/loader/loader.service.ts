@@ -4,9 +4,12 @@ import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {LoadingController} from '@ionic/angular';
+import firebase from 'firebase/compat/app';
 
 @Injectable({providedIn: 'root'})
 export class LoaderService {
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  user: firebase.User;
   private loaderRequestsList: number[] = [];
   private loaderSubject = new BehaviorSubject<boolean>(this.loaderRequestsList.length > 0);
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -19,7 +22,13 @@ export class LoaderService {
     private snackBar: MatSnackBar,
     public loadingController: LoadingController
   ) {
-
+    this.auth.user.subscribe(value => {
+      if (value) {
+        this.user = value;
+      } else {
+        this.user = undefined;
+      }
+    });
   }
 
   show(): number {

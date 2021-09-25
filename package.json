@@ -5,11 +5,15 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --host 0.0.0.0",
+    "ion:start": "ionic serve --external --lab",
+    "build": "ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
     "emulator": "firebase emulators:start",
+    "firestore:get:indexes": "firebase firestore:indexes > firestore.indexes.json",
+    "deploy": "firebase deploy --only hosting",
+    "firestore:host": "npm run buid && npm run deploy",
     "e2e": "ng e2e"
   },
   "private": true,
