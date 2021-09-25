@@ -132,7 +132,7 @@
       </mat-expansion-panel>
     </mat-accordion>
 
-    <ion-fab *ngIf="transactionService.getSelectedTransactionType() | async as type" [edge]="false" class="me-5 mb-5"
+    <ion-fab *ngIf="transactionService.getSelectedTransactionType() | async as type" [edge]="false" class="me-3 mb-3"
              horizontal="end" slot="fixed"
              vertical="bottom">
       <ion-fab-button (click)="addNewExpenses(type)">

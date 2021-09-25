@@ -80,6 +80,7 @@ export class TransactionService {
               )
                 .forEach(transaction => {
                   switch (transaction.repeatOption) {
+                    case 'day':
                     case 'week':
                       console.log('-----------------Week Login-----------------');
                       Array.from(Array(transaction.noOfInstallments).keys()).forEach((ind, index) => {
@@ -158,16 +159,17 @@ export class TransactionService {
 
   private getInstalment(transaction: any, selectedDate: Date, weekOrDayCount = 0, isSuffix = true): string | number {
     switch (transaction.repeatOption) {
+      case 'day':
+        const datDate1 = moment(transaction.startDate);
+        const datDate2 = moment(selectedDate);
+        datDate2.add(weekOrDayCount * transaction.repeatInterval, transaction.repeatOption);
+        const datDate = Math.floor(datDate2.diff(datDate1, transaction.repeatOption, true)) + 1;
+        return isSuffix ? ordinalSuffixOf(datDate) : datDate;
+        break;
       case 'week':
         const weekDate1 = moment(transaction.startDate);
         const weekDate2 = moment(selectedDate);
-        console.log('3---->', weekOrDayCount, ',', transaction.repeatInterval, ',', weekOrDayCount > 0);
         weekDate2.add(weekOrDayCount * transaction.repeatInterval, transaction.repeatOption);
-        if (weekOrDayCount > 0) {
-          weekDate2.subtract(1, transaction.repeatOption);
-        }
-        console.log(weekOrDayCount, weekDate2.format('DD-MMMM-yyyy'));
-        console.log('######################################');
         const weekDate = Math.floor(weekDate2.diff(weekDate1, transaction.repeatOption, true)) + 1;
         return isSuffix ? ordinalSuffixOf(weekDate) : weekDate;
         break;

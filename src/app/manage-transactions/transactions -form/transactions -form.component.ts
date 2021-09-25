@@ -77,7 +77,11 @@ export class TransactionsFormComponent implements OnInit {
       const duration: any = (this.data.repeatInterval * this.data.noOfInstallments) - 1;
       console.log('duration', duration);
       date.add(duration, this.data.repeatOption);
-      date.subtract(1, this.data.repeatOption as DurationInputArg2);
+      console.log('Step-01', date.format('DD-MMMM-yyyy'));
+      if (this.data.repeatInterval > 1) {
+        date.subtract(1, this.data.repeatOption as DurationInputArg2);
+      }
+      console.log('Step-02', date.format('DD-MMMM-yyyy'));
       this.data.endDate = date.toDate();
     }, 50);
   }
