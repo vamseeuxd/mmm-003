@@ -10,13 +10,14 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar *ngIf="selectedDate$ | async as startFilter">
+  <ion-toolbar *ngIf="transactionService.getSelectedDate() | async as startFilter">
     <ion-item>
-      <app-date-navigator (selectedDateChange)="selectedDateAction.next($event)" [selectedDate]="startFilter"
+      <app-date-navigator (selectedDateChange)="transactionService.updateSelectedDateType($event)"
+                          [selectedDate]="startFilter"
                           class="d-block w-100"></app-date-navigator>
     </ion-item>
   </ion-toolbar>
-  <ion-toolbar *ngIf="typeFilter$ | async as type">
+  <ion-toolbar *ngIf="transactionService.getSelectedTransactionType() | async as type">
     <ion-segment (ionChange)="onTypeSegmentChange($event)"
                  [ngModel]="type">
       <ion-segment-button value="expenses">
@@ -31,31 +32,31 @@
 
 <ion-content [fullscreen]="true" id="transactionsPage">
 
-  <!--<pre>{{data$|async|json}}</pre>-->
+  <!--<pre>{{transactionService.getTransactions()|async|json}}</pre>-->
 
-  <mat-accordion *ngIf="data$|async as data">
+  <mat-accordion *ngIf="transactionService.getTransactions()|async as data">
     <mat-expansion-panel *ngFor="let transaction of data">
       <mat-expansion-panel-header>
         <mat-panel-title>{{transaction.name}}</mat-panel-title>
       </mat-expansion-panel-header>
       <mat-card>
-        <!--<pre>{{transaction|json}}</pre>-->
         <ion-list>
           <ion-item>
             <ion-label>Amount : {{transaction.amount|currency:'INR'}}</ion-label>
           </ion-item>
           <ion-item>
-            <ion-label>Start Date : {{transaction.dates.start}}</ion-label>
+            <ion-label>Start Date : {{transaction?.dates.start}}</ion-label>
           </ion-item>
           <ion-item>
-            <ion-label>End Date : {{transaction.dates.end}}</ion-label>
+            <ion-label>End Date : {{transaction?.dates.end}}</ion-label>
           </ion-item>
         </ion-list>
       </mat-card>
     </mat-expansion-panel>
   </mat-accordion>
 
-  <ion-fab *ngIf="typeFilter$ | async as type" [edge]="false" class="me-5 mb-5" horizontal="end" slot="fixed"
+  <ion-fab *ngIf="transactionService.getSelectedTransactionType() | async as type" [edge]="false" class="me-5 mb-5"
+           horizontal="end" slot="fixed"
            vertical="bottom">
     <ion-fab-button (click)="addNewExpenses(type)">
       <ion-icon name="add"></ion-icon>
@@ -66,7 +67,7 @@
 </ion-content>
 
 <ion-menu #filterMenu contentId="transactionsPage" menuId="first" side="end">
-  <ion-header *ngIf="typeFilter$ | async as type">
+  <ion-header *ngIf="transactionService.getSelectedTransactionType() | async as type">
     <ion-toolbar>
       <ion-title>{{type|titlecase}} Filter</ion-title>
     </ion-toolbar>
