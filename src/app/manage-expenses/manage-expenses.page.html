@@ -34,8 +34,8 @@
 
   <!--<pre>{{transactionService.getTransactions()|async|json}}</pre>-->
 
-  <mat-accordion *ngIf="transactionService.getTransactions()|async as data">
-    <mat-expansion-panel *ngFor="let transaction of data">
+  <mat-accordion *ngIf="transactionService.getTransactions()|async as transactions">
+    <mat-expansion-panel *ngFor="let transaction of transactions">
       <mat-expansion-panel-header>
         <mat-panel-title>{{transaction.name}}</mat-panel-title>
       </mat-expansion-panel-header>
