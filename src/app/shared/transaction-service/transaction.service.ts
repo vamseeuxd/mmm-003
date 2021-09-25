@@ -79,8 +79,8 @@ export class TransactionService {
               )
                 .forEach(transaction => {
                   this.getInstalmentsWithDueDate(transaction, selectedDate, lastDate)
-                    .forEach((ind, index) => {
-                      transactionsToReturn.push(this.getTransaction(transaction, selectedDate, ind.instalment, ind.dueDate));
+                    .forEach((option) => {
+                      transactionsToReturn.push(this.getTransaction(transaction, option.instalment, option.dueDate));
                     });
                 });
               return of(
@@ -89,7 +89,7 @@ export class TransactionService {
 
             }
           ),
-          tap(async x => {
+          tap(async () => {
             await this.loader.hide(this.dataLoaderId);
           })
         );
@@ -164,7 +164,7 @@ export class TransactionService {
     }));
   }
 
-  private getTransaction(transaction: any, selectedDate: Date, installment: string, dueDate: string = null): ITransaction {
+  private getTransaction(transaction: any, installment: string, dueDate: string = null): ITransaction {
     return {
       ...transaction,
       installment,

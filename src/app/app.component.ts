@@ -34,7 +34,7 @@ export class AppComponent {
   async login() {
     const loaderId = window.loader.show();
     try {
-      const response = await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+      await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
       /*if (response && response.user && response.user.uid) {
         await this.router.navigate([this.usersService.pageBeforeLogOut]);
       }*/

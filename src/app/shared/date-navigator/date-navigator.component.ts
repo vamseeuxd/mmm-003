@@ -8,9 +8,9 @@ import {MatDatepicker} from '@angular/material/datepicker';
   styleUrls: ['./date-navigator.component.scss']
 })
 export class DateNavigatorComponent implements OnInit {
-  readonly todayDate = new Date(window.getServerTime());
   @Input() selectedDate = new Date(window.getServerTime());
   @Output() selectedDateChange: EventEmitter<Date> = new EventEmitter<Date>();
+  readonly todayDate = new Date(window.getServerTime());
 
   constructor() {
   }

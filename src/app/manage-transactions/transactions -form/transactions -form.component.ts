@@ -29,14 +29,14 @@ export class TransactionsFormComponent implements OnInit {
 
   @Input() type: 'expenses' | 'income' = 'expenses';
   data: ITransaction = {
-    name: 'Test 01',
-    amount: 1,
+    name: '',
+    amount: null,
     type: 'expenses',
     startDate: null,
     endDate: null,
     repeatInterval: 1,
     repeatOption: 'month',
-    noOfInstallments: 2,
+    noOfInstallments: 1,
   };
   repeatDropDownConfig = {
     day: [],
@@ -53,7 +53,7 @@ export class TransactionsFormComponent implements OnInit {
     repeatOption: 'day',
   };
   oldRepeatOption: RepeatOption = 'month';
-  private dialogRef: MatDialogRef<unknown, any>;
+  private dialogRef: MatDialogRef<unknown>;
 
   constructor(
     public modalController: ModalController,
@@ -72,9 +72,7 @@ export class TransactionsFormComponent implements OnInit {
   updateEndDate(): void {
     setTimeout(() => {
       const date = moment(this.data.startDate);
-      const unit: string = this.modalData.repeatOption;
       const duration: any = (this.data.repeatInterval * (this.data.noOfInstallments - 1));
-      console.log('duration', duration);
       date.add(duration, this.data.repeatOption);
       this.data.endDate = date.toDate();
     }, 50);

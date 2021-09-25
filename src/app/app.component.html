@@ -4,7 +4,8 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header *ngIf="loader.user">
-            <img [src]="loader.user.providerData[0].photoURL" class="rounded-circle border me-2" width="40">
+            <img [src]="loader.user.providerData[0].photoURL" alt="Google Profile Photo" class="rounded-circle border me-2"
+                 width="40">
             {{loader.user.providerData[0].displayName}}
           </ion-list-header>
           <ion-note *ngIf="loader.user">

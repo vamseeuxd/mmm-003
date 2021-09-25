@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {LoadingController} from '@ionic/angular';
 import firebase from 'firebase/compat/app';
@@ -13,13 +12,11 @@ export class LoaderService {
   private loaderRequestsList: number[] = [];
   private loaderSubject = new BehaviorSubject<boolean>(this.loaderRequestsList.length > 0);
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  showLoader$ = this.loaderSubject.asObservable();
   private loading: HTMLIonLoadingElement;
 
   constructor(
     public auth: AngularFireAuth,
     public route: Router,
-    private snackBar: MatSnackBar,
     public loadingController: LoadingController
   ) {
     this.auth.user.subscribe(value => {
@@ -36,7 +33,7 @@ export class LoaderService {
     this.loaderRequestsList.push(id);
     this.loaderSubject.next(this.loaderRequestsList.length > 0);
     if (this.loaderRequestsList.length > 0) {
-      this.presentLoading();
+      this.presentLoading().then(r => console.log(r));
     }
     return id;
   }
@@ -46,7 +43,7 @@ export class LoaderService {
     this.loaderRequestsList.push(id);
     this.loaderSubject.next(this.loaderRequestsList.length > 0);
     if (this.loaderRequestsList.length > 0) {
-      this.presentLoading();
+      this.presentLoading().then(r => console.log(r));
     }
     return of(id);
   }
