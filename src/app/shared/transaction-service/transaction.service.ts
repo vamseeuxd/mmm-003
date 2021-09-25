@@ -161,8 +161,11 @@ export class TransactionService {
       case 'week':
         const weekDate1 = moment(transaction.startDate);
         const weekDate2 = moment(selectedDate);
-        console.log('3---->', weekOrDayCount);
-        weekDate2.add(weekOrDayCount, transaction.repeatOption);
+        console.log('3---->', weekOrDayCount, ',', transaction.repeatInterval, ',', weekOrDayCount > 0);
+        weekDate2.add(weekOrDayCount * transaction.repeatInterval, transaction.repeatOption);
+        if (weekOrDayCount > 0) {
+          weekDate2.subtract(1, transaction.repeatOption);
+        }
         console.log(weekOrDayCount, weekDate2.format('DD-MMMM-yyyy'));
         console.log('######################################');
         const weekDate = Math.floor(weekDate2.diff(weekDate1, transaction.repeatOption, true)) + 1;
