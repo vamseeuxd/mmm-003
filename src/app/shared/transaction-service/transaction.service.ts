@@ -27,6 +27,7 @@ export interface ITransaction {
   name: string;
   startDate: string;
   dueDate?: string;
+  isPaid?: boolean;
   repeatInterval: number;
   amount: number;
   installment: number;
@@ -145,7 +146,7 @@ export class TransactionService {
   private getDueDate(transaction: ITransaction, index: number) {
     const amount: DurationInputArg1 = index * transaction.repeatInterval;
     const unit: DurationInputArg2 = transaction.repeatOption as DurationInputArg2;
-    return moment(transaction.startDate).add(amount, unit).format(this.dateFormat);
+    return moment(transaction.dates.start).add(amount, unit).format(this.dateFormat);
   }
 
   private getDates(transaction: ITransaction): IDates {
