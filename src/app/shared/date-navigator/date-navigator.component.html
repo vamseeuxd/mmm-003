@@ -5,7 +5,8 @@
       class="fa fa-fast-backward"></i></button>
     <button (click)="navigateSelectedDate('m--')" class="col-2 mx-1" mat-raised-button style="min-width: auto;"><i
       class="fa fa-backward"></i></button>
-    <button (click)="picker.open()" class="col   mx-0" mat-raised-button>{{selectedDate|date:'MMM-yyyy'|uppercase}}
+    <button (click)="picker.open()" class="col mx-0 text-truncate"
+            mat-raised-button>{{selectedDate|date:'MMM-yyyy'|uppercase}}
       <input [matDatepicker]="picker" class="d-none" matInput></button>
     <button (click)="navigateSelectedDate('m++')" class="col-2 mx-1" mat-raised-button style="min-width: auto;"><i
       class="fa fa-forward"></i></button>
