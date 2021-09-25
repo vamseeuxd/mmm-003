@@ -4,7 +4,6 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {NgForm} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import * as moment from 'moment';
-import {DurationInputArg2} from 'moment';
 
 export type RepeatOption = 'never' | 'day' | 'week' | 'month' | 'year';
 
@@ -74,14 +73,9 @@ export class TransactionsFormComponent implements OnInit {
     setTimeout(() => {
       const date = moment(this.data.startDate);
       const unit: string = this.modalData.repeatOption;
-      const duration: any = (this.data.repeatInterval * this.data.noOfInstallments) - 1;
+      const duration: any = (this.data.repeatInterval * (this.data.noOfInstallments - 1));
       console.log('duration', duration);
       date.add(duration, this.data.repeatOption);
-      console.log('Step-01', date.format('DD-MMMM-yyyy'));
-      if (this.data.repeatInterval > 1) {
-        date.subtract(1, this.data.repeatOption as DurationInputArg2);
-      }
-      console.log('Step-02', date.format('DD-MMMM-yyyy'));
       this.data.endDate = date.toDate();
     }, 50);
   }

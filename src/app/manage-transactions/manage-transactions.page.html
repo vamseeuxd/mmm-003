@@ -13,9 +13,10 @@
     </ion-toolbar>
     <ion-toolbar>
       <ion-item>
-        <app-date-navigator (selectedDateChange)="transactionService.updateSelectedDateType($event)"
-                            [selectedDate]="selectedDate"
-                            class="d-block w-100"></app-date-navigator>
+        <app-date-navigator
+          (selectedDateChange)="transactionService.updateSelectedDateType($event);transactionsPage.scrollToTop();"
+          [selectedDate]="selectedDate"
+          class="d-block w-100"></app-date-navigator>
       </ion-item>
     </ion-toolbar>
     <ion-toolbar *ngIf="transactionService.getSelectedTransactionType() | async as type">
@@ -30,18 +31,24 @@
       </ion-segment>
     </ion-toolbar>
   </ion-header>
-  <ion-content [fullscreen]="true" id="transactionsPage">
+  <ion-content #transactionsPage [fullscreen]="true" id="transactionsPage">
 
     <!--<pre>{{transactionService.getTransactions()|async|json}}</pre>-->
 
     <mat-accordion *ngIf="transactionService.getTransactions()|async as transactions">
       <mat-expansion-panel *ngFor="let transaction of transactions" class="mb-2">
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{transaction.name}}</mat-panel-title>
+        <mat-expansion-panel-header style="height: 80px;">
+          <mat-panel-title>
+            <div class="d-flex justify-content-center ion-align-items-center h-100">
+              {{transaction.name}}
+            </div>
+          </mat-panel-title>
           <mat-panel-description>
-            <span class="me-2">{{transaction?.repeatOption}}</span>
-            <span class="me-2">{{transaction?.installment}}</span>
-            <span class="me-2">{{transaction?.dueDate}}</span>
+            <div class="d-flex flex-column justify-content-start">
+              <span class="me-2">Repeat Every {{transaction.repeatInterval}} {{transaction?.repeatOption}}</span>
+              <span class="me-2">{{transaction?.installment}} Installment</span>
+              <span class="me-2">Due Date {{transaction?.dueDate}}</span>
+            </div>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-card style="margin-top: -10px;">
