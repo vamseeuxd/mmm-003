@@ -26,8 +26,10 @@ export interface IPayment {
 export interface ITransaction {
   name: string;
   startDate: string;
+  dueDate?: string;
   repeatInterval: number;
   amount: number;
+  installment: number;
   dates: IDates;
   uid: string;
   noOfInstallments: number;
@@ -69,10 +71,32 @@ export class TransactionService {
           switchMap((transactions: any[]) => {
               selectedDate.setDate(1);
               selectedDate.setHours(0, 0, 0, 0);
+              const lastDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
+              const transactionsToReturn: ITransaction[] = [];
+              transactions.filter(transaction =>
+                //...................
+                (selectedDate.getTime() >= transaction.dates.start && selectedDate.getTime() <= transaction.dates.end) ||
+                (lastDate.getTime() >= transaction.dates.start && lastDate.getTime() <= transaction.dates.end)
+              )
+                .forEach(transaction => {
+                  switch (transaction.repeatOption) {
+                    case 'week':
+                      console.log('-----------------Week Login-----------------');
+                      Array.from(Array(transaction.noOfInstallments).keys()).forEach((ind, index) => {
+                        console.log('1---->', index);
+                        transactionsToReturn.push(this.getTransaction(transaction, selectedDate, index));
+                      });
+                      break;
+                    case 'month':
+                      // console.log('-----------------Month Login-----------------');
+                      transactionsToReturn.push(this.getTransaction(transaction, selectedDate));
+                      break;
+                  }
+                });
               return of(
-                transactions.filter(transaction => (transaction.dates.start <= selectedDate.getTime()))
-                  .map(transaction => this.getTransaction(transaction))
+                transactionsToReturn
               );
+
             }
           ),
           tap(async x => {
@@ -98,7 +122,7 @@ export class TransactionService {
     return this.selectedTransactionType$;
   }
 
-  getTransactions(): Observable<any[]> {
+  getTransactions(): Observable<ITransaction[]> {
     return this.transactions$;
   }
 
@@ -114,15 +138,6 @@ export class TransactionService {
     const amount: DurationInputArg1 = index * transaction.repeatInterval;
     const unit: DurationInputArg2 = transaction.repeatOption as DurationInputArg2;
     return moment(transaction.startDate).add(amount, unit).format(this.dateFormat);
-  }
-
-  private getTransaction(transaction: any): ITransaction {
-    return {
-      ...transaction,
-      dates: this.getDates(transaction),
-      startDate: moment(transaction.startDate).format(this.dateFormat),
-      payments: this.getPayments(transaction)
-    };
   }
 
   private getDates(transaction: ITransaction): IDates {
@@ -141,5 +156,37 @@ export class TransactionService {
     }));
   }
 
+  private getInstalment(transaction: any, selectedDate: Date, weekOrDayCount = 0, isSuffix = true): string | number {
+    switch (transaction.repeatOption) {
+      case 'week':
+        const weekDate1 = moment(transaction.startDate);
+        const weekDate2 = moment(selectedDate);
+        console.log('3---->', weekOrDayCount);
+        weekDate2.add(weekOrDayCount, transaction.repeatOption);
+        console.log(weekOrDayCount, weekDate2.format('DD-MMMM-yyyy'));
+        console.log('######################################');
+        const weekDate = Math.floor(weekDate2.diff(weekDate1, transaction.repeatOption, true)) + 1;
+        return isSuffix ? ordinalSuffixOf(weekDate) : weekDate;
+        break;
+      case 'month':
+        const monthDate1 = moment(transaction.startDate).set('date', 1);
+        const monthDate2 = moment(selectedDate).set('date', 1);
+        const monthDate = Math.floor(monthDate2.diff(monthDate1, transaction.repeatOption, true)) + 1;
+        return isSuffix ? ordinalSuffixOf(monthDate) : monthDate;
+        break;
+    }
+  }
+
+  private getTransaction(transaction: any, selectedDate: Date, weekOrDayCount = 0): ITransaction {
+    console.log('2---->', weekOrDayCount);
+    return {
+      ...transaction,
+      installment: this.getInstalment(transaction, selectedDate, weekOrDayCount),
+      dates: this.getDates(transaction),
+      startDate: moment(transaction.startDate).format(this.dateFormat),
+      dueDate: this.getDueDate(transaction, Number(this.getInstalment(transaction, selectedDate, weekOrDayCount, false)) - 1),
+      payments: this.getPayments(transaction)
+    };
+  }
 
 }
