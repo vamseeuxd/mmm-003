@@ -4,9 +4,9 @@ import {FormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
 
-import {ManageExpensesRoutingModule} from './manage-expenses-routing.module';
+import {ManageTransactionsRoutingModule} from './manage-transactions-routing.module';
 
-import {ManageExpensesPage} from './manage-expenses.page';
+import {ManageTransactionsPage} from './manage-transactions.page';
 import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -26,7 +26,7 @@ import {MatCardModule} from '@angular/material/card';
     CommonModule,
     FormsModule,
     IonicModule,
-    ManageExpensesRoutingModule,
+    ManageTransactionsRoutingModule,
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
@@ -41,10 +41,10 @@ import {MatCardModule} from '@angular/material/card';
     MatCardModule
   ],
   declarations: [
-    ManageExpensesPage,
+    ManageTransactionsPage,
     DateNavigatorComponent,
     TransactionsFormComponent
   ],
 })
-export class ManageExpensesPageModule {
+export class ManageTransactionsPageModule {
 }

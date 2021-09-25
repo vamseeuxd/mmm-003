@@ -5,10 +5,10 @@ import {TRANSACTION_TYPE, TransactionService} from '../shared/transaction-servic
 
 @Component({
   selector: 'app-folder',
-  templateUrl: './manage-expenses.page.html',
-  styleUrls: ['./manage-expenses.page.scss'],
+  templateUrl: './manage-transactions.page.html',
+  styleUrls: ['./manage-transactions.page.scss'],
 })
-export class ManageExpensesPage implements OnInit {
+export class ManageTransactionsPage implements OnInit {
 
   constructor(
     public modalController: ModalController,

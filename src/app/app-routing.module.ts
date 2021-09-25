@@ -4,12 +4,12 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'manage-expenses/Inbox',
+    redirectTo: 'manage-transactions/Inbox',
     pathMatch: 'full'
   },
   {
-    path: 'manage-expenses/:id',
-    loadChildren: () => import('./manage-expenses/manage-expenses-page.module').then(m => m.ManageExpensesPageModule)
+    path: 'manage-transactions/:id',
+    loadChildren: () => import('./manage-transactions/manage-transactions-page.module').then(m => m.ManageTransactionsPageModule)
   }
 ];
 
