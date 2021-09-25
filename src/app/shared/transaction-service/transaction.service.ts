@@ -164,38 +164,13 @@ export class TransactionService {
     }));
   }
 
-  private getInstalment(transaction: any, selectedDate: Date, weekOrDayCount = 0, isSuffix = true): string | number {
-    switch (transaction.repeatOption) {
-      case 'day':
-        const dayDate1 = moment(transaction.startDate);
-        const dayDate2 = moment(selectedDate);
-        dayDate2.add(weekOrDayCount * transaction.repeatInterval, transaction.repeatOption);
-        const dayDate = Math.floor(dayDate2.diff(dayDate1, transaction.repeatOption, true)) + 1;
-        return isSuffix ? ordinalSuffixOf(weekOrDayCount + 1) : dayDate;
-        break;
-      case 'week':
-        const weekDate1 = moment(transaction.startDate);
-        const weekDate2 = moment(selectedDate);
-        weekDate2.add(weekOrDayCount * transaction.repeatInterval, transaction.repeatOption);
-        const weekDate = Math.floor(weekDate2.diff(weekDate1, transaction.repeatOption, true)) + 1;
-        return isSuffix ? ordinalSuffixOf(weekDate) : weekDate;
-        break;
-      case 'month':
-        const monthDate1 = moment(transaction.startDate).set('date', 1);
-        const monthDate2 = moment(selectedDate).set('date', 1);
-        const monthDate = Math.floor(monthDate2.diff(monthDate1, transaction.repeatOption, true)) + 1;
-        return isSuffix ? ordinalSuffixOf(monthDate) : monthDate;
-        break;
-    }
-  }
-
   private getTransaction(transaction: any, selectedDate: Date, installment: string, dueDate: string = null): ITransaction {
     return {
       ...transaction,
       installment,
       dates: this.getDates(transaction),
       startDate: moment(transaction.startDate).format(this.dateFormat),
-      dueDate: dueDate ? dueDate : this.getDueDate(transaction, Number(this.getInstalment(transaction, selectedDate)) - 1),
+      dueDate,
       payments: this.getPayments(transaction)
     };
   }
