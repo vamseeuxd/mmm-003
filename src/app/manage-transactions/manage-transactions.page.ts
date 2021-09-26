@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {IonItemSliding, ModalController} from '@ionic/angular';
 import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
 import {ITransaction, TRANSACTION_TYPE, TransactionService} from '../shared/transaction-service/transaction.service';
 import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
@@ -45,5 +45,19 @@ export class ManageTransactionsPage implements OnInit {
     });
     return await modal.present();
 
+  }
+
+  async editTransactionClick(transactionSliding: IonItemSliding, transaction: ITransaction, selectedDate: Date) {
+    await transactionSliding.close();
+    const modal = await this.modalController.create({
+      component: TransactionsFormComponent,
+      backdropDismiss: false,
+      componentProps: {
+        transaction,
+        selectedDate,
+        isEdit: true,
+      }
+    });
+    return await modal.present();
   }
 }

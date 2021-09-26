@@ -23,6 +23,21 @@ export interface IPayment {
   isPaid: boolean;
 }
 
+export type RepeatOption = 'never' | 'day' | 'week' | 'month' | 'year';
+
+export interface ITransactionDoc {
+  name: string;
+  type: 'expenses' | 'income';
+  id?: string;
+  amount: number;
+  startDate: number | Date;
+  endDate: number | Date;
+  dates?: { start: number | Date; end: number | Date };
+  repeatInterval: number;
+  repeatOption: RepeatOption;
+  noOfInstallments: number;
+}
+
 export interface ITransaction {
   name: string;
   startDate: string;
@@ -30,13 +45,14 @@ export interface ITransaction {
   isPaid?: boolean;
   repeatInterval: number;
   amount: number;
-  installment: number;
+  installment: string;
   dates: IDates;
-  uid: string;
+  uid?: string;
   noOfInstallments: number;
   type: TRANSACTION_TYPE;
-  repeatOption: string;
+  repeatOption: RepeatOption;
   id: string;
+  fireStoreDoc: ITransactionDoc;
   payments: IPayment[];
 }
 
@@ -61,7 +77,7 @@ export class TransactionService {
         if (!user) {
           return of([]);
         }
-        return this.firestore.collection('transactions', ref => {
+        return this.firestore.collection<ITransactionDoc>('transactions', ref => {
           this.dataLoaderId = this.loader.show();
           selectedDate.setDate(1);
           selectedDate.setHours(0, 0, 0, 0);
@@ -143,20 +159,20 @@ export class TransactionService {
     }));
   }
 
-  private getDueDate(transaction: ITransaction, index: number) {
+  private getDueDate(transaction: ITransactionDoc, index: number) {
     const amount: DurationInputArg1 = index * transaction.repeatInterval;
     const unit: DurationInputArg2 = transaction.repeatOption as DurationInputArg2;
     return moment(transaction.dates.start).add(amount, unit).format(this.dateFormat);
   }
 
-  private getDates(transaction: ITransaction): IDates {
+  private getDates(transaction: ITransactionDoc): IDates {
     return {
       start: moment(transaction.dates.start).format(this.dateFormat),
       end: moment(transaction.dates.end).format(this.dateFormat),
     };
   }
 
-  private getPayments(transaction: ITransaction): IPayment[] {
+  private getPayments(transaction: ITransactionDoc): IPayment[] {
     return Array.from(Array(Number(transaction.noOfInstallments)).keys()).map(key => ({
       instalment: ordinalSuffixOf(key + 1),
       dueDate: this.getDueDate(transaction, key),
@@ -165,14 +181,21 @@ export class TransactionService {
     }));
   }
 
-  private getTransaction(transaction: any, installment: string, dueDate: string = null): ITransaction {
+  private getTransaction(fireStoreDoc: ITransactionDoc, installment: string, dueDate: string = null): ITransaction {
     return {
-      ...transaction,
+      amount: fireStoreDoc.amount,
+      id: fireStoreDoc.id,
+      name: fireStoreDoc.name,
+      noOfInstallments: fireStoreDoc.noOfInstallments,
+      repeatInterval: fireStoreDoc.repeatInterval,
+      repeatOption: fireStoreDoc.repeatOption,
+      type: fireStoreDoc.type,
+      fireStoreDoc,
       installment,
-      dates: this.getDates(transaction),
-      startDate: moment(transaction.startDate).format(this.dateFormat),
+      dates: this.getDates(fireStoreDoc),
+      startDate: moment(fireStoreDoc.startDate).format(this.dateFormat),
       dueDate,
-      payments: this.getPayments(transaction)
+      payments: this.getPayments(fireStoreDoc)
     };
   }
 

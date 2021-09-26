@@ -4,21 +4,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {NgForm} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import * as moment from 'moment';
-
-export type RepeatOption = 'never' | 'day' | 'week' | 'month' | 'year';
-
-export interface ITransaction {
-  name: string;
-  type: 'expenses' | 'income';
-  id?: string;
-  amount: number;
-  startDate: number | Date;
-  endDate: number | Date;
-  dates?: { start: number | Date; end: number | Date };
-  repeatInterval: number;
-  repeatOption: RepeatOption;
-  noOfInstallments: number;
-}
+import {ITransaction, ITransactionDoc, RepeatOption} from '../../shared/transaction-service/transaction.service';
 
 @Component({
   selector: 'app-expenses-form',
@@ -28,7 +14,9 @@ export interface ITransaction {
 export class TransactionsFormComponent implements OnInit {
 
   @Input() type: 'expenses' | 'income' = 'expenses';
-  data: ITransaction = {
+  @Input() isEdit = false;
+  @Input() transaction: ITransaction;
+  transactionDoc: ITransactionDoc = {
     name: '',
     amount: null,
     type: 'expenses',
@@ -67,23 +55,39 @@ export class TransactionsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.isEdit) {
+      this.transactionDoc = {
+        name: this.transaction.fireStoreDoc.name,
+        amount: this.transaction.fireStoreDoc.amount,
+        type: this.transaction.fireStoreDoc.type,
+        startDate: this.transaction.fireStoreDoc.dates.start,
+        endDate: this.transaction.fireStoreDoc.dates.end,
+        repeatInterval: this.transaction.fireStoreDoc.repeatInterval,
+        repeatOption: this.transaction.fireStoreDoc.repeatOption,
+        noOfInstallments: this.transaction.fireStoreDoc.noOfInstallments,
+      };
+      this.modalData = {
+        repeatInterval: this.transaction.fireStoreDoc.repeatInterval,
+        repeatOption: this.transaction.fireStoreDoc.repeatOption,
+      };
+    }
   }
 
   updateEndDate(): void {
     setTimeout(() => {
-      const date = moment(this.data.startDate);
-      const duration: any = (this.data.repeatInterval * (this.data.noOfInstallments - 1));
-      date.add(duration, this.data.repeatOption);
-      this.data.endDate = date.toDate();
+      const date = moment(this.transactionDoc.startDate);
+      const duration: any = (this.transactionDoc.repeatInterval * (this.transactionDoc.noOfInstallments - 1));
+      date.add(duration, this.transactionDoc.repeatOption);
+      this.transactionDoc.endDate = date.toDate();
     }, 50);
   }
 
   openDialog(template: any): void {
     if (this.oldRepeatOption !== 'never') {
       this.modalData.repeatOption = this.oldRepeatOption;
-      this.modalData.repeatInterval = this.data.repeatInterval;
+      this.modalData.repeatInterval = this.transactionDoc.repeatInterval;
     } else {
-      this.data.repeatOption = 'day';
+      this.transactionDoc.repeatOption = 'day';
     }
     this.dialogRef = this.dialog.open(template, {width: '400px'});
   }
@@ -93,12 +97,12 @@ export class TransactionsFormComponent implements OnInit {
       return `Every ${option}`;
     }
     // eslint-disable-next-line max-len
-    return `Every ${(this.data.repeatInterval === 1) ? '' : this.data.repeatInterval} ${option}${(this.data.repeatInterval === 1) ? '' : 's'}`;
+    return `Every ${(this.transactionDoc.repeatInterval === 1) ? '' : this.transactionDoc.repeatInterval} ${option}${(this.transactionDoc.repeatInterval === 1) ? '' : 's'}`;
   }
 
   repeatOptionOkClick() {
-    this.data.repeatOption = this.modalData.repeatOption;
-    this.data.repeatInterval = this.modalData.repeatInterval;
+    this.transactionDoc.repeatOption = this.modalData.repeatOption;
+    this.transactionDoc.repeatInterval = this.modalData.repeatInterval;
     this.dialogRef.close();
     this.updateEndDate();
   }
@@ -109,7 +113,7 @@ export class TransactionsFormComponent implements OnInit {
     const start = expensesForm.value.startDate.getTime();
     console.log(moment(end).format('DD-MMMM-yyyy'));
     delete expensesForm.value.endDate;
-    await this.firestore.collection<ITransaction>('transactions').add({
+    await this.firestore.collection<ITransactionDoc>('transactions').add({
       ...expensesForm.value,
       dates: {
         start,

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title class="ion-text-center text-capitalize">
-      Add New {{type}}
+      {{isEdit ? 'Edit' : 'Add New'}} {{type}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,20 +11,22 @@
         class="transaction-form px-4 d-flex flex-column align-items-center justify-content-center">
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>Expenses Title</mat-label>
-      <input #title [(ngModel)]="data.name" autocomplete="off" matInput maxlength="50" name="name"
+      <input #title [(ngModel)]="transactionDoc.name" autocomplete="off" matInput maxlength="50" name="name"
              placeholder="Provide Expenses Time" required type="text">
       <mat-hint align="end">{{title.value.length}} / 50</mat-hint>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>Expenses Amount</mat-label>
-      <input [(ngModel)]="data.amount" autocomplete="off" matInput name="amount" ngModel placeholder="Expenses Amount"
+      <input [(ngModel)]="transactionDoc.amount" autocomplete="off" matInput name="amount" ngModel
+             placeholder="Expenses Amount"
              required type="number">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
-      <mat-label>Start Date {{data.startDate | date:'dd-MMMM-yyyy'}}</mat-label>
-      <input (ngModelChange)="updateEndDate()" [(ngModel)]="data.startDate" [matDatepicker]="picker" autocomplete="off"
+      <mat-label>Start Date {{transactionDoc.startDate | date:'dd-MMMM-yyyy'}}</mat-label>
+      <input (ngModelChange)="updateEndDate()" [(ngModel)]="transactionDoc.startDate" [matDatepicker]="picker"
+             autocomplete="off"
              matInput maxlength="50"
              name="startDate" ngModel
              placeholder="Start Date" required>
@@ -34,21 +36,31 @@
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
       <mat-label>Repeat</mat-label>
-      <mat-select #repeatOptionInput (ngModelChange)="updateEndDate()" [(ngModel)]="data.repeatOption"
+      <mat-select #repeatOptionInput (ngModelChange)="updateEndDate()" [(ngModel)]="transactionDoc.repeatOption"
                   name="repeatOption" required value="never_repeat">
-        <mat-option (click)="data.repeatInterval = 1;oldRepeatOption = data.repeatOption;updateEndDate()" value="never">
+        <mat-option
+          (click)="transactionDoc.repeatInterval = 1;oldRepeatOption = transactionDoc.repeatOption;updateEndDate()"
+          value="never">
           Never Repeat
         </mat-option>
-        <mat-option (click)="data.repeatInterval = 1;oldRepeatOption = data.repeatOption;updateEndDate()" value="day">
+        <mat-option
+          (click)="transactionDoc.repeatInterval = 1;oldRepeatOption = transactionDoc.repeatOption;updateEndDate()"
+          value="day">
           {{getRepeatOptionLabel('Day', repeatOptionInput.panelOpen)}}
         </mat-option>
-        <mat-option (click)="data.repeatInterval = 1;oldRepeatOption = data.repeatOption;updateEndDate()" value="week">
+        <mat-option
+          (click)="transactionDoc.repeatInterval = 1;oldRepeatOption = transactionDoc.repeatOption;updateEndDate()"
+          value="week">
           {{getRepeatOptionLabel('Week', repeatOptionInput.panelOpen)}}
         </mat-option>
-        <mat-option (click)="data.repeatInterval = 1;oldRepeatOption = data.repeatOption;updateEndDate()" value="month">
+        <mat-option
+          (click)="transactionDoc.repeatInterval = 1;oldRepeatOption = transactionDoc.repeatOption;updateEndDate()"
+          value="month">
           {{getRepeatOptionLabel('Month', repeatOptionInput.panelOpen)}}
         </mat-option>
-        <mat-option (click)="data.repeatInterval = 1;oldRepeatOption = data.repeatOption;updateEndDate()" value="year">
+        <mat-option
+          (click)="transactionDoc.repeatInterval = 1;oldRepeatOption = transactionDoc.repeatOption;updateEndDate()"
+          value="year">
           {{getRepeatOptionLabel('Year', repeatOptionInput.panelOpen)}}
         </mat-option>
         <mat-option (click)="openDialog(repeatOptionModalTemplate)">Custom</mat-option>
@@ -57,20 +69,21 @@
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
       <mat-label>No of Installments</mat-label>
-      <input (ngModelChange)="updateEndDate()" [(ngModel)]="data.noOfInstallments" autocomplete="off" matInput
+      <input (ngModelChange)="updateEndDate()" [(ngModel)]="transactionDoc.noOfInstallments" autocomplete="off" matInput
              maxlength="50" min="1" name="noOfInstallments"
              ngModel placeholder="No of Installments" required type="number">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
-      <mat-label>End Date {{data.endDate | date:'dd-MMMM-yyyy'}}</mat-label>
-      <input [(ngModel)]="data.endDate" [matDatepicker]="endDatepicker" autocomplete="off" matInput maxlength="50"
+      <mat-label>End Date {{transactionDoc.endDate | date:'dd-MMMM-yyyy'}}</mat-label>
+      <input [(ngModel)]="transactionDoc.endDate" [matDatepicker]="endDatepicker" autocomplete="off" matInput
+             maxlength="50"
              name="endDate" ngModel placeholder="End Date" readonly required>
       <mat-datepicker-toggle [for]="endDatepicker" disabled matSuffix></mat-datepicker-toggle>
       <mat-datepicker #endDatepicker touchUi></mat-datepicker>
     </mat-form-field>
 
-    <input [ngModel]="data.repeatInterval" name="repeatInterval" type="hidden">
+    <input [ngModel]="transactionDoc.repeatInterval" name="repeatInterval" type="hidden">
     <input [ngModel]="type" name="type" type="hidden">
 
     <div class="d-flex" style="margin-top: -10px;">
@@ -114,7 +127,8 @@
           </mat-form-field>
         </div>
         <div class="d-flex">
-          <button (click)="data.repeatOption = oldRepeatOption" class="ms-auto" mat-dialog-close mat-raised-button
+          <button (click)="transactionDoc.repeatOption = oldRepeatOption" class="ms-auto" mat-dialog-close
+                  mat-raised-button
                   style="width: 80px">Cancel
           </button>
           <button (click)="repeatOptionOkClick()" class="ms-3" color="primary" mat-raised-button style="width: 80px">
