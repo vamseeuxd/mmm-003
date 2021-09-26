@@ -153,6 +153,7 @@ export class TransactionService {
     try {
       await this.firestore.collection('payments').add(
         {
+          transactionId,
           uid: this.loader.user.providerData[0].uid,
           dueDate: dueDate.getTime(),
           paidOn: paidOn.getTime()
