@@ -66,6 +66,7 @@ export class TransactionsFormComponent implements OnInit {
         repeatInterval: this.transaction.fireStoreDoc.repeatInterval,
         repeatOption: this.transaction.fireStoreDoc.repeatOption,
       };
+      this.oldRepeatOption = this.transaction.fireStoreDoc.repeatOption;
       this.updateEndDate();
     }
   }
