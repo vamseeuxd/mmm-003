@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, combineLatest, forkJoin, Observable, of} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {LoaderService} from '../loader/loader.service';
-import {switchMap, take, tap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 import * as moment from 'moment';
 import {DurationInputArg1, DurationInputArg2} from 'moment';
 import {ordinalSuffixOf} from '../utils/utils';
@@ -109,18 +109,33 @@ export class TransactionService {
             .where('dates.end', '>=', selectedDate.getTime());
         }).valueChanges({idField: 'id'}).pipe(
           switchMap(x => {
-            const xxx: any = {source: of(x)};
+            const xxx: any[] = [of(x)];
             x.forEach(value => {
-              xxx[value.id] = this.firestore.collection<IPaymentDoc>('payments', ref => ref.where('transactionId', '==', value.id))
-                .valueChanges({idField: 'id'}).pipe(take(1));
+              xxx.push(this.firestore.collection<IPaymentDoc>('payments', ref => ref.where('transactionId', '==', value.id))
+                .valueChanges({idField: 'id'}));
             });
-            return forkJoin(xxx).pipe(switchMap(
-              (value: any) => {
-                value.source.forEach(d => {
+            return combineLatest(xxx).pipe(switchMap(
+              (value: any[]) => {
+                const source = value[0];
+                value.splice(0, 1);
+                const obj: any = {};
+                value.forEach((value1) => {
+                  // @ts-ignore
+                  if (value1.length > 0) {
+                    // @ts-ignore
+                    obj[value1[0].transactionId] = value1;
+                  }
+                  // @ts-ignore
+                  source.forEach(d => {
+                    d.payments = obj[d.id];
+                    delete obj[d.id];
+                  });
+                });
+                /*value.source.forEach(d => {
                   d.payments = value[d.id];
                   delete value[d.id];
-                });
-                return of(value.source);
+                });*/
+                return of(source);
               }
             ));
           }),
@@ -136,6 +151,7 @@ export class TransactionService {
                 .forEach(transaction => {
                   this.getInstalmentsWithDueDate(transaction, selectedDate, lastDate)
                     .forEach((option) => {
+                      console.log(option);
                       transactionsToReturn.push(
                         this.getTransaction(
                           transaction,
@@ -240,7 +256,7 @@ export class TransactionService {
   private getPayments(transaction: ITransactionDoc): IPayment[] {
     return Array.from(Array(Number(transaction.noOfInstallments)).keys()).map(key => {
       const dueDate = this.getDueDate(transaction, key);
-      console.log(transaction.payments.map(d => d.dueDate).includes(dueDate.toDate().getTime()));
+      console.log(transaction.payments && transaction.payments.map(d => d.dueDate).includes(dueDate.toDate().getTime()));
       return ({
         instalment: ordinalSuffixOf(key + 1),
         id: null,
@@ -249,14 +265,14 @@ export class TransactionService {
         paidOn: null,
         transactionId: transaction.id,
         type: transaction.type,
-        isPaid: transaction.payments.map(d => d.dueDate).includes(dueDate.toDate().getTime()),
+        isPaid: transaction.payments && transaction.payments.map(d => d.dueDate).includes(dueDate.toDate().getTime()),
       });
     });
   }
 
   private getTransaction(fireStoreDoc: ITransactionDoc, installment: string, uid: string, dueDate: number = null): ITransaction {
     console.log('---------------------------------');
-    console.log(fireStoreDoc.payments.map(d => d.dueDate).includes(dueDate));
+    console.log(fireStoreDoc.payments && fireStoreDoc.payments.map(d => d.dueDate).includes(dueDate));
     return {
       amount: fireStoreDoc.amount,
       id: fireStoreDoc.id,
@@ -267,7 +283,7 @@ export class TransactionService {
       type: fireStoreDoc.type,
       fireStoreDoc,
       uid,
-      isPaid: fireStoreDoc.payments.map(d => d.dueDate).includes(dueDate),
+      isPaid: fireStoreDoc.payments && fireStoreDoc.payments.map(d => d.dueDate).includes(dueDate),
       installment,
       dates: this.getDates(fireStoreDoc),
       startDate: moment(fireStoreDoc.startDate).format(this.dateFormat),
