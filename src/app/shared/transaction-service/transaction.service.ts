@@ -233,6 +233,25 @@ export class TransactionService {
     }
   }
 
+  async deleteTransaction(transaction: ITransaction) {
+    const loaderId = this.loader.show();
+    try {
+      const batch = this.firestore.firestore.batch();
+      const docRef1 = this.firestore.collection<ITransactionDoc>('transactions').doc(transaction.id).ref;
+      batch.delete(docRef1);
+      transaction.payments.forEach(payment => {
+        if (payment.id) {
+          const docRef2 = this.firestore.collection('payments').doc(payment.id).ref;
+          batch.delete(docRef2);
+        }
+      });
+      await batch.commit();
+      await this.loader.hide(loaderId);
+    } catch (e) {
+      await this.loader.hide(loaderId);
+    }
+  }
+
   private getInstalmentsWithDueDate(transaction: any, selectedDate: Date, lastDate: Date) {
     return Array.from(Array(transaction.noOfInstallments).keys()).map((index) => {
       const dueDate = moment(transaction.dates.start);

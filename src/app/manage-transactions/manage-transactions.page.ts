@@ -108,4 +108,22 @@ export class ManageTransactionsPage implements OnInit {
     });
     await alert.present();
   }
+
+  async deleteTransaction(transaction: ITransaction) {
+    const alert = await this.alertController.create({
+      header: 'Delete Confirmation',
+      // eslint-disable-next-line max-len
+      message: `Are you sure! Do you want to Delete ${transaction.type.toLowerCase()} ? <br> <small class="text-danger d-block mt-2 w-100 text-center">Note : all ${transaction.payments.length} payments related to this ${transaction.type.toLowerCase()} also deleted</small>`,
+      buttons: [
+        {text: 'No', role: 'cancel', cssClass: 'secondary'},
+        {
+          text: 'Yes',
+          handler: () => {
+            this.transactionService.deleteTransaction(transaction);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 }

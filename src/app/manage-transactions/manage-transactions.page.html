@@ -73,7 +73,9 @@
         </ion-item>
 
         <ion-item-options side="end">
-          <ion-item-option color="danger" style="width: 80px;">Delete</ion-item-option>
+          <ion-item-option (click)="deleteTransaction(transaction);transactionSliding.close();" color="danger"
+                           style="width: 80px;">Delete
+          </ion-item-option>
           <ion-item-option
             (click)="editTransactionClick(transactionSliding, transaction, selectedDate);$event.stopPropagation();"
             color="warning"
