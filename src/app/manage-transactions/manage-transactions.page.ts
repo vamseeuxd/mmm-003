@@ -22,6 +22,7 @@ export class ManageTransactionsPage implements OnInit {
   defaultDate: Date;
   selectedPayment: IPayment;
   selectedTransaction: ITransaction;
+  hideHeader = false;
 
   constructor(
     public modalController: ModalController,
@@ -125,5 +126,10 @@ export class ManageTransactionsPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  hideHeaderClick($event: any) {
+    console.log($event.detail.deltaY > 0);
+    this.hideHeader = $event.detail.deltaY > 0;
   }
 }

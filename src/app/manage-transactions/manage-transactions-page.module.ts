@@ -21,6 +21,7 @@ import {DateNavigatorComponent} from '../shared/date-navigator/date-navigator.co
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
 import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
+import {HideHeaderDirective} from '../shared/directives/hide-header.directive';
 
 @NgModule({
   imports: [
@@ -39,12 +40,13 @@ import {TransactionsDetailsComponent} from './transactions-details/transactions-
     MatDialogModule,
     MatTabsModule,
     MatExpansionModule,
-    MatCardModule
+    MatCardModule,
   ],
   declarations: [
     ManageTransactionsPage,
     DateNavigatorComponent,
     TransactionsDetailsComponent,
+    HideHeaderDirective,
     TransactionsFormComponent
   ],
 })

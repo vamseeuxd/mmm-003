@@ -1,5 +1,6 @@
 <ng-container *ngIf="transactionService.getSelectedDate() | async as selectedDate">
-  <ion-header [translucent]="true">
+  <ion-header #header [style.marginTop.px]="hideHeader ? -178 : 0" [translucent]="true"
+              style="transition: all ease-in-out 1s">
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
@@ -31,9 +32,9 @@
       </ion-segment>
     </ion-toolbar>
   </ion-header>
-  <ion-content #transactionsPage [fullscreen]="true" id="transactionsPage">
-
-    <!--<pre>{{transactionService.getTransactions()|async|json}}</pre>-->
+  <ion-content #transactionsPage (ionScroll)="hideHeaderClick($event)" [fullscreen]="true"
+               id="transactionsPage"
+               scrollEvents="true">
 
     <ion-list *ngIf="transactionService.getTransactions()|async as transactions">
 
