@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {ITransaction} from '../../shared/transaction-service/transaction.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-transactions-details',
@@ -17,4 +18,7 @@ export class TransactionsDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
+  getFormattedDate(dueDate: number): string {
+    return moment(dueDate).format('DD-MMMM-yyyy');
+  }
 }

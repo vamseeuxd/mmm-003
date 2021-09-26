@@ -124,7 +124,8 @@
             </ion-avatar>
             <ion-label>
               <h2 class="d-flex justify-content-between align-items-center">
-                {{payment.dueDate}}
+                <!--{{payment.dueDate}}-->
+                {{getFormattedDate(payment.dueDate)}}
                 <ion-badge [color]="payment.isPaid ? 'success' : 'danger'">
                   {{payment.isPaid ? 'Paid' : 'Pending'}}
                 </ion-badge>

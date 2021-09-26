@@ -18,7 +18,8 @@ export interface IDates {
 
 export interface IPayment {
   instalment: string;
-  dueDate: string;
+  dueDateString: string;
+  dueDate: number;
   type: TRANSACTION_TYPE;
   isPaid: boolean;
 }
@@ -147,6 +148,22 @@ export class TransactionService {
     return this.selectedDate$;
   }
 
+  async addPayment(dueDate: Date, transactionId: string, paidOn: Date) {
+    const loaderId = this.loader.show();
+    try {
+      await this.firestore.collection('payments').add(
+        {
+          uid: this.loader.user.providerData[0].uid,
+          dueDate: dueDate.getTime(),
+          paidOn: paidOn.getTime()
+        }
+      );
+      await this.loader.hide(loaderId);
+    } catch (e) {
+      await this.loader.hide(loaderId);
+    }
+  }
+
   private getInstalmentsWithDueDate(transaction: any, selectedDate: Date, lastDate: Date) {
     return Array.from(Array(transaction.noOfInstallments).keys()).map((index) => {
       const dueDate = moment(transaction.dates.start);
@@ -165,10 +182,12 @@ export class TransactionService {
     }));
   }
 
-  private getDueDate(transaction: ITransactionDoc, index: number) {
+  private getDueDate(transaction: ITransactionDoc, index: number): moment.Moment {
     const amount: DurationInputArg1 = index * transaction.repeatInterval;
     const unit: DurationInputArg2 = transaction.repeatOption as DurationInputArg2;
-    return moment(transaction.dates.start).add(amount, unit).format(this.dateFormat);
+    const returnValue = moment(transaction.dates.start).add(amount, unit);
+    returnValue.add(amount, unit);
+    return returnValue;
   }
 
   private getDates(transaction: ITransactionDoc): IDates {
@@ -181,7 +200,8 @@ export class TransactionService {
   private getPayments(transaction: ITransactionDoc): IPayment[] {
     return Array.from(Array(Number(transaction.noOfInstallments)).keys()).map(key => ({
       instalment: ordinalSuffixOf(key + 1),
-      dueDate: this.getDueDate(transaction, key),
+      dueDate: this.getDueDate(transaction, key).toDate().getTime(),
+      dueDateString: this.getDueDate(transaction, key).format(this.dateFormat),
       type: transaction.type,
       isPaid: false,
     }));
