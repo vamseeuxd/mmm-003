@@ -75,6 +75,7 @@ export interface ITransaction {
   repeatOption: RepeatOption;
   id: string;
   fireStoreDoc: ITransactionDoc;
+  payment: IPayment | null;
   payments: IPayment[];
 }
 
@@ -151,13 +152,14 @@ export class TransactionService {
                 .forEach(transaction => {
                   this.getInstalmentsWithDueDate(transaction, selectedDate, lastDate)
                     .forEach((option) => {
-                      console.log(option);
                       transactionsToReturn.push(
                         this.getTransaction(
                           transaction,
                           option.instalment,
                           this.loader.user.providerData[0].uid,
-                          option.dueDate)
+                          option.dueDate,
+                          selectedDate,
+                          lastDate)
                       );
                     });
                 });
@@ -253,26 +255,34 @@ export class TransactionService {
     };
   }
 
-  private getPayments(transaction: ITransactionDoc): IPayment[] {
-    return Array.from(Array(Number(transaction.noOfInstallments)).keys()).map(key => {
-      const dueDate = this.getDueDate(transaction, key);
-      console.log(transaction.payments && transaction.payments.map(d => d.dueDate).includes(dueDate.toDate().getTime()));
+  private getPayments(transaction: ITransactionDoc, selectedDate: Date, lastDate: Date): IPayment[] {
+    return Array.from(Array(transaction.noOfInstallments).keys()).map((index) => {
+      const dueDate = moment(transaction.dates.start);
+      // @ts-ignore
+      dueDate.add((index * transaction.repeatInterval), transaction.repeatOption);
       return ({
-        instalment: ordinalSuffixOf(key + 1),
-        id: null,
-        dueDateString: dueDate.format(this.dateFormat),
-        dueDate: dueDate.toDate().getTime(),
-        paidOn: null,
-        transactionId: transaction.id,
-        type: transaction.type,
-        isPaid: transaction.payments && transaction.payments.map(d => d.dueDate).includes(dueDate.toDate().getTime()),
+        instalment: ordinalSuffixOf(index + 1),
+        dueDate
       });
-    });
+    }).filter(data => {
+      const startDate = moment(selectedDate.getTime());
+      const endDate = moment(lastDate.getTime());
+      return data.dueDate.isBetween(startDate, endDate, undefined, '[]');
+    }).map(data => ({
+      instalment: data.instalment,
+      id: null,
+      dueDateString: data.dueDate.format(this.dateFormat),
+      dueDate: data.dueDate.toDate().getTime(),
+      paidOn: null,
+      transactionId: transaction.id,
+      type: transaction.type,
+      isPaid: transaction.payments && transaction.payments.map(d => d.dueDate).includes(data.dueDate.toDate().getTime()),
+    }));
   }
 
-  private getTransaction(fireStoreDoc: ITransactionDoc, installment: string, uid: string, dueDate: number = null): ITransaction {
-    console.log('---------------------------------');
-    console.log(fireStoreDoc.payments && fireStoreDoc.payments.map(d => d.dueDate).includes(dueDate));
+  // eslint-disable-next-line max-len
+  private getTransaction(fireStoreDoc: ITransactionDoc, installment: string, uid: string, dueDate: number = null, selectedDate: Date, lastDate: Date): ITransaction {
+    const payments = this.getPayments(fireStoreDoc, selectedDate, lastDate);
     return {
       amount: fireStoreDoc.amount,
       id: fireStoreDoc.id,
@@ -288,7 +298,8 @@ export class TransactionService {
       dates: this.getDates(fireStoreDoc),
       startDate: moment(fireStoreDoc.startDate).format(this.dateFormat),
       dueDate,
-      payments: this.getPayments(fireStoreDoc)
+      payment: payments.find(d => d.dueDate === dueDate),
+      payments
     };
   }
 

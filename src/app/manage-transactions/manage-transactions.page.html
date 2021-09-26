@@ -39,7 +39,8 @@
 
       <ion-item-sliding #transactionSliding *ngFor="let transaction of transactions">
         <ion-item-options side="start">
-          <ion-item-option *ngIf="!transaction.isPaid" color="success" style="width: 100px;">
+          <ion-item-option (click)="markAsPaid(markAsPaidTempRef,transaction.payment,transaction)"
+                           *ngIf="!transaction.isPaid" color="success" style="width: 100px;">
             <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
               <span class="d-block text-white w-100 text-center" style="font-size: 10px;">Mark as</span>
               <ion-label class="fw-bold">Paid</ion-label>
@@ -212,3 +213,22 @@
   </ion-menu>
 
 </ng-container>
+
+<ng-template #markAsPaidTempRef>
+  <h1 mat-dialog-title>Mark as Paid</h1>
+  <form #sampleForm="ngForm" mat-dialog-content>
+    <p>Mark {{selectedPayment.instalment}} instalment ({{selectedPayment.dueDateString}}) as Paid
+      for {{selectedTransaction.name}}</p>
+    <mat-form-field appearance="legacy" class="w-100">
+      <mat-label>Payment Date</mat-label>
+      <input [matDatepicker]="picker" [ngModel]="defaultDate" matInput name="paidOn" placeholder="MM/DD/YYYY" required>
+      <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+      <mat-datepicker #picker touchUi></mat-datepicker>
+    </mat-form-field>
+    <!--<pre>{{selectedPayment|json}}</pre>-->
+  </form>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>No Thanks</button>
+    <button (click)="addPayment(sampleForm)" mat-button>Save</button>
+  </div>
+</ng-template>

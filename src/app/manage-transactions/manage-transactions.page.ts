@@ -1,8 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {IonItemSliding, ModalController} from '@ionic/angular';
 import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
-import {ITransaction, TRANSACTION_TYPE, TransactionService} from '../shared/transaction-service/transaction.service';
+import {
+  IPayment,
+  ITransaction,
+  TRANSACTION_TYPE,
+  TransactionService
+} from '../shared/transaction-service/transaction.service';
 import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-folder',
@@ -11,8 +18,14 @@ import {TransactionsDetailsComponent} from './transactions-details/transactions-
 })
 export class ManageTransactionsPage implements OnInit {
 
+  dialogRef: MatDialogRef<any>;
+  defaultDate: Date;
+  private selectedPayment: IPayment;
+  private selectedTransaction: ITransaction;
+
   constructor(
     public modalController: ModalController,
+    public dialog: MatDialog,
     public transactionService: TransactionService,
   ) {
   }
@@ -59,5 +72,22 @@ export class ManageTransactionsPage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  markAsPaid(markAsPaidTempRef: TemplateRef<any>, payment: IPayment, transaction: ITransaction) {
+    this.selectedPayment = payment;
+    this.selectedTransaction = transaction;
+    this.defaultDate = new Date(payment.dueDate);
+    this.dialogRef = this.dialog.open(markAsPaidTempRef);
+  }
+
+  async addPayment(sampleForm: NgForm) {
+    // dialogRef
+    try {
+      // eslint-disable-next-line max-len
+      await this.transactionService.addPayment(new Date(this.selectedPayment.dueDate), this.selectedTransaction.id, sampleForm.value.paidOn);
+      this.dialogRef.close();
+    } catch (e) {
+    }
   }
 }
