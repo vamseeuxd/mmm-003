@@ -5,6 +5,7 @@ import {NgForm} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import * as moment from 'moment';
 import {ITransaction, ITransactionDoc, RepeatOption} from '../../shared/transaction-service/transaction.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-expenses-form',
@@ -46,6 +47,7 @@ export class TransactionsFormComponent implements OnInit {
   constructor(
     public modalController: ModalController,
     public dialog: MatDialog,
+    public matSnackBar: MatSnackBar,
     private firestore: AngularFirestore,
   ) {
     this.repeatDropDownConfig.day = Array.from(Array(30).keys());
@@ -57,19 +59,14 @@ export class TransactionsFormComponent implements OnInit {
   ngOnInit(): void {
     if (this.isEdit) {
       this.transactionDoc = {
-        name: this.transaction.fireStoreDoc.name,
-        amount: this.transaction.fireStoreDoc.amount,
-        type: this.transaction.fireStoreDoc.type,
-        startDate: this.transaction.fireStoreDoc.dates.start,
-        endDate: this.transaction.fireStoreDoc.dates.end,
-        repeatInterval: this.transaction.fireStoreDoc.repeatInterval,
-        repeatOption: this.transaction.fireStoreDoc.repeatOption,
-        noOfInstallments: this.transaction.fireStoreDoc.noOfInstallments,
+        ...this.transaction.fireStoreDoc,
+        startDate: new Date(this.transaction.fireStoreDoc.startDate),
       };
       this.modalData = {
         repeatInterval: this.transaction.fireStoreDoc.repeatInterval,
         repeatOption: this.transaction.fireStoreDoc.repeatOption,
       };
+      this.updateEndDate();
     }
   }
 
@@ -107,13 +104,10 @@ export class TransactionsFormComponent implements OnInit {
     this.updateEndDate();
   }
 
-  async saveExpenses(expensesForm: NgForm) {
-    const loaderId = window.loader.show();
+  getDateToSave(expensesForm: NgForm) {
     const end = expensesForm.value.endDate.getTime();
     const start = expensesForm.value.startDate.getTime();
-    console.log(moment(end).format('DD-MMMM-yyyy'));
-    delete expensesForm.value.endDate;
-    await this.firestore.collection<ITransactionDoc>('transactions').add({
+    return {
       ...expensesForm.value,
       dates: {
         start,
@@ -122,8 +116,30 @@ export class TransactionsFormComponent implements OnInit {
       uid: window.loader.user.providerData[0].uid,
       noOfInstallments: Number(expensesForm.value.noOfInstallments),
       startDate: expensesForm.value.startDate.getTime()
-    });
-    // moment(transaction.startDate).add(key * transaction.repeatInterval, transaction.repeatOption).format('DD-MMM-yyyy')
+    };
+  }
+
+  async saveExpenses(expensesForm: NgForm) {
+    const loaderId = window.loader.show();
+    const dataToSave = this.getDateToSave(expensesForm);
+    delete dataToSave.endDate;
+    delete dataToSave.id;
+    try {
+      if (this.isEdit) {
+        const docRef = this.firestore.collection<ITransactionDoc>('transactions').doc(this.transaction.fireStoreDoc.id).ref;
+        await docRef.update(dataToSave);
+        this.matSnackBar.open(`${this.type.toLocaleUpperCase()} Updated successfully`, this.type.toLocaleUpperCase());
+      } else {
+        await this.firestore.collection<ITransactionDoc>('transactions').add(dataToSave);
+        this.matSnackBar.open(`New ${this.type.toLocaleUpperCase()} added successfully`, this.type.toLocaleUpperCase(), {duration: 1000});
+      }
+    } catch (e) {
+      if (this.isEdit) {
+        this.matSnackBar.open(`Error while updating ${this.type.toLocaleUpperCase()}`, this.type.toLocaleUpperCase(), {duration: 1000});
+      } else {
+        this.matSnackBar.open(`Error while Adding ${this.type.toLocaleUpperCase()}`, this.type.toLocaleUpperCase(), {duration: 1000});
+      }
+    }
     await window.loader.hide(loaderId);
     await this.modalController.dismiss();
   }

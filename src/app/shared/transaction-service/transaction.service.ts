@@ -47,7 +47,7 @@ export interface ITransaction {
   amount: number;
   installment: string;
   dates: IDates;
-  uid?: string;
+  uid: string;
   noOfInstallments: number;
   type: TRANSACTION_TYPE;
   repeatOption: RepeatOption;
@@ -85,7 +85,7 @@ export class TransactionService {
             .where('type', '==', type)
             .where('dates.end', '>=', selectedDate.getTime());
         }).valueChanges({idField: 'id'}).pipe(
-          switchMap((transactions: any[]) => {
+          switchMap((transactions: ITransactionDoc[]) => {
               selectedDate.setDate(1);
               selectedDate.setHours(0, 0, 0, 0);
               const lastDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
@@ -97,7 +97,13 @@ export class TransactionService {
                 .forEach(transaction => {
                   this.getInstalmentsWithDueDate(transaction, selectedDate, lastDate)
                     .forEach((option) => {
-                      transactionsToReturn.push(this.getTransaction(transaction, option.instalment, option.dueDate));
+                      transactionsToReturn.push(
+                        this.getTransaction(
+                          transaction,
+                          option.instalment,
+                          this.loader.user.providerData[0].uid,
+                          option.dueDate)
+                      );
                     });
                 });
               return of(
@@ -181,7 +187,7 @@ export class TransactionService {
     }));
   }
 
-  private getTransaction(fireStoreDoc: ITransactionDoc, installment: string, dueDate: string = null): ITransaction {
+  private getTransaction(fireStoreDoc: ITransactionDoc, installment: string, uid: string, dueDate: string = null): ITransaction {
     return {
       amount: fireStoreDoc.amount,
       id: fireStoreDoc.id,
@@ -191,6 +197,7 @@ export class TransactionService {
       repeatOption: fireStoreDoc.repeatOption,
       type: fireStoreDoc.type,
       fireStoreDoc,
+      uid,
       installment,
       dates: this.getDates(fireStoreDoc),
       startDate: moment(fireStoreDoc.startDate).format(this.dateFormat),
