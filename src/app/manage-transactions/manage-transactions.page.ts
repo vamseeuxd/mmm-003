@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {IonItemSliding, ModalController} from '@ionic/angular';
+import {AlertController, IonItemSliding, ModalController} from '@ionic/angular';
 import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
 import {
   IPayment,
@@ -26,6 +26,7 @@ export class ManageTransactionsPage implements OnInit {
   constructor(
     public modalController: ModalController,
     public dialog: MatDialog,
+    public alertController: AlertController,
     public transactionService: TransactionService,
   ) {
   }
@@ -89,5 +90,22 @@ export class ManageTransactionsPage implements OnInit {
       this.dialogRef.close();
     } catch (e) {
     }
+  }
+
+  async makeAsNotPaid(transaction: ITransaction) {
+    const alert = await this.alertController.create({
+      header: 'Delete Confirmation',
+      message: 'Are you sure! Do you want to delete Payment?',
+      buttons: [
+        {text: 'No', role: 'cancel', cssClass: 'secondary'},
+        {
+          text: 'Yes',
+          handler: () => {
+            this.transactionService.deletePayment(transaction.payment.id);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

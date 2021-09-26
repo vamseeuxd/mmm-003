@@ -1,30 +1,44 @@
-import {Component, Input, OnInit, TemplateRef} from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
+import {AlertController, ModalController} from '@ionic/angular';
 import {IPayment, ITransaction, TransactionService} from '../../shared/transaction-service/transaction.service';
 import * as moment from 'moment';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {NgForm} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-transactions-details',
   templateUrl: './transactions-details.component.html',
   styleUrls: ['./transactions-details.component.scss'],
 })
-export class TransactionsDetailsComponent implements OnInit {
+export class TransactionsDetailsComponent implements OnInit, OnDestroy {
   @Input() transaction: ITransaction;
   @Input() selectedDate: Date;
   defaultDate: Date;
   dialogRef: MatDialogRef<any>;
   private selectedPayment: IPayment;
+  private subscription: Subscription;
 
   constructor(
     public modalController: ModalController,
+    public alertController: AlertController,
     public transactionService: TransactionService,
     public dialog: MatDialog,
   ) {
   }
 
   ngOnInit() {
+    this.subscription = this.transactionService.getTransactions().subscribe(value => {
+      value.forEach(value1 => {
+        if (this.transaction.id === value1.id && this.transaction.dueDate === value1.dueDate) {
+          this.transaction = value1;
+        }
+      });
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   getFormattedDate(dueDate: number): string {
@@ -44,5 +58,22 @@ export class TransactionsDetailsComponent implements OnInit {
       this.dialogRef.close();
     } catch (e) {
     }
+  }
+
+  async makeAsNotPaid(payment: IPayment) {
+    const alert = await this.alertController.create({
+      header: 'Delete Confirmation',
+      message: 'Are you sure! Do you want to delete Payment?',
+      buttons: [
+        {text: 'No', role: 'cancel', cssClass: 'secondary'},
+        {
+          text: 'Yes',
+          handler: () => {
+            this.transactionService.deletePayment(payment.id);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

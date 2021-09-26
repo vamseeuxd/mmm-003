@@ -222,6 +222,17 @@ export class TransactionService {
     }
   }
 
+  async deletePayment(paymentId: string) {
+    const loaderId = this.loader.show();
+    try {
+      const docRef = this.firestore.collection('payments').doc(paymentId).ref;
+      await docRef.delete();
+      await this.loader.hide(loaderId);
+    } catch (e) {
+      await this.loader.hide(loaderId);
+    }
+  }
+
   private getInstalmentsWithDueDate(transaction: any, selectedDate: Date, lastDate: Date) {
     return Array.from(Array(transaction.noOfInstallments).keys()).map((index) => {
       const dueDate = moment(transaction.dates.start);
@@ -268,16 +279,22 @@ export class TransactionService {
       const startDate = moment(selectedDate.getTime());
       const endDate = moment(lastDate.getTime());
       return data.dueDate.isBetween(startDate, endDate, undefined, '[]');
-    }).map(data => ({
-      instalment: data.instalment,
-      id: null,
-      dueDateString: data.dueDate.format(this.dateFormat),
-      dueDate: data.dueDate.toDate().getTime(),
-      paidOn: null,
-      transactionId: transaction.id,
-      type: transaction.type,
-      isPaid: transaction.payments && transaction.payments.map(d => d.dueDate).includes(data.dueDate.toDate().getTime()),
-    }));
+    }).map(
+      data => {
+        const paymentDoc = transaction.payments.find(d => (d.dueDate === data.dueDate.toDate().getTime()));
+        return ({
+          instalment: data.instalment,
+          id: paymentDoc ? paymentDoc.id : null,
+          dueDateString: data.dueDate.format(this.dateFormat),
+          dueDate: data.dueDate.toDate().getTime(),
+          paidOn: paymentDoc ? paymentDoc.paidOn : null,
+          paymentDoc,
+          transactionId: transaction.id,
+          type: transaction.type,
+          isPaid: transaction.payments && transaction.payments.map(d => d.dueDate).includes(data.dueDate.toDate().getTime()),
+        });
+      }
+    );
   }
 
   // eslint-disable-next-line max-len
