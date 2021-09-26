@@ -1,102 +1,151 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="ion-text-center text-capitalize">
-      {{transaction.name|titlecase}}({{transaction.installment}}) {{transaction.type|titlecase}} Details
+    <ion-title class="ion-text-left text-capitalize">
+      {{transaction.name|titlecase}}
+      <p class="fw-normal p-0 m-0 mb-0 mb-1" style="font-size: 0.8rem;">
+        ({{transaction.installment}}&nbsp;installment)
+      </p>
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalController.dismiss()" class="ms-auto" color="danger">Close</ion-button>
+    </ion-buttons>
 
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="px-5">
-  <!--<mat-card style="margin-top: -10px;">-->
-  <div class="border p-2 mt-2 w-100">
-    <p class="m-0 p-0 text-danger mb-2 fw-bold">{{selectedDate|date:'MMMM-yyyy'}} Month
-      Info :</p>
-    <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
-      <span class="text-truncate">Instalment :</span>
-      <span>{{transaction.installment}} Instalment</span>
-    </div>
-    <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
-      <span class="text-truncate">Due Date :</span>
-      <span>
-                <!--{{transaction.startDate|date:'dd'}}-{{selectedDate|date:'MMMM-yyyy'}}-->
-        {{transaction?.dueDate}}
-              </span>
-    </div>
-    <div class="d-flex justify-content-between w-100 py-1 px-2 pb-0">
-      <span class="text-truncate">Paid on :</span>
-      <span>
-                Not available
-        <!--{{transaction?.paidEmiInfo?.paidOn | date : 'dd-MMMM-yyyy'}}-->
-              </span>
-    </div>
-  </div>
-  <div class="border p-2 mt-2 w-100">
-
-    <p class="m-0 p-0 text-danger mb-1 fw-bold">Over-all Info</p>
-
-    <div class="d-flex flex-column justify-content-between w-100 py-1 px-2 pb-2 mt-1 border-bottom">
-      <div class="d-flex justify-content-between w-100 py-1 px-2 mt-1">
-        <span class="text-truncate">Installments :</span>
-        <span>
-                Repeat Every
-          {{transaction.repeatInterval > 1 ? transaction.repeatInterval : ''}}
-          {{transaction.repeatOption|titlecase}}
-              </span>
-      </div>
-      <div class="d-flex flex-row w-100">
-        <div
-          class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border border-end-0">
-          <span class="text-truncate">Total</span>
-          <span class="text-danger fw-bold">{{transaction.noOfInstallments}}</span>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ng-container *ngIf="detailsPageSegment.value === '01'">
+    <div>
+      <div class="border p-2 mt-2 w-100">
+        <p class="m-0 p-0 text-danger fw-bold">
+          {{selectedDate|date:'MMMM-yyyy'}}
+          Month Info :
+        </p>
+        <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+          <span class="text-truncate">Instalment :</span>
+          <span>{{transaction.installment}} Instalment</span>
         </div>
-        <div class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border">
-          <span class="text-truncate">Paid</span>
-          <span class="text-danger fw-bold">4</span>
-          <!--<span>{{transaction?.payments?.length}}Months</span>-->
+        <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+          <span class="text-truncate">Due Date :</span>
+          <span>{{transaction?.dueDate}}</span>
         </div>
-        <div
-          class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border border-start-0">
-          <span class="text-truncate">Pending</span>
-          <span class="text-danger fw-bold">0</span>
-          <!--<span>{{transaction.notSettledEmi}}Months</span>-->
+        <div class="d-flex justify-content-between w-100 py-1 px-2 pb-0">
+          <span class="text-truncate">Paid on :</span>
+          <span>Not available</span>
         </div>
       </div>
-    </div>
+      <div class="border p-2 mt-2 w-100">
+
+        <p class="m-0 p-0 text-danger fw-bold">Over-all Info</p>
+
+        <div class="d-flex flex-column justify-content-between w-100 py-1 px-2 pb-2 border-bottom">
+          <div class="d-flex justify-content-between w-100 py-1 px-2 mt-1 border border-bottom-0">
+            <span class="text-truncate">Installments :</span>
+            <span>
+          Repeat Every
+              {{transaction.repeatInterval > 1 ? transaction.repeatInterval : ''}}
+              {{transaction.repeatOption|titlecase}}
+        </span>
+          </div>
+          <div class="d-flex flex-row w-100">
+            <div
+              class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border border-end-0">
+              <span class="text-truncate">Total</span>
+              <span class="text-danger fw-bold">{{transaction.noOfInstallments}}</span>
+            </div>
+            <div class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border">
+              <span class="text-truncate">Paid</span>
+              <span class="text-danger fw-bold">4</span>
+            </div>
+            <div
+              class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border border-start-0">
+              <span class="text-truncate">Pending</span>
+              <span class="text-danger fw-bold">0</span>
+            </div>
+          </div>
+        </div>
 
 
-    <div class="d-flex justify-content-between w-100 py-1 px-2 mt-1 border-bottom">
-      <span class="text-truncate">Start Date :</span>
-      <span>{{transaction.dates.start}}</span>
-    </div>
-    <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
-      <span class="text-truncate">End Date :</span>
-      <span>{{transaction.dates.end}}</span>
-    </div>
-    <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+        <div class="d-flex justify-content-between w-100 py-1 px-2 mt-1 border-bottom">
+          <span class="text-truncate">Start Date :</span>
+          <span>{{transaction.dates.start}}</span>
+        </div>
+        <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+          <span class="text-truncate">End Date :</span>
+          <span>{{transaction.dates.end}}</span>
+        </div>
+        <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
 
-      <span class="text-truncate">Category :</span>
-      <!--<span>{{getLabelByList(transaction.category, expensesCategories)}}</span>-->
+          <span class="text-truncate">Category :</span>
+          <!--<span>{{getLabelByList(transaction.category, expensesCategories)}}</span>-->
+        </div>
+        <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+          <span class="text-truncate">Payee :</span>
+          <!--<span>{{getLabelByList(transaction.payee, payees)}}</span>-->
+        </div>
+        <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+          <span class="text-truncate">Spending For :</span>
+          <!--<span>{{getLabelByList(transaction.for, expensesFor)}}</span>-->
+        </div>
+        <div class="d-flex justify-content-between w-100 py-1 px-2 pb-0">
+          <span class="text-truncate">Tax Savings :</span>
+          <!--<span>{{getLabelByList(transaction.taxDeductionSection, taxDeductionSections)}}</span>-->
+        </div>
+      </div>
     </div>
-    <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
-      <span class="text-truncate">Payee :</span>
-      <!--<span>{{getLabelByList(transaction.payee, payees)}}</span>-->
+  </ng-container>
+  <ng-container *ngIf="detailsPageSegment.value === '02'">
+    <div>
+      <ion-list>
+        <ion-item-sliding *ngFor="let payment of transaction.payments" lines="full">
+          <ion-item-options side="start">
+            <ion-item-option *ngIf="!payment.isPaid" color="success" style="width: 100px;">
+              <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+                <span class="d-block text-white w-100 text-center" style="font-size: 10px;">Mark as</span>
+                <ion-label class="fw-bold">Paid</ion-label>
+              </div>
+            </ion-item-option>
+            <ion-item-option *ngIf="payment.isPaid" color="danger" style="width: 100px;margin-right: 15px;">
+              <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+                <span class="d-block text-white w-100 text-center" style="font-size: 10px;">Mark as</span>
+                <ion-label class="fw-bold">Not Paid</ion-label>
+              </div>
+            </ion-item-option>
+          </ion-item-options>
+          <ion-item lines="full">
+            <ion-avatar slot="start">
+              <div [class.border-danger]="!payment.isPaid"
+                   [class.border-success]="payment.isPaid"
+                   [class.text-danger]="!payment.isPaid"
+                   [class.text-success]="payment.isPaid"
+                   class="w-100 h-100 rounded-circle border d-flex justify-content-center align-items-center">
+                {{payment.instalment}}
+              </div>
+            </ion-avatar>
+            <ion-label>
+              <h2 class="d-flex justify-content-between align-items-center">
+                {{payment.dueDate}}
+                <ion-badge [color]="payment.isPaid ? 'success' : 'danger'">
+                  {{payment.isPaid ? 'Paid' : 'Pending'}}
+                </ion-badge>
+              </h2>
+            </ion-label>
+          </ion-item>
+        </ion-item-sliding>
+      </ion-list>
     </div>
-    <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
-      <span class="text-truncate">Spending For :</span>
-      <!--<span>{{getLabelByList(transaction.for, expensesFor)}}</span>-->
-    </div>
-    <div class="d-flex justify-content-between w-100 py-1 px-2 pb-0">
-      <span class="text-truncate">Tax Savings :</span>
-      <!--<span>{{getLabelByList(transaction.taxDeductionSection, taxDeductionSections)}}</span>-->
-    </div>
-  </div>
-  <!--</mat-card>-->
-
+  </ng-container>
 </ion-content>
 
 <ion-footer>
-  <ion-tab-bar>
-    <ion-button (click)="modalController.dismiss()" class="ms-auto" color="dark">Close</ion-button>
-  </ion-tab-bar>
+  <ion-toolbar class="border-top">
+    <ion-segment #detailsPageSegment value="01">
+      <ion-segment-button value="01">
+        <ion-label>Basic Detail</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="02">
+        <ion-label>All Instalments</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-footer>
