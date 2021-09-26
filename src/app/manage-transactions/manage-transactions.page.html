@@ -57,11 +57,14 @@
                   style="--min-height: 80px;">
           <ion-label slot="start">
             <h2 class="mb-2 fw-bold">{{transaction.name}} ({{transaction.installment}})</h2>
-            <ion-badge class="fw-normal" color="secondary">Due On : {{transaction.dueDate}}</ion-badge>
+            <ion-badge class="fw-normal" color="primary">
+              Due : {{transaction.dueDate|date:'dd-MMM-yyyy'}}
+            </ion-badge>
           </ion-label>
           <ion-label class="pe-2" slot="end">
             <h4 class="fw-bold mb-2">{{transaction.amount | currency : 'INR'}}</h4>
-            <ion-badge class="fw-normal" color="danger">{{transaction?.isPaid ? '' : 'Pending'}}</ion-badge>
+            <ion-badge [color]="transaction.isPaid ? 'success' : 'danger'" class="fw-normal"
+                       style="width: 56px;">{{transaction.isPaid ? 'Paid' : 'Pending'}}</ion-badge>
           </ion-label>
         </ion-item>
 
