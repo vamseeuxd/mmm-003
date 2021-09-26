@@ -91,7 +91,7 @@ export class TransactionService {
   private dataLoaderId: number;
   private readonly dateFormat = 'DD-MMM-yyyy';
   private payments$: Observable<IPayment[]> = this.firestore.collection<IPayment>('payments').valueChanges({idField: 'id'});
-  private transactions$: Observable<ITransaction[]> = combineLatest([
+  private transactions$: Observable<{ date: string; transactions: ITransaction[] }[]> = combineLatest([
     this.selectedDate$,
     this.selectedTransactionType$,
     this.loader.auth.user
@@ -169,9 +169,9 @@ export class TransactionService {
 
             }
           ),
-          tap(async (a) => {
+          switchMap(value => {
             const finalObj = {};
-            a.forEach((transaction) => {
+            value.forEach((transaction) => {
               const date = moment(transaction.dueDate).format('DD-MMM-yyyy');
               if (finalObj[date]) {
                 finalObj[date].push(transaction);
@@ -179,7 +179,6 @@ export class TransactionService {
                 finalObj[date] = [transaction];
               }
             });
-            console.log(finalObj);
             const finalList = [];
             Object.keys(finalObj).forEach(key => {
               finalList.push({
@@ -187,7 +186,9 @@ export class TransactionService {
                 transactions: finalObj[key],
               });
             });
-            console.log(finalList);
+            return of(finalList);
+          }),
+          tap(async (a) => {
             await this.loader.hide(this.dataLoaderId);
           })
         );
@@ -211,7 +212,7 @@ export class TransactionService {
     return this.selectedTransactionType$;
   }
 
-  getTransactions(): Observable<ITransaction[]> {
+  getTransactions(): Observable<{ date: string; transactions: ITransaction[] }[]> {
     return this.transactions$;
   }
 

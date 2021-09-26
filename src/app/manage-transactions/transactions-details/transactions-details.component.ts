@@ -30,9 +30,11 @@ export class TransactionsDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.transactionService.getTransactions().subscribe(value => {
       value.forEach(value1 => {
-        if (this.transaction.id === value1.id && this.transaction.dueDate === value1.dueDate) {
-          this.transaction = value1;
-        }
+        value1.transactions.forEach(value2 => {
+          if (this.transaction.id === value2.id && this.transaction.dueDate === value2.dueDate) {
+            this.transaction = value2;
+          }
+        });
       });
     });
   }
