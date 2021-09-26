@@ -16,8 +16,8 @@ export class TransactionsDetailsComponent implements OnInit, OnDestroy {
   @Input() selectedDate: Date;
   defaultDate: Date;
   dialogRef: MatDialogRef<any>;
-  private selectedPayment: IPayment;
-  private subscription: Subscription;
+  selectedPayment: IPayment;
+  subscription: Subscription;
 
   constructor(
     public modalController: ModalController,
