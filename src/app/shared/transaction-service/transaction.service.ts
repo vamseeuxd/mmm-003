@@ -164,12 +164,30 @@ export class TransactionService {
                     });
                 });
               return of(
-                transactionsToReturn
+                transactionsToReturn.sort((a, b) => (a.dueDate - b.dueDate))
               );
 
             }
           ),
-          tap(async () => {
+          tap(async (a) => {
+            const finalObj = {};
+            a.forEach((transaction) => {
+              const date = moment(transaction.dueDate).format('DD-MMM-yyyy');
+              if (finalObj[date]) {
+                finalObj[date].push(transaction);
+              } else {
+                finalObj[date] = [transaction];
+              }
+            });
+            console.log(finalObj);
+            const finalList = [];
+            Object.keys(finalObj).forEach(key => {
+              finalList.push({
+                date: key,
+                transactions: finalObj[key],
+              });
+            });
+            console.log(finalList);
             await this.loader.hide(this.dataLoaderId);
           })
         );
@@ -300,7 +318,7 @@ export class TransactionService {
       return data.dueDate.isBetween(startDate, endDate, undefined, '[]');
     }).map(
       data => {
-        const paymentDoc = transaction.payments.find(d => (d.dueDate === data.dueDate.toDate().getTime()));
+        const paymentDoc = transaction.payments ? transaction.payments.find(d => (d.dueDate === data.dueDate.toDate().getTime())) : null;
         return ({
           instalment: data.instalment,
           id: paymentDoc ? paymentDoc.id : null,

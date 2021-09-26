@@ -20,8 +20,8 @@ export class ManageTransactionsPage implements OnInit {
 
   dialogRef: MatDialogRef<any>;
   defaultDate: Date;
-  private selectedPayment: IPayment;
-  private selectedTransaction: ITransaction;
+  selectedPayment: IPayment;
+  selectedTransaction: ITransaction;
 
   constructor(
     public modalController: ModalController,
