@@ -20,6 +20,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {DateNavigatorComponent} from '../shared/date-navigator/date-navigator.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
+import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import {MatCardModule} from '@angular/material/card';
   declarations: [
     ManageTransactionsPage,
     DateNavigatorComponent,
+    TransactionsDetailsComponent,
     TransactionsFormComponent
   ],
 })

@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
-import {TRANSACTION_TYPE, TransactionService} from '../shared/transaction-service/transaction.service';
+import {ITransaction, TRANSACTION_TYPE, TransactionService} from '../shared/transaction-service/transaction.service';
+import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
 
 @Component({
   selector: 'app-folder',
@@ -30,5 +31,19 @@ export class ManageTransactionsPage implements OnInit {
 
   onTypeSegmentChange($event: any) {
     this.transactionService.updateSelectedTransactionType($event.detail.value ? $event.detail.value : 'expenses');
+  }
+
+  async showMoreDetail(transaction: ITransaction, selectedDate: Date) {
+
+    const modal = await this.modalController.create({
+      component: TransactionsDetailsComponent,
+      backdropDismiss: false,
+      componentProps: {
+        transaction,
+        selectedDate,
+      }
+    });
+    return await modal.present();
+
   }
 }
