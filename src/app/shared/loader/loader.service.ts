@@ -36,7 +36,6 @@ export class LoaderService {
       this.presentLoading().then(() => {
       });
     }
-    console.log('loader.show', id);
     return id;
   }
 

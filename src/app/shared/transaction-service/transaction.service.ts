@@ -15,14 +15,6 @@ export interface IDates {
   end: string;
 }
 
-/*
-dueDate: 1631298600000
-id: "4JBRcYGWpAaX2EWfC3xz"
-paidOn: 1631298600000
-transactionId: "UDIVsLDfyqkPHZqSKZO6"
-uid: "102322390323163970849"
-*/
-
 export interface IPaymentDoc {
   dueDate: number;
   id: string;
