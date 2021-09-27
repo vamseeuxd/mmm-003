@@ -119,13 +119,8 @@ export class TransactionService {
                   // @ts-ignore
                   source.forEach(d => {
                     d.payments = obj[d.id];
-                    delete obj[d.id];
                   });
                 });
-                /*value.source.forEach(d => {
-                  d.payments = value[d.id];
-                  delete value[d.id];
-                });*/
                 return of(source);
               }
             ));
