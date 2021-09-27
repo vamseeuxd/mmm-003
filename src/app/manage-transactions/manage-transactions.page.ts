@@ -129,7 +129,6 @@ export class ManageTransactionsPage implements OnInit {
   }
 
   hideHeaderClick($event: any) {
-    console.log($event.detail.deltaY > 0);
     this.hideHeader = $event.detail.deltaY > 0;
   }
 }
