@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Manage Categories</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button style="opacity: 0;pointer-events: none"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment #typeSegmentRef value="expenses">
+      <ion-segment-button value="expenses">
+        <ion-label>Expenses</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="income">
+        <ion-label>Incomes</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <form #newItemForm="ngForm" class="w-100">
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>{{typeSegmentRef.value|titlecase}} Category Name</mat-label>
+          <input autocomplete="off" matInput maxlength="30" minlength="3" name="name"
+                 ngModel placeholder="{{typeSegmentRef.value|titlecase}} Category Name" required type="text">
+          <mat-hint align="start">required 3 to 30 characters</mat-hint>
+          <button [disabled]="newItemForm.invalid" mat-icon-button matSuffix>
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>
