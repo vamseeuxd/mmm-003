@@ -21,6 +21,7 @@ import {DateNavigatorComponent} from '../shared/date-navigator/date-navigator.co
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
 import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import {TransactionsDetailsComponent} from './transactions-details/transactions-
     MatDialogModule,
     MatTabsModule,
     MatExpansionModule,
+    SharedModule,
     MatCardModule,
   ],
   declarations: [

@@ -11,6 +11,7 @@ export class DateNavigatorComponent implements OnInit {
   @Input() selectedDate = new Date(window.getServerTime());
   @Output() selectedDateChange: EventEmitter<Date> = new EventEmitter<Date>();
   readonly todayDate = new Date(window.getServerTime());
+  timeOutRef: any;
 
   constructor() {
   }
@@ -37,7 +38,14 @@ export class DateNavigatorComponent implements OnInit {
     this.selectedDate = date.toDate();
     this.selectedDate.setDate(1);
     this.selectedDate.setHours(0, 0, 0, 0);
-    this.selectedDateChange.emit(this.selectedDate);
+    if (this.timeOutRef) {
+      clearTimeout(this.timeOutRef);
+    }
+    this.timeOutRef = setTimeout(() => {
+      clearTimeout(this.timeOutRef);
+      this.timeOutRef = null;
+      this.selectedDateChange.emit(this.selectedDate);
+    }, 1000);
   }
 
   chosenMonthHandler($event: Date, picker: MatDatepicker<any>) {
