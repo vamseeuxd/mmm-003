@@ -27,7 +27,7 @@ import {SharedModule} from './shared/shared.module';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
     AngularFireAuthModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     BrowserAnimationsModule,
     MatSnackBarModule,
     NgbModule,

@@ -12,7 +12,8 @@ import firebase from 'firebase/compat/app';
 export class AppComponent {
   readonly isProduction = environment.production;
   public appPages = [
-    {title: 'Manage-Transactions', url: '/manage-transactions', icon: 'mail'}
+    {title: 'Manage Transactions', url: '/manage-transactions', icon: 'mail'},
+    {title: 'Manage Categories', url: '/manage-categories', icon: 'mail'},
   ];
 
   constructor(

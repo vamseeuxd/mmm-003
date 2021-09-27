@@ -10,6 +10,7 @@
     "build": "ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
+    "page": "ionic g page manage-categories",
     "emulator": "firebase emulators:start",
     "firestore:get:indexes": "firebase firestore:indexes > firestore.indexes.json",
     "deploy": "firebase deploy --only hosting",

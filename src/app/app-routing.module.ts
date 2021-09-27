@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: 'manage-transactions',
     loadChildren: () => import('./manage-transactions/manage-transactions-page.module').then(m => m.ManageTransactionsPageModule)
+  },
+  {
+    path: 'manage-categories',
+    loadChildren: () => import('./manage-categories/manage-categories.module').then( m => m.ManageCategoriesPageModule)
   }
 ];
 

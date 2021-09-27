@@ -36,6 +36,9 @@ export class LoaderService {
       this.presentLoading().then(() => {
       });
     }
+    setTimeout(() => {
+      this.hide(id);
+    }, 5000);
     return id;
   }
 
