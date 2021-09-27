@@ -33,8 +33,10 @@ export class LoaderService {
     this.loaderRequestsList.push(id);
     this.loaderSubject.next(this.loaderRequestsList.length > 0);
     if (this.loaderRequestsList.length > 0) {
-      this.presentLoading().then(r => console.log(r));
+      this.presentLoading().then(() => {
+      });
     }
+    console.log('loader.show', id);
     return id;
   }
 
@@ -43,7 +45,8 @@ export class LoaderService {
     this.loaderRequestsList.push(id);
     this.loaderSubject.next(this.loaderRequestsList.length > 0);
     if (this.loaderRequestsList.length > 0) {
-      this.presentLoading().then(r => console.log(r));
+      this.presentLoading().then(() => {
+      });
     }
     return of(id);
   }

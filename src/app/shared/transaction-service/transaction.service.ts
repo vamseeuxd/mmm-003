@@ -3,9 +3,8 @@ import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {LoaderService} from '../loader/loader.service';
-import {switchMap, tap} from 'rxjs/operators';
+import {shareReplay, switchMap, tap} from 'rxjs/operators';
 import * as moment from 'moment';
-import {DurationInputArg1, DurationInputArg2} from 'moment';
 import {ordinalSuffixOf} from '../utils/utils';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -90,7 +89,6 @@ export class TransactionService {
   private selectedDate$: Observable<Date> = this.selectedDateAction.asObservable();
   private dataLoaderId: number;
   private readonly dateFormat = 'DD-MMM-yyyy';
-  private payments$: Observable<IPayment[]> = this.firestore.collection<IPayment>('payments').valueChanges({idField: 'id'});
   private transactions$: Observable<{ date: string; transactions: ITransaction[] }[]> = combineLatest([
     this.selectedDate$,
     this.selectedTransactionType$,
@@ -157,9 +155,7 @@ export class TransactionService {
                           transaction,
                           option.instalment,
                           this.loader.user.providerData[0].uid,
-                          option.dueDate,
-                          selectedDate,
-                          lastDate)
+                          option.dueDate)
                       );
                     });
                 });
@@ -188,9 +184,10 @@ export class TransactionService {
             });
             return of(finalList);
           }),
-          tap(async (a) => {
+          shareReplay(),
+          tap(async () => {
             await this.loader.hide(this.dataLoaderId);
-          })
+          }),
         );
       }
     )
@@ -289,14 +286,6 @@ export class TransactionService {
     }));
   }
 
-  private getDueDate(transaction: ITransactionDoc, index: number): moment.Moment {
-    const amount: DurationInputArg1 = index * transaction.repeatInterval;
-    const unit: DurationInputArg2 = transaction.repeatOption as DurationInputArg2;
-    const returnValue = moment(transaction.dates.start).add(amount, unit);
-    returnValue.add(amount, unit);
-    return returnValue;
-  }
-
   private getDates(transaction: ITransactionDoc): IDates {
     return {
       start: moment(transaction.dates.start).format(this.dateFormat),
@@ -304,40 +293,39 @@ export class TransactionService {
     };
   }
 
-  private getPayments(transaction: ITransactionDoc, selectedDate: Date, lastDate: Date): IPayment[] {
-    return Array.from(Array(transaction.noOfInstallments).keys()).map((index) => {
-      const dueDate = moment(transaction.dates.start);
-      // @ts-ignore
-      dueDate.add((index * transaction.repeatInterval), transaction.repeatOption);
-      return ({
-        instalment: ordinalSuffixOf(index + 1),
-        dueDate
-      });
-    }).filter(data => {
-      const startDate = moment(selectedDate.getTime());
-      const endDate = moment(lastDate.getTime());
-      return data.dueDate.isBetween(startDate, endDate, undefined, '[]');
-    }).map(
-      data => {
-        const paymentDoc = transaction.payments ? transaction.payments.find(d => (d.dueDate === data.dueDate.toDate().getTime())) : null;
+  private getPayments(transaction: ITransactionDoc): IPayment[] {
+    return Array.from(Array(transaction.noOfInstallments).keys())
+      .sort((a, b) => (a - b))
+      .map((index) => {
+        const dueDate = moment(transaction.dates.start);
+        // @ts-ignore
+        dueDate.add((index * transaction.repeatInterval), transaction.repeatOption);
         return ({
-          instalment: data.instalment,
-          id: paymentDoc ? paymentDoc.id : null,
-          dueDateString: data.dueDate.format(this.dateFormat),
-          dueDate: data.dueDate.toDate().getTime(),
-          paidOn: paymentDoc ? paymentDoc.paidOn : null,
-          paymentDoc,
-          transactionId: transaction.id,
-          type: transaction.type,
-          isPaid: transaction.payments && transaction.payments.map(d => d.dueDate).includes(data.dueDate.toDate().getTime()),
+          instalment: ordinalSuffixOf(index + 1),
+          dueDate
         });
-      }
-    );
+      })
+      .map(
+        data => {
+          const paymentDoc = transaction.payments ? transaction.payments.find(d => (d.dueDate === data.dueDate.toDate().getTime())) : null;
+          return ({
+            instalment: data.instalment,
+            id: paymentDoc ? paymentDoc.id : null,
+            dueDateString: data.dueDate.format(this.dateFormat),
+            dueDate: data.dueDate.toDate().getTime(),
+            paidOn: paymentDoc ? paymentDoc.paidOn : null,
+            paymentDoc,
+            transactionId: transaction.id,
+            type: transaction.type,
+            isPaid: transaction.payments && transaction.payments.map(d => d.dueDate).includes(data.dueDate.toDate().getTime()),
+          });
+        }
+      );
   }
 
   // eslint-disable-next-line max-len
-  private getTransaction(fireStoreDoc: ITransactionDoc, installment: string, uid: string, dueDate: number = null, selectedDate: Date, lastDate: Date): ITransaction {
-    const payments = this.getPayments(fireStoreDoc, selectedDate, lastDate);
+  private getTransaction(fireStoreDoc: ITransactionDoc, installment: string, uid: string, dueDate: number = null): ITransaction {
+    const payments = this.getPayments(fireStoreDoc);
     return {
       amount: fireStoreDoc.amount,
       id: fireStoreDoc.id,
