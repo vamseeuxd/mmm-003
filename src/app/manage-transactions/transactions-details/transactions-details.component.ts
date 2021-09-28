@@ -68,4 +68,8 @@ export class TransactionsDetailsComponent implements OnInit, OnDestroy {
         });
         await alert.present();
     }
+
+    getNoOfPayment(payments: IPayment[], isPaid: boolean) {
+        return payments.filter(p => (p.isPaid === isPaid)).length;
+    }
 }
