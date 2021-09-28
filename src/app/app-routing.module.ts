@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'manage-categories',
-    loadChildren: () => import('./manage-categories/manage-categories.module').then( m => m.ManageCategoriesPageModule)
+    loadChildren: () => import('./manage-categories/manage-categories.module').then(m => m.ManageCategoriesPageModule)
   }
 ];
 

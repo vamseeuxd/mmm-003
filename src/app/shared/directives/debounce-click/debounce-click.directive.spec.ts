@@ -1,4 +1,4 @@
-import { DebounceClickDirective } from './debounce-click.directive';
+import {DebounceClickDirective} from './debounce-click.directive';
 
 describe('DebounceClickDirective', () => {
   it('should create an instance', () => {

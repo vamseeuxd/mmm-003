@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { ManageCategoriesPage } from './manage-categories.page';
+import {ManageCategoriesPage} from './manage-categories.page';
 
 describe('ManageCategoriesPage', () => {
   let component: ManageCategoriesPage;
@@ -9,7 +9,7 @@ describe('ManageCategoriesPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageCategoriesPage ],
+      declarations: [ManageCategoriesPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

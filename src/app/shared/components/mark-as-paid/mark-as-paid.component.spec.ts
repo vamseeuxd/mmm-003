@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { MarkAsPaidComponent } from './mark-as-paid.component';
+import {MarkAsPaidComponent} from './mark-as-paid.component';
 
 describe('MarkAsPaidComponent', () => {
   let component: MarkAsPaidComponent;
@@ -9,7 +9,7 @@ describe('MarkAsPaidComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MarkAsPaidComponent ],
+      declarations: [MarkAsPaidComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
