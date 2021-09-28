@@ -4,7 +4,11 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {NgForm} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import * as moment from 'moment';
-import {ITransaction, ITransactionDoc, RepeatOption} from '../../shared/transaction-service/transaction.service';
+import {
+  ITransaction,
+  ITransactionDoc,
+  RepeatOption
+} from '../../shared/services/transaction-service/transaction.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({

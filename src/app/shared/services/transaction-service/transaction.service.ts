@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
-import {LoaderService} from '../services/loader/loader.service';
+import {LoaderService} from '../loader/loader.service';
 import {shareReplay, switchMap, tap} from 'rxjs/operators';
 import * as moment from 'moment';
-import {ordinalSuffixOf} from '../utils/utils';
+import {ordinalSuffixOf} from '../../utils/utils';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export type TRANSACTION_TYPE = 'expenses' | 'income';

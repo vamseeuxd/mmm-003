@@ -6,7 +6,7 @@ import {
   ITransaction,
   TRANSACTION_TYPE,
   TransactionService
-} from '../shared/transaction-service/transaction.service';
+} from '../shared/services/transaction-service/transaction.service';
 import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {NgForm} from '@angular/forms';
