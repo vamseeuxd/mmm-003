@@ -15,12 +15,12 @@ export class MarkAsPaidComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<MarkAsPaidComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { selectedPayment: IPayment; defaultDate: Date; transaction: ITransaction },
+    @Inject(MAT_DIALOG_DATA) public data: { selectedPayment: IPayment; transaction: ITransaction },
     public dialog: MatDialog,
     public transactionService: TransactionService,
   ) {
     this.selectedPayment = data.selectedPayment;
-    this.defaultDate = data.defaultDate;
+    this.defaultDate = new Date(data.selectedPayment.dueDate);
     this.transaction = data.transaction;
   }
 

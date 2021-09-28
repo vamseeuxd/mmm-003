@@ -55,7 +55,6 @@ export class TransactionsDetailsComponent implements OnInit, OnDestroy {
             {
                 data: {
                     selectedPayment: payment,
-                    defaultDate: new Date(payment.dueDate),
                     transaction: this.transaction
                 }
             });
