@@ -3,7 +3,7 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
 import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
-import {LoaderService} from './app/shared/loader/loader.service';
+import {LoaderService} from './app/shared/services/loader/loader.service';
 import firebase from 'firebase/compat/app';
 
 declare global {

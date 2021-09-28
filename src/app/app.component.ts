@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LoaderService} from './shared/loader/loader.service';
+import {LoaderService} from './shared/services/loader/loader.service';
 import {environment} from '../environments/environment';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
