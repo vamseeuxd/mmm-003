@@ -38,8 +38,8 @@ export class LoaderService {
       });
     }
     if (autoHide) {
-      setTimeout(() => {
-        this.hide(id);
+      setTimeout(async () => {
+        await this.hide(id);
       }, 5000);
     }
     return id;
