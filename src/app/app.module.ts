@@ -15,7 +15,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatButtonModule} from '@angular/material/button';
-import {SharedModule} from './shared/shared.module';
+import {SharedModule} from './shared.module';
 
 @NgModule({
   declarations: [AppComponent,],

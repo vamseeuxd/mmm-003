@@ -9,7 +9,7 @@ import {ManageTransactionsRoutingModule} from './manage-transactions-routing.mod
 import {ManageTransactionsPage} from './manage-transactions.page';
 import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
 import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
-import {SharedModule} from '../shared/shared.module';
+import {SharedModule} from '../shared.module';
 
 @NgModule({
   imports: [
