@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AlertController, ModalController} from '@ionic/angular';
 import {
     IPayment,
@@ -7,8 +7,8 @@ import {
 } from '../../shared/services/transaction-service/transaction.service';
 import * as moment from 'moment';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {NgForm} from '@angular/forms';
 import {Subscription} from 'rxjs';
+import {MarkAsPaidComponent} from '../../shared/components/mark-as-paid/mark-as-paid.component';
 
 @Component({
     selector: 'app-transactions-details',
@@ -18,9 +18,7 @@ import {Subscription} from 'rxjs';
 export class TransactionsDetailsComponent implements OnInit, OnDestroy {
     @Input() transaction: ITransaction;
     @Input() selectedDate: Date;
-    defaultDate: Date;
     dialogRef: MatDialogRef<any>;
-    selectedPayment: IPayment;
     subscription: Subscription;
 
     constructor(
@@ -51,19 +49,16 @@ export class TransactionsDetailsComponent implements OnInit, OnDestroy {
         return moment(dueDate).format('DD-MMMM-yyyy');
     }
 
-    markAsPaid(markAsPaidTempRef: TemplateRef<any>, payment: IPayment) {
-        this.selectedPayment = payment;
-        this.defaultDate = new Date(payment.dueDate);
-        this.dialogRef = this.dialog.open(markAsPaidTempRef);
-    }
-
-    async addPayment(sampleForm: NgForm) {
-        // dialogRef
-        try {
-            await this.transactionService.addPayment(new Date(this.selectedPayment.dueDate), this.transaction.id, sampleForm.value.paidOn);
-            this.dialogRef.close();
-        } catch (e) {
-        }
+    markAsPaid(payment: IPayment) {
+        this.dialogRef = this.dialog.open(
+            MarkAsPaidComponent,
+            {
+                data: {
+                    selectedPayment: payment,
+                    defaultDate: new Date(payment.dueDate),
+                    transaction: this.transaction
+                }
+            });
     }
 
     async makeAsNotPaid(payment: IPayment) {

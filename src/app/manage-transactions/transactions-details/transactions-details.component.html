@@ -98,7 +98,7 @@
     <ion-list>
       <ion-item-sliding #transactionSliding *ngFor="let payment of transaction.payments" lines="full">
         <ion-item-options side="start">
-          <ion-item-option (click)="markAsPaid(markAsPaidTempRef,payment);transactionSliding.close();"
+          <ion-item-option (click)="markAsPaid(payment);transactionSliding.close();"
                            *ngIf="!payment.isPaid" color="success"
                            style="width: 100px;">
             <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
@@ -158,29 +158,3 @@
   </ion-toolbar>
 </ion-footer>
 
-<ng-template #markAsPaidTempRef>
-  <h1 mat-dialog-title>Mark {{selectedPayment.instalment}} instalment as Paid</h1>
-  <form #sampleForm="ngForm" mat-dialog-content>
-    <h6 class="mb-0">Due Date: {{selectedPayment.dueDateString}}</h6>
-    <button (click)="picker.open()"
-            class="py-2 fs-6 my-3 text-truncate w-100 d-flex justify-content-center align-items-center" color="primary"
-            mat-raised-button style="font-size: 0.7rem">
-      Paid on &nbsp;
-      {{sampleForm.value.paidOn|date:'dd-MMMM-yyyy'|uppercase}}
-      <i class="fa fa-calendar ms-2"></i>
-      <input [matDatepicker]="picker" [ngModel]="defaultDate" class="d-none" matInput name="paidOn"
-             placeholder="MM/DD/YYYY" required>
-    </button>
-    <mat-datepicker #picker touchUi></mat-datepicker>
-  </form>
-  <div mat-dialog-actions>
-    <div class="d-flex w-100 flex-row justify-content-between">
-      <div class="col-5">
-        <button class="w-100" mat-dialog-close mat-raised-button>No Thanks</button>
-      </div>
-      <div class="col-5">
-        <button (click)="addPayment(sampleForm)" class="w-100" color="primary" mat-raised-button>Mark as Paid</button>
-      </div>
-    </div>
-  </div>
-</ng-template>

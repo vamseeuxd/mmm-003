@@ -13,12 +13,15 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
+import {MarkAsPaidComponent} from './shared/components/mark-as-paid/mark-as-paid.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     DebounceClickDirective,
     DateNavigatorComponent,
+    MarkAsPaidComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +37,7 @@ import {MatCardModule} from '@angular/material/card';
     MatTabsModule,
     MatExpansionModule,
     MatCardModule,
+    FormsModule,
   ],
   exports: [
     DebounceClickDirective,
@@ -50,6 +54,7 @@ import {MatCardModule} from '@angular/material/card';
     MatTabsModule,
     MatExpansionModule,
     MatCardModule,
+    MarkAsPaidComponent,
   ]
 })
 export class SharedModule {
