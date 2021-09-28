@@ -27,7 +27,7 @@
         </div>
         <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
           <span class="text-truncate">Due Date :</span>
-          <span>{{transaction?.dueDate}}</span>
+          <span>{{transaction?.dueDate|date:'dd-MMMM-yyyy'}}</span>
         </div>
         <div class="d-flex justify-content-between w-100 py-1 px-2 pb-0">
           <span class="text-truncate">Paid on :</span>
@@ -128,9 +128,14 @@
             <h2 class="d-flex justify-content-between align-items-center">
               <!--{{payment.dueDate}}-->
               {{getFormattedDate(payment.dueDate)}}
-              <ion-badge [color]="payment.isPaid ? 'success' : 'danger'" class="fw-normal">
+              <!--<ion-badge [color]="payment.isPaid ? 'success' : 'danger'" class="fw-normal">
                 {{payment.isPaid ? 'Paid' : 'Pending'}}
-              </ion-badge>
+              </ion-badge>-->
+              <span [class.bg-danger]="!payment.isPaid" [class.bg-success]="payment.isPaid"
+                    class="badge rounded-pill fw-normal">
+                <ng-container *ngIf="payment.isPaid">Paid: {{payment.paidOn|date:'dd-MMM-yyyy'}}</ng-container>
+                <ng-container *ngIf="!payment.isPaid">Pending</ng-container>
+              </span>
             </h2>
           </ion-label>
         </ion-item>

@@ -68,15 +68,19 @@
               <ion-item (click)="showMoreDetail(transaction, selectedDate)" [detail]="true" lines="full"
                         style="--min-height: 80px;">
                 <ion-label slot="start">
-                  <h2 class="mb-2 fw-bold">{{transaction.name}} ({{transaction.installment}})</h2>
-                  <ion-badge class="fw-normal" color="primary">
+                  <h2 class="mb-2">{{transaction.name}} ({{transaction.installment}})</h2>
+                  <span class="badge bg-warning text-dark rounded-pill fw-normal">
                     Due : {{transaction.dueDate|date:'dd-MMM-yyyy'}}
-                  </ion-badge>
+                  </span>
                 </ion-label>
                 <ion-label class="pe-2" slot="end">
-                  <h4 class="fw-bold mb-2">{{transaction.amount | currency : 'INR'}}</h4>
-                  <ion-badge [color]="transaction.isPaid ? 'success' : 'danger'" class="fw-normal"
-                             style="width: 56px;">{{transaction.isPaid ? 'Paid' : 'Pending'}}</ion-badge>
+                  <h4 class="mb-2">{{transaction.amount | currency : 'INR'}}</h4>
+                  <span [class.bg-danger]="!transaction.isPaid" [class.bg-success]="transaction.isPaid"
+                        class="badge rounded-pill fw-normal">
+                    <ng-container
+                      *ngIf="transaction.isPaid">Paid: {{transaction.payment.paidOn|date:'dd-MMM-yyyy'}}</ng-container>
+                    <ng-container *ngIf="!transaction.isPaid">Pending</ng-container>
+                  </span>
                 </ion-label>
               </ion-item>
 

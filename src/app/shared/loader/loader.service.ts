@@ -28,17 +28,20 @@ export class LoaderService {
     });
   }
 
-  show(): number {
+  show(autoHide = true): number {
     const id = new Date().getTime();
     this.loaderRequestsList.push(id);
     this.loaderSubject.next(this.loaderRequestsList.length > 0);
     if (this.loaderRequestsList.length > 0) {
       this.presentLoading().then(() => {
+        document.body.append(document.querySelector('ion-loading'));
       });
     }
-    setTimeout(() => {
-      this.hide(id);
-    }, 5000);
+    if (autoHide) {
+      setTimeout(() => {
+        this.hide(id);
+      }, 5000);
+    }
     return id;
   }
 
