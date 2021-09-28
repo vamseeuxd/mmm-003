@@ -6,7 +6,7 @@ import {
     TransactionService
 } from '../../shared/services/transaction-service/transaction.service';
 import * as moment from 'moment';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {Subscription} from 'rxjs';
 import {MarkAsPaidComponent} from '../../shared/components/mark-as-paid/mark-as-paid.component';
 
@@ -18,7 +18,6 @@ import {MarkAsPaidComponent} from '../../shared/components/mark-as-paid/mark-as-
 export class TransactionsDetailsComponent implements OnInit, OnDestroy {
     @Input() transaction: ITransaction;
     @Input() selectedDate: Date;
-    dialogRef: MatDialogRef<any>;
     subscription: Subscription;
 
     constructor(
@@ -49,15 +48,8 @@ export class TransactionsDetailsComponent implements OnInit, OnDestroy {
         return moment(dueDate).format('DD-MMMM-yyyy');
     }
 
-    markAsPaid(payment: IPayment) {
-        this.dialogRef = this.dialog.open(
-            MarkAsPaidComponent,
-            {
-                data: {
-                    selectedPayment: payment,
-                    transaction: this.transaction
-                }
-            });
+    markAsPaid(selectedPayment: IPayment) {
+        this.dialog.open(MarkAsPaidComponent, {data: {selectedPayment, transaction: this.transaction}});
     }
 
     async makeAsNotPaid(payment: IPayment) {

@@ -47,7 +47,7 @@
             <ion-item-sliding #transactionSliding *ngFor="let transaction of group.transactions">
               <ion-item-options side="start">
                 <ion-item-option
-                  (click)="markAsPaid(markAsPaidTempRef,transaction.payment,transaction);transactionSliding.close();"
+                  (click)="markAsPaid(transaction.payment,transaction);transactionSliding.close();"
                   *ngIf="!transaction.isPaid" color="success" style="width: 100px;">
                   <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
                     <span class="d-block text-white w-100 text-center" style="font-size: 10px;">Mark as</span>
@@ -129,7 +129,7 @@
   </ng-container>
 </ng-container>
 
-<ng-template #markAsPaidTempRef>
+<!--<ng-template #markAsPaidTempRef>
   <h1 mat-dialog-title>Mark as Paid</h1>
   <form #sampleForm="ngForm" mat-dialog-content>
     <p>Mark {{selectedPayment.instalment}} instalment ({{selectedPayment.dueDateString}}) as Paid
@@ -140,7 +140,7 @@
       <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
       <mat-datepicker #picker touchUi></mat-datepicker>
     </mat-form-field>
-    <!--<pre>{{selectedPayment|json}}</pre>-->
+    &lt;!&ndash;<pre>{{selectedPayment|json}}</pre>&ndash;&gt;
   </form>
   <div mat-dialog-actions>
     <div class="d-flex w-100 flex-row justify-content-between">
@@ -152,4 +152,4 @@
       </div>
     </div>
   </div>
-</ng-template>
+</ng-template>-->

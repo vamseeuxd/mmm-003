@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AlertController, IonItemSliding, ModalController} from '@ionic/angular';
 import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
 import {
@@ -8,8 +8,8 @@ import {
   TransactionService
 } from '../shared/services/transaction-service/transaction.service';
 import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {NgForm} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {MarkAsPaidComponent} from '../shared/components/mark-as-paid/mark-as-paid.component';
 
 @Component({
   selector: 'app-folder',
@@ -18,10 +18,6 @@ import {NgForm} from '@angular/forms';
 })
 export class ManageTransactionsPage implements OnInit {
 
-  dialogRef: MatDialogRef<any>;
-  defaultDate: Date;
-  selectedPayment: IPayment;
-  selectedTransaction: ITransaction;
   hideHeader = false;
 
   constructor(
@@ -76,23 +72,6 @@ export class ManageTransactionsPage implements OnInit {
     return await modal.present();
   }
 
-  markAsPaid(markAsPaidTempRef: TemplateRef<any>, payment: IPayment, transaction: ITransaction) {
-    this.selectedPayment = payment;
-    this.selectedTransaction = transaction;
-    this.defaultDate = new Date(payment.dueDate);
-    this.dialogRef = this.dialog.open(markAsPaidTempRef);
-  }
-
-  async addPayment(sampleForm: NgForm) {
-    // dialogRef
-    try {
-      // eslint-disable-next-line max-len
-      await this.transactionService.addPayment(new Date(this.selectedPayment.dueDate), this.selectedTransaction.id, sampleForm.value.paidOn);
-      this.dialogRef.close();
-    } catch (e) {
-    }
-  }
-
   async makeAsNotPaid(transaction: ITransaction) {
     const alert = await this.alertController.create({
       header: 'Delete Confirmation',
@@ -130,5 +109,9 @@ export class ManageTransactionsPage implements OnInit {
 
   hideHeaderClick($event: any) {
     this.hideHeader = $event.detail.deltaY > 0;
+  }
+
+  markAsPaid(selectedPayment: IPayment, transaction: ITransaction) {
+    this.dialog.open(MarkAsPaidComponent, {data: {selectedPayment, transaction}});
   }
 }

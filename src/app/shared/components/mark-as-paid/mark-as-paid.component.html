@@ -1,5 +1,6 @@
 <h1 mat-dialog-title>Mark {{selectedPayment.instalment}} instalment as Paid</h1>
 <form #sampleForm="ngForm" mat-dialog-content>
+  <h6 class="mb-0">{{transaction.type|titlecase}} Name: {{transaction.name}}</h6>
   <h6 class="mb-0">Due Date: {{selectedPayment.dueDateString}}</h6>
   <button (click)="picker.open()"
           class="py-2 fs-6 my-3 text-truncate w-100 d-flex justify-content-center align-items-center" color="primary"
