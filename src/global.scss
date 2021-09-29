@@ -31,3 +31,19 @@ ion-toolbar {
   --ion-toolbar-background: var(--ion-color-danger);
   --ion-toolbar-color: var(--ion-color-light);
 }
+
+
+.item-rounded-end {
+  border-radius: 24px !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+ion-menu ion-item.selected {
+  --background: rgba(var(--ion-color-danger-rgb), 0.14) !important;
+  --color: var(--ion-color-danger) !important;
+
+  ion-icon {
+    color: var(--ion-color-danger) !important;
+  }
+}

@@ -2,33 +2,57 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-header>
-        <ion-toolbar color="light">
-          <ion-title size=" small
-        ">Monthly Money Manage
-          </ion-title>
-          <ion-buttons slot="end">
+        <ion-toolbar style="height: auto;">
+          <ion-title>Monthly Money Manage</ion-title>
+          <!--<ion-buttons slot="end">
             <ion-button (click)="logout()" *ngIf="loader.user">Logout</ion-button>
             <ion-button (click)="login()" *ngIf="!loader.user">Login</ion-button>
-          </ion-buttons>
+          </ion-buttons>-->
         </ion-toolbar>
-        <ion-toolbar *ngIf="loader.user" color="light" style="height: auto;">
+        <!--<ion-toolbar *ngIf="loader.user" color="light" style="height: auto;">
           <ion-title size="small">
             <p class="m-0 p-0 mt-2"><i class="fa fa-user me-2"></i>{{loader.user.providerData[0].displayName}}</p>
             <p class="m-0 p-0 mb-2"><i class="fa fa-envelope me-2"></i>{{loader.user.providerData[0].email}}</p>
           </ion-title>
-        </ion-toolbar>
+        </ion-toolbar>-->
       </ion-header>
       <ion-content>
         <ion-list id="inbox-list">
           <ion-menu-toggle *ngFor="let p of appPages; let i = index" auto-hide="false">
-            <ion-item [routerLink]="[p.url]" detail="false" lines="none" routerDirection="root"
-                      routerLinkActive="selected">
+            <ion-item class="item-rounded-end" [routerLink]="[p.url]" detail="false" lines="none" routerDirection="root" routerLinkActive="selected">
               <ion-icon [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'" slot="start"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+              <ion-label class="fw-light">{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
 
+        <ion-list *ngIf="loader.user" lines="none">
+          <ion-list-header>
+            Account
+          </ion-list-header>
+          <ion-item routerLink="/account" routerLinkActive="active" routerDirection="root" detail="false">
+            <ion-icon slot="start" name="person"></ion-icon>
+            <ion-label>
+              Account
+            </ion-label>
+          </ion-item>
+          <ion-menu-toggle autoHide="false">
+            <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
+              <ion-icon slot="start" name="help"></ion-icon>
+              <ion-label>
+                Support
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle autoHide="false">
+            <ion-item button (click)="logout()" detail="false">
+              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-label>
+                Logout
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
