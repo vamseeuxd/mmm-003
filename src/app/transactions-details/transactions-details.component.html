@@ -22,63 +22,52 @@
     <ng-container *ngIf="detailsPageSegment.value === '01'">
       <div>
         <div class="border p-2 mt-2 w-100 pb-0">
-          <p class="m-0 p-0 text-muted fw-bold">
-            {{selectedDate|date:'MMMM-yyyy'}}
-            Month Info :
-          </p>
-          <!--<pre>{{transaction.payments|json}}</pre>-->
+          <p class="m-0 p-0 text-muted fw-bold">{{selectedDate|date:'MMMM-yyyy'}} Month Info :</p>
           <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
-            <span class="text-truncate">Instalment :</span>
-            <span>{{transactionService.getTransactionById(transaction.id, transaction.dueDate).installment}}
-              Instalment</span>
+            <span class="text-truncate">Amount :</span><span>{{transactionService.getTransactionById(transaction.id, transaction.dueDate).amount|currency:'INR'}}</span>
           </div>
           <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
-            <span class="text-truncate">Due Date :</span>
-            <span>{{transactionService.getTransactionById(transaction.id, transaction.dueDate)?.dueDate|date:'dd-MMMM-yyyy'}}</span>
+            <span class="text-truncate">Instalment :</span><span>{{transactionService.getTransactionById(transaction.id, transaction.dueDate).installment}}Instalment</span>
+          </div>
+          <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+            <span class="text-truncate">Due Date :</span><span>{{transactionService.getTransactionById(transaction.id, transaction.dueDate)?.dueDate|date:'dd-MMMM-yyyy'}}</span>
           </div>
           <div class="d-flex justify-content-between align-items-center w-100 py-1 px-2 pt-1">
             <span class="text-truncate">Paid on :</span>
             <span>
-            <span [class.bg-danger]="!transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid"
-                  [class.bg-success]="transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid"
-                  class="fs-6 badge rounded-pill fw-normal">
-                <ng-container
-                  *ngIf="transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid">{{transactionService.getTransactionById(transaction.id, transaction.dueDate).payment.paidOn|date:'dd-MMM-yyyy'}}</ng-container>
-                <ng-container *ngIf="!transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid">Pending</ng-container>
+              <span [class.bg-danger]="!transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid" [class.bg-success]="transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid" class="fs-6 badge rounded-pill fw-normal">
+                  <ng-container *ngIf="transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid">{{transactionService.getTransactionById(transaction.id, transaction.dueDate).payment.paidOn|date:'dd-MMM-yyyy'}}</ng-container>
+                  <ng-container *ngIf="!transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid">Pending</ng-container>
+              </span>
             </span>
-          </span>
           </div>
         </div>
         <div class="border p-2 mt-2 w-100">
-
           <p class="m-0 p-0 text-muted fw-bold">Over-all Info</p>
-
           <div class="d-flex flex-column justify-content-between w-100 py-1 px-2 pb-2 border-bottom">
             <div class="d-flex justify-content-between w-100 py-1 px-2 mt-1 border border-bottom-0">
               <span class="text-truncate">Installments :</span>
-              <span>
-          Repeat Every
-                {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatInterval > 1 ? transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatInterval : ''}}
-                {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatOption|titlecase}}
-        </span>
+              <span>Repeat Every {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatInterval > 1 ? transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatInterval : ''}} {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatOption|titlecase}}</span>
             </div>
             <div class="d-flex flex-row w-100">
               <div
                 class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border border-end-0">
-                <span class="text-truncate text-primary">Total</span>
-                <span
-                  class="fw-bold text-primary">{{transactionService.getTransactionById(transaction.id, transaction.dueDate).noOfInstallments}} {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatOption|titlecase}}</span>
+                <span class="text-truncate text-primary">Total <small>({{transactionService.getTransactionById(transaction.id, transaction.dueDate).noOfInstallments}})</small></span>
+                <span class="fw-bold text-primary">
+                  {{transactionService.getTransactionById(transaction.id, transaction.dueDate).noOfInstallments}}
+                </span>
               </div>
               <div class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border">
-                <span class="text-truncate text-success">Paid</span>
-                <span
-                  class="fw-bold text-success">{{getNoOfPayment(transactionService.getTransactionById(transaction.id, transaction.dueDate).payments, true)}} {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatOption|titlecase}}</span>
+                <span class="text-truncate text-success">Paid <small>({{getNoOfPayment(transactionService.getTransactionById(transaction.id, transaction.dueDate).payments, true)}})</small></span>
+                <span class="fw-bold text-success">
+                  {{getNoOfPayment(transactionService.getTransactionById(transaction.id, transaction.dueDate).payments, true)}}
+                </span>
               </div>
-              <div
-                class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border border-start-0">
-                <span class="text-truncate text-danger">Pending</span>
-                <span
-                  class="fw-bold text-danger">{{getNoOfPayment(transactionService.getTransactionById(transaction.id, transaction.dueDate).payments, false)}} {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatOption|titlecase}}</span>
+              <div class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border border-start-0">
+                <span class="text-truncate text-danger">Pending <small>({{getNoOfPayment(transactionService.getTransactionById(transaction.id, transaction.dueDate).payments, false)}})</small></span>
+                <span class="fw-bold text-danger">
+                  {{getNoOfPayment(transactionService.getTransactionById(transaction.id, transaction.dueDate).payments, false)}}
+                </span>
               </div>
             </div>
           </div>
