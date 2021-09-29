@@ -41,8 +41,9 @@
         </h4>
         <ng-container *ngFor="let group of transactionService.transactions">
           <ion-item-group color="light" sticky>
-            <ion-item-divider color="light" sticky>{{group.date}}</ion-item-divider>
-            <ion-item-sliding #transactionSliding *ngFor="let transaction of group.transactions">
+            <ion-item-divider sticky>{{group.date}}</ion-item-divider>
+            <ion-item-sliding #transactionSliding *ngFor="let transaction of group.transactions"
+                              [attr.track]="transaction.isPaid ? 'paid' : 'notPaid'">
               <ion-item-options side="start">
                 <ion-item-option
                   (click)="markAsPaid(transaction.payment,transaction);transactionSliding.close();"
@@ -63,22 +64,31 @@
                 </ion-item-option>
               </ion-item-options>
 
-              <ion-item (click)="showMoreDetail(transaction, selectedDate)" lines="full" style="--min-height: 80px;">
-                <ion-label slot="start">
+              <ion-item (click)="showMoreDetail(transaction, selectedDate)" button>
+                <ion-label>
                   <h2 class="mb-2">{{transaction.name}} ({{transaction.installment}})</h2>
-                  <span class="badge bg-warning text-dark rounded-pill fw-normal">
+                  <!--<p [class.text-danger]="!transaction.isPaid" [class.text-success]="transaction.isPaid">-->
+                  <p>
+                    <span>Due On : {{transaction.dueDate|date:'dd-MMM-yyyy'}}</span>
+                    <ng-container *ngIf="transaction.isPaid">
+                      <span class="ms-2">Paid On: {{transaction.payment.paidOn|date:'dd-MMM-yyyy'}}</span>
+                    </ng-container>
+                    <ng-container *ngIf="!transaction.isPaid">
+                      <span class="ms-2">Paid On: Not Paid</span>
+                    </ng-container>
+                  </p>
+                  <!--<span class="badge bg-warning text-dark rounded-pill fw-normal">
                     Due : {{transaction.dueDate|date:'dd-MMM-yyyy'}}
-                  </span>
+                  </span>-->
                 </ion-label>
-                <ion-label class="pe-2" slot="end">
+                <!--<ion-label class="pe-2" slot="end">
                   <h4 class="mb-2">{{transaction.amount | currency : 'INR'}}</h4>
-                  <span [class.bg-danger]="!transaction.isPaid" [class.bg-success]="transaction.isPaid"
-                        class="badge rounded-pill fw-normal">
+                  <span [class.bg-danger]="!transaction.isPaid" [class.bg-success]="transaction.isPaid" class="badge rounded-pill fw-normal">
                     <ng-container
                       *ngIf="transaction.isPaid">Paid: {{transaction.payment.paidOn|date:'dd-MMM-yyyy'}}</ng-container>
                     <ng-container *ngIf="!transaction.isPaid">Pending</ng-container>
                   </span>
-                </ion-label>
+                </ion-label>-->
               </ion-item>
 
               <ion-item-options side="end">
@@ -96,8 +106,9 @@
         </ng-container>
       </ion-list>
 
-      <ion-fab *ngIf="transactionService.getSelectedTransactionType() | async as type" [edge]="false" class="me-3 mb-3"
-               color="danger"
+      <ion-fab *ngIf="transactionService.getSelectedTransactionType() | async as type" [edge]="false" cdkDrag
+               cdkDragLockAxis="x"
+               class="me-3 mb-3" color="danger"
                horizontal="end" slot="fixed"
                vertical="bottom">
         <ion-fab-button (click)="addNewExpenses(type)" color="danger">
@@ -109,7 +120,7 @@
 
     <ion-menu #filterMenu contentId="transactionsPage" menuId="first" side="end">
       <ion-header *ngIf="transactionService.getSelectedTransactionType() | async as type">
-        <ion-toolbar>
+        <ion-toolbar style="height: auto;">
           <ion-title>{{type|titlecase}} Filter</ion-title>
         </ion-toolbar>
       </ion-header>

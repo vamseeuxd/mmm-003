@@ -43,4 +43,17 @@ ion-menu-button {
       }
     }
   }
+
+  $categories: (
+    notPaid: #fe4c52,
+    paid: #69bb7b,
+  );
+
+  @each $track, $value in map-remove($categories) {
+    ion-item-sliding[track='#{$track}'] ion-item ion-label {
+      border-left: 2px solid $value;
+      padding-left: 10px;
+    }
+  }
 }
+

@@ -10,6 +10,7 @@ import {ManageTransactionsPage} from './manage-transactions.page';
 import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
 import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
 import {SharedModule} from '../shared.module';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import {SharedModule} from '../shared.module';
     IonicModule,
     ManageTransactionsRoutingModule,
     SharedModule,
+    DragDropModule,
   ],
   declarations: [
     ManageTransactionsPage,
