@@ -26,6 +26,14 @@
           </ion-menu-toggle>
         </ion-list>
 
+        <ion-list *ngIf="!loader.user" lines="none">
+          <ion-item button (click)="login()" detail="false">
+            <ion-icon slot="start" name="log-out"></ion-icon>
+            <ion-label>
+              Login
+            </ion-label>
+          </ion-item>
+        </ion-list>
         <ion-list *ngIf="loader.user" lines="none">
           <ion-list-header>
             Account
