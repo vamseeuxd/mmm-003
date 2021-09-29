@@ -8,11 +8,11 @@
       <h6 class="m-0 p-0">Due Date: {{selectedPayment.dueDateString}}</h6>
     </div>
     <div class="list-group-item">
+      <p>Paid on:</p>
       <button (click)="picker.open()"
               class="py-2 fs-6 my-1 text-truncate w-100 d-flex justify-content-center align-items-center"
               mat-raised-button style="font-size: 0.7rem">
-        Paid on &nbsp;
-        {{sampleForm.value.paidOn|date:'dd-MMMM-yyyy'|uppercase}}
+        {{sampleForm.value.paidOn|date:'dd-MMM-yyyy'|uppercase}}
         <i class="fa fa-calendar ms-2"></i>
         <input [matDatepicker]="picker" [ngModel]="defaultDate" class="d-none" matInput name="paidOn"
                placeholder="MM/DD/YYYY" required>

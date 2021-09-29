@@ -7,7 +7,6 @@ import {
 } from '../../shared/services/transaction-service/transaction.service';
 import * as moment from 'moment';
 import {MatDialog} from '@angular/material/dialog';
-import {Subscription} from 'rxjs';
 import {MarkAsPaidComponent} from '../../shared/components/mark-as-paid/mark-as-paid.component';
 
 @Component({
@@ -18,7 +17,6 @@ import {MarkAsPaidComponent} from '../../shared/components/mark-as-paid/mark-as-
 export class TransactionsDetailsComponent implements OnInit, OnDestroy {
   @Input() transaction: ITransaction;
   @Input() selectedDate: Date;
-  subscription: Subscription;
 
   constructor(
     public modalController: ModalController,
@@ -29,19 +27,9 @@ export class TransactionsDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    /*this.subscription = this.transactionService.getTransactions().subscribe(value => {
-        value.forEach(value1 => {
-            value1.transactions.forEach(value2 => {
-                if (this.transaction.id === value2.id && this.transaction.dueDate === value2.dueDate) {
-                    this.transaction = value2;
-                }
-            });
-        });
-    });*/
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   getFormattedDate(dueDate: number): string {

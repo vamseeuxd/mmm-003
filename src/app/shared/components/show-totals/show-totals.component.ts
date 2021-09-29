@@ -18,18 +18,37 @@ export class ShowTotalsComponent implements OnInit {
 
   getTotals(transactions: { date: string; transactions: ITransaction[] }[]) {
     // eslint-disable-next-line max-len
-    return transactions.length ? ([].concat.apply([], transactions.map(t => t.transactions)).map(t => t.amount).reduce((prev, next) => prev + next)) : 0;
+    if (transactions && transactions.length > 0) {
+      return ([].concat.apply([], transactions.map(t => t.transactions)).map(t => t.amount).reduce((prev, next) => prev + next));
+    } else {
+      return 0;
+    }
+
   }
 
   getPaidTotals(transactions: { date: string; transactions: ITransaction[] }[]) {
-    return transactions.length ? ([].concat.apply([], transactions.map(t => t.transactions))
-      .filter(t => t.isPaid)
-      .map(t => t.amount).reduce((prev, next) => prev + next)) : 0;
+    if (transactions && transactions.length > 0) {
+      const paidTransactions = [].concat.apply([], transactions.map(t => t.transactions)).filter(t => t.isPaid);
+      if (paidTransactions && paidTransactions.length > 0) {
+        return paidTransactions.map(t => t.amount).reduce((prev, next) => prev + next);
+      } else {
+        return 0;
+      }
+    } else {
+      return 0;
+    }
   }
 
   getNotPaidTotals(transactions: { date: string; transactions: ITransaction[] }[]) {
-    return transactions.length ? ([].concat.apply([], transactions.map(t => t.transactions))
-      .filter(t => !t.isPaid)
-      .map(t => t.amount).reduce((prev, next) => prev + next)) : 0;
+    if (transactions && transactions.length > 0) {
+      const paidTransactions = [].concat.apply([], transactions.map(t => t.transactions)).filter(t => !t.isPaid);
+      if (paidTransactions && paidTransactions.length > 0) {
+        return paidTransactions.map(t => t.amount).reduce((prev, next) => prev + next);
+      } else {
+        return 0;
+      }
+    } else {
+      return 0;
+    }
   }
 }

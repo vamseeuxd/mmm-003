@@ -96,11 +96,11 @@
         </ng-container>
       </ion-list>
 
-      <ion-fab *ngIf="transactionService.getSelectedTransactionType() | async as type" [edge]="false"
-               class="me-3 mb-3"
+      <ion-fab *ngIf="transactionService.getSelectedTransactionType() | async as type" [edge]="false" class="me-3 mb-3"
+               color="danger"
                horizontal="end" slot="fixed"
                vertical="bottom">
-        <ion-fab-button (click)="addNewExpenses(type)">
+        <ion-fab-button (click)="addNewExpenses(type)" color="danger">
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
       </ion-fab>
