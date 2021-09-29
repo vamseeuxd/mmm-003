@@ -1,29 +1,25 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar color="light">
+          <ion-title size=" small
+        ">Monthly Money Manage
+          </ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="logout()" *ngIf="loader.user">Logout</ion-button>
+            <ion-button (click)="login()" *ngIf="!loader.user">Login</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-toolbar *ngIf="loader.user" color="light" style="height: auto;">
+          <ion-title size="small">
+            <p class="m-0 p-0 mt-2"><i class="fa fa-user me-2"></i>{{loader.user.providerData[0].displayName}}</p>
+            <p class="m-0 p-0 mb-2"><i class="fa fa-envelope me-2"></i>{{loader.user.providerData[0].email}}</p>
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header *ngIf="loader.user">
-            <img [src]="loader.user.providerData[0].photoURL" alt="Google Profile Photo"
-                 class="rounded-circle border me-2"
-                 width="40">
-            {{loader.user.providerData[0].displayName}}
-          </ion-list-header>
-          <ion-note *ngIf="loader.user">
-            <p class="m-0 p-0 mb-1">{{loader.user.providerData[0].email}}</p>
-            <p class="m-0 p-0 mb-1">{{loader.user.providerData[0].uid}}</p>
-            <p class="m-0 p-0 mb-1">{{loader.user.providerData[0].phoneNumber}}</p>
-          </ion-note>
-          <ion-menu-toggle auto-hide="false">
-            <ion-item detail="false" lines="none">
-              <div>
-                <button (click)="logout()" *ngIf="loader.user" class="ms-2" mat-raised-button>Logout</button>
-                <button (click)="login()" *ngIf="!loader.user" class="text-danger ms-2" mat-raised-button><i
-                  class="fa fa-google text-danger me-2" style="font-size: 2rem"></i>Login with Google
-                </button>
-              </div>
-            </ion-item>
-          </ion-menu-toggle>
           <ion-menu-toggle *ngFor="let p of appPages; let i = index" auto-hide="false">
             <ion-item [routerLink]="[p.url]" detail="false" lines="none" routerDirection="root"
                       routerLinkActive="selected">
