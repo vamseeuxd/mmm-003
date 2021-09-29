@@ -1,8 +1,8 @@
 <ng-container *ngIf="transactionService.getSelectedDate() | async as selectedDate">
   <ng-container *ngIf="transactionService.getSelectedTransactionType() | async as type">
-    <ion-header #header [style.marginTop.px]="hideHeader ? -178 : 0" [translucent]="true"
-                style="transition: all ease-in-out 1s">
-      <ion-toolbar>
+    <!--<ion-header #header [style.marginTop.px]="hideHeader ? -178 : 0" [translucent]="true" style="transition: all ease-in-out 1s">-->
+    <ion-header #header>
+      <ion-toolbar style="height: 40px;">
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
@@ -13,16 +13,13 @@
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
-      <ion-toolbar>
-        <ion-item>
-          <app-date-navigator
-            (selectedDateChange)="transactionService.updateSelectedDateType($event);transactionsPage.scrollToTop();"
-            [selectedDate]="selectedDate"
-            class="d-block w-100"></app-date-navigator>
-        </ion-item>
+      <ion-toolbar style="height: 45px;">
+        <app-date-navigator
+          (selectedDateChange)="transactionService.updateSelectedDateType($event);transactionsPage.scrollToTop();"
+          [selectedDate]="selectedDate" class="d-block w-100"></app-date-navigator>
       </ion-toolbar>
-      <ion-toolbar>
-        <ion-segment (ionChange)="onTypeSegmentChange($event)" [ngModel]="type">
+      <ion-toolbar style="--min-height: 40px;">
+        <ion-segment (ionChange)="onTypeSegmentChange($event)" [ngModel]="type" class="transaction-type-segment">
           <ion-segment-button value="expenses">
             <ion-label>Expenses</ion-label>
           </ion-segment-button>
@@ -37,6 +34,7 @@
                  scrollEvents="true">
 
       <ion-list *ngIf="transactionService.getTransactions()|async as transactions">
+        <!--<ion-list *ngIf="false">-->
         <h4 *ngIf="transactions.length === 0" class="text-center text-warning">
           No {{type|titlecase}} to show
           in {{selectedDate|date:'MMM-yyyy'}}
@@ -107,8 +105,8 @@
         </ion-fab-button>
       </ion-fab>
 
-
     </ion-content>
+
     <ion-menu #filterMenu contentId="transactionsPage" menuId="first" side="end">
       <ion-header *ngIf="transactionService.getSelectedTransactionType() | async as type">
         <ion-toolbar>
@@ -129,27 +127,8 @@
   </ng-container>
 </ng-container>
 
-<!--<ng-template #markAsPaidTempRef>
-  <h1 mat-dialog-title>Mark as Paid</h1>
-  <form #sampleForm="ngForm" mat-dialog-content>
-    <p>Mark {{selectedPayment.instalment}} instalment ({{selectedPayment.dueDateString}}) as Paid
-      for {{selectedTransaction.name}}</p>
-    <mat-form-field appearance="legacy" class="w-100">
-      <mat-label>Payment Date</mat-label>
-      <input [matDatepicker]="picker" [ngModel]="defaultDate" matInput name="paidOn" placeholder="MM/DD/YYYY" required>
-      <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-      <mat-datepicker #picker touchUi></mat-datepicker>
-    </mat-form-field>
-    &lt;!&ndash;<pre>{{selectedPayment|json}}</pre>&ndash;&gt;
-  </form>
-  <div mat-dialog-actions>
-    <div class="d-flex w-100 flex-row justify-content-between">
-      <div class="col-5">
-        <button class="w-100" mat-dialog-close mat-raised-button>No Thanks</button>
-      </div>
-      <div class="col-5">
-        <button (click)="addPayment(sampleForm)" class="w-100" color="primary" mat-raised-button>Mark as Paid</button>
-      </div>
-    </div>
-  </div>
-</ng-template>-->
+<ion-footer>
+  <ion-toolbar style="--min-height: 40px;">
+    <app-show-totals></app-show-totals>
+  </ion-toolbar>
+</ion-footer>

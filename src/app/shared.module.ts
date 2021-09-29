@@ -15,6 +15,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
 import {MarkAsPaidComponent} from './shared/components/mark-as-paid/mark-as-paid.component';
 import {FormsModule} from '@angular/forms';
+import {ShowTotalsComponent} from './shared/components/show-totals/show-totals.component';
+import {IonicModule} from '@ionic/angular';
 
 
 @NgModule({
@@ -22,6 +24,7 @@ import {FormsModule} from '@angular/forms';
     DebounceClickDirective,
     DateNavigatorComponent,
     MarkAsPaidComponent,
+    ShowTotalsComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ import {FormsModule} from '@angular/forms';
     MatExpansionModule,
     MatCardModule,
     FormsModule,
+    IonicModule,
   ],
   exports: [
     DebounceClickDirective,
@@ -55,6 +59,7 @@ import {FormsModule} from '@angular/forms';
     MatExpansionModule,
     MatCardModule,
     MarkAsPaidComponent,
+    ShowTotalsComponent,
   ]
 })
 export class SharedModule {

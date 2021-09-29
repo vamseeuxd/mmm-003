@@ -11,7 +11,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "page": "ionic g page manage-categories",
-    "component": "ng generate component shared/components/MarkAsPaid --export",
+    "component": "ng generate component shared/components/showTotals --export",
     "directive": "ng generate directive shared/directives/MarkAsPaid --export",
     "service": "ng generate directive shared/services/MarkAsPaid",
     "emulator": "firebase emulators:start",

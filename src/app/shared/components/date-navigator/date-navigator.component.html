@@ -1,17 +1,23 @@
-<h6 class="m-0 text-center text-muted" style="font-size: 0.7rem">Today:{{todayDate|date:'dd-MMMM-yyyy'}}</h6>
-<div class="w-100 d-flex py-2 justify-content-around text-danger">
-  <div class="row w-100">
-    <button (click)="navigateSelectedDate('y--')" class="col-2 mx-0" mat-raised-button style="min-width: auto;"><i
-      class="fa fa-fast-backward"></i></button>
-    <button (click)="navigateSelectedDate('m--')" class="col-2 mx-1" mat-raised-button style="min-width: auto;"><i
-      class="fa fa-backward"></i></button>
-    <button (click)="picker.open()" class="col mx-0 text-truncate" mat-raised-button
-            style="font-size: 0.9rem">{{selectedDate|date:'MMM-yyyy'|uppercase}}<input [matDatepicker]="picker"
-                                                                                       class="d-none" matInput></button>
-    <button (click)="navigateSelectedDate('m++')" class="col-2 mx-1" mat-raised-button style="min-width: auto;"><i
-      class="fa fa-forward"></i></button>
-    <button (click)="navigateSelectedDate('y++')" class="col-2 mx-0" mat-raised-button style="min-width: auto;"><i
-      class="fa fa-fast-forward"></i></button>
+<!--<h6 class="m-0 text-center text-muted" style="font-size: 0.7rem">Today:{{todayDate|date:'dd-MMMM-yyyy'}}</h6>-->
+<div class="w-100 d-flex py-2 px-3 justify-content-around text-danger">
+  <div class="px-2 row w-100">
+    <button (click)="navigateSelectedDate('y--')" class="col-2 mx-0 date-navigation-btn" mat-raised-button>
+      <i class="fa fa-fast-backward"></i>
+    </button>
+    <button (click)="navigateSelectedDate('m--')" class="col-2 mx-1 date-navigation-btn" mat-raised-button>
+      <i class="fa fa-backward"></i>
+    </button>
+    <button (click)="picker.open()" class="col mx-0 text-truncate date-navigation-btn" mat-raised-button
+            style="font-size: 0.9rem">
+      {{selectedDate|date:'MMM-yyyy'|uppercase}}
+      <input [matDatepicker]="picker" class="d-none" matInput>
+    </button>
+    <button (click)="navigateSelectedDate('m++')" class="col-2 mx-1 date-navigation-btn" mat-raised-button>
+      <i class="fa fa-forward"></i>
+    </button>
+    <button (click)="navigateSelectedDate('y++')" class="col-2 mx-0 date-navigation-btn" mat-raised-button>
+      <i class="fa fa-fast-forward"></i>
+    </button>
     <mat-datepicker #picker (monthSelected)="chosenMonthHandler($event, picker)" class="d-none" startView="multi-year"
                     touchUi></mat-datepicker>
   </div>
