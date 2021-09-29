@@ -35,74 +35,93 @@
 
       <ion-list>
         <!--<ion-list *ngIf="false">-->
-        <h4 *ngIf="transactionService.transactions.length === 0" class="text-center text-warning">
-          No {{type|titlecase}} to show
-          in {{selectedDate|date:'MMM-yyyy'}}
-        </h4>
+        <!-- <h4 *ngIf="transactionService.transactions.length === 0" class="text-center text-warning">
+           No {{type|titlecase}} to show in {{selectedDate|date:'MMM-yyyy'}}
+         </h4>-->
+        <!--<p>
+          isPending {{totalsFilter.isPaid}} && isPending {{totalsFilter.isPending}}
+        </p>-->
+        <p *ngIf="totalsFilter.isPaid && totalsFilter.isPending && totalsFilter.noOfAll === 0"
+           class="text-muted text-center">No {{type|titlecase}} to show
+          in {{selectedDate|date:'MMM-yyyy'}}</p>
+        <p *ngIf="totalsFilter.isPaid && !totalsFilter.isPending && totalsFilter.noOfPaid === 0"
+           class="text-muted text-center">No Paid {{type|titlecase}} to show
+          in {{selectedDate|date:'MMM-yyyy'}}</p>
+        <p *ngIf="!totalsFilter.isPaid && totalsFilter.isPending && totalsFilter.noOfPending === 0"
+           class="text-muted text-center">No Pending {{type|titlecase}} to show
+          in {{selectedDate|date:'MMM-yyyy'}}</p>
+
         <ng-container *ngFor="let group of transactionService.transactions">
           <ion-item-group color="light" sticky>
-            <ion-item-divider sticky>{{group.date}}</ion-item-divider>
-            <ion-item-sliding #transactionSliding *ngFor="let transaction of group.transactions"
-                              [attr.track]="transaction.isPaid ? 'paid' : 'notPaid'">
-              <ion-item-options side="start">
-                <ion-item-option
-                  (click)="markAsPaid(transaction.payment,transaction);transactionSliding.close();"
-                  *ngIf="!transaction.isPaid" color="success" style="width: 100px;">
-                  <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
-                    <span class="d-block text-white w-100 text-center" style="font-size: 10px;">Mark as</span>
-                    <ion-label class="fw-bold">Paid</ion-label>
-                  </div>
-                </ion-item-option>
-                <ion-item-option (click)="makeAsNotPaid(transaction);transactionSliding.close();"
-                                 *ngIf="transaction.isPaid"
-                                 color="danger"
-                                 style="width: 100px;margin-right: 15px;">
-                  <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
-                    <span class="d-block text-white w-100 text-center" style="font-size: 10px;">Mark as</span>
-                    <ion-label class="fw-bold">Not Paid</ion-label>
-                  </div>
-                </ion-item-option>
-              </ion-item-options>
+            <ng-container>
+              <ion-item-divider *ngIf="getTransaction(totalsFilter,group.transactions).length>0"
+                                sticky>{{group.date}}</ion-item-divider>
+              <ion-item-sliding #transactionSliding
+                                *ngFor="let transaction of getTransaction(totalsFilter,group.transactions)"
+                                [attr.track]="transaction.isPaid ? 'paid' : 'notPaid'">
+                <ion-item-options side="start">
+                  <ion-item-option
+                    (click)="markAsPaid(transaction.payment,transaction);transactionSliding.close();"
+                    *ngIf="!transaction.isPaid" color="success" style="width: 100px;">
+                    <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+                      <span class="d-block text-white w-100 text-center" style="font-size: 10px;">Mark as</span>
+                      <ion-label class="fw-bold">Paid</ion-label>
+                    </div>
+                  </ion-item-option>
+                  <ion-item-option (click)="makeAsNotPaid(transaction);transactionSliding.close();"
+                                   *ngIf="transaction.isPaid"
+                                   color="danger"
+                                   style="width: 100px;margin-right: 15px;">
+                    <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+                      <span class="d-block text-white w-100 text-center" style="font-size: 10px;">Mark as</span>
+                      <ion-label class="fw-bold">Not Paid</ion-label>
+                    </div>
+                  </ion-item-option>
+                </ion-item-options>
 
-              <!--<ion-item (click)="showMoreDetail(transaction, selectedDate)" button>-->
-              <ion-item button routerLink="/transactions-details/{{transaction.id}}/{{transaction.dueDate}}">
-                <ion-label>
-                  <h2 class="mb-2">{{transaction.name}} ({{transaction.installment}})</h2>
-                  <!--<p [class.text-danger]="!transaction.isPaid" [class.text-success]="transaction.isPaid">-->
-                  <p>
-                    <span>Due On : {{transaction.dueDate|date:'dd-MMM-yyyy'}}</span>
-                    <ng-container *ngIf="transaction.isPaid">
-                      <span class="ms-2">Paid On: {{transaction.payment.paidOn|date:'dd-MMM-yyyy'}}</span>
-                    </ng-container>
-                    <ng-container *ngIf="!transaction.isPaid">
-                      <span class="ms-2">Paid On: Not Paid</span>
-                    </ng-container>
-                  </p>
-                  <!--<span class="badge bg-warning text-dark rounded-pill fw-normal">
-                    Due : {{transaction.dueDate|date:'dd-MMM-yyyy'}}
-                  </span>-->
-                </ion-label>
-                <!--<ion-label class="pe-2" slot="end">
-                  <h4 class="mb-2">{{transaction.amount | currency : 'INR'}}</h4>
-                  <span [class.bg-danger]="!transaction.isPaid" [class.bg-success]="transaction.isPaid" class="badge rounded-pill fw-normal">
-                    <ng-container
-                      *ngIf="transaction.isPaid">Paid: {{transaction.payment.paidOn|date:'dd-MMM-yyyy'}}</ng-container>
-                    <ng-container *ngIf="!transaction.isPaid">Pending</ng-container>
-                  </span>
-                </ion-label>-->
-              </ion-item>
+                <!--<ion-item (click)="showMoreDetail(transaction, selectedDate)" button>-->
+                <ion-item button routerLink="/transactions-details/{{transaction.id}}/{{transaction.dueDate}}">
+                  <ion-label>
+                    <h2 class="mb-2 d-flex justify-content-between">
+                      <span>{{transaction.name}} <small>({{transaction.installment}} installment)</small></span>
+                      <span class="ms-auto fw-bold text-muted">{{transaction.amount|currency:'INR'}}</span>
+                    </h2>
+                    <!--<p [class.text-danger]="!transaction.isPaid" [class.text-success]="transaction.isPaid">-->
+                    <p>
+                      <span>Due On : {{transaction.dueDate|date:'dd-MMM-yyyy'}}</span>
+                      <ng-container *ngIf="transaction.isPaid">
+                        <span class="ms-2">Paid On: {{transaction.payment.paidOn|date:'dd-MMM-yyyy'}}</span>
+                      </ng-container>
+                      <ng-container *ngIf="!transaction.isPaid">
+                        <span class="ms-2">Paid On: Not Paid</span>
+                      </ng-container>
+                    </p>
+                    <!--<span class="badge bg-warning text-dark rounded-pill fw-normal">
+                      Due : {{transaction.dueDate|date:'dd-MMM-yyyy'}}
+                    </span>-->
+                  </ion-label>
+                  <!--<ion-label class="pe-2" slot="end">
+                    <h4 class="mb-2">{{transaction.amount | currency : 'INR'}}</h4>
+                    <span [class.bg-danger]="!transaction.isPaid" [class.bg-success]="transaction.isPaid" class="badge rounded-pill fw-normal">
+                      <ng-container
+                        *ngIf="transaction.isPaid">Paid: {{transaction.payment.paidOn|date:'dd-MMM-yyyy'}}</ng-container>
+                      <ng-container *ngIf="!transaction.isPaid">Pending</ng-container>
+                    </span>
+                  </ion-label>-->
+                </ion-item>
 
-              <ion-item-options side="end">
-                <ion-item-option (click)="deleteTransaction(transaction);transactionSliding.close();" color="danger"
-                                 style="width: 80px;">Delete
-                </ion-item-option>
-                <ion-item-option
-                  (click)="editTransactionClick(transactionSliding, transaction, selectedDate);$event.stopPropagation();"
-                  color="warning"
-                  style="width: 80px;margin-right: 15px;">Edit
-                </ion-item-option>
-              </ion-item-options>
-            </ion-item-sliding>
+                <ion-item-options side="end">
+                  <ion-item-option (click)="deleteTransaction(transaction);transactionSliding.close();" color="danger"
+                                   style="width: 80px;">Delete
+                  </ion-item-option>
+                  <ion-item-option
+                    (click)="editTransactionClick(transactionSliding, transaction, selectedDate);$event.stopPropagation();"
+                    color="warning"
+                    style="width: 80px;margin-right: 15px;">Edit
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ng-container>
           </ion-item-group>
         </ng-container>
       </ion-list>
@@ -136,9 +155,7 @@
       </ion-content>
     </ion-menu>
     <ion-footer>
-      <ion-toolbar style="--min-height: 40px;">
-        <app-show-totals></app-show-totals>
-      </ion-toolbar>
+      <app-show-totals #totalsFilter></app-show-totals>
     </ion-footer>
     <!--</ng-container>-->
   </ng-container>

@@ -9,6 +9,7 @@ import {
 } from '../shared/services/transaction-service/transaction.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MarkAsPaidComponent} from '../shared/components/mark-as-paid/mark-as-paid.component';
+import {ShowTotalsComponent} from '../shared/components/show-totals/show-totals.component';
 
 @Component({
   selector: 'app-folder',
@@ -98,5 +99,16 @@ export class ManageTransactionsPage implements OnInit {
 
   markAsPaid(selectedPayment: IPayment, transaction: ITransaction) {
     this.dialog.open(MarkAsPaidComponent, {data: {selectedPayment, transaction}});
+  }
+
+  getTransaction(totalsFilter: ShowTotalsComponent, transactions: ITransaction[]): ITransaction[] {
+    if (totalsFilter.isPaid && totalsFilter.isPending) {
+      return transactions;
+    } else if (totalsFilter.isPaid && !totalsFilter.isPending) {
+      return transactions.filter(t => t.isPaid);
+    } else if (!totalsFilter.isPaid && totalsFilter.isPending) {
+      return transactions.filter(t => !t.isPaid);
+    }
+    return transactions;
   }
 }
