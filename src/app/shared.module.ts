@@ -17,7 +17,7 @@ import {MarkAsPaidComponent} from './shared/components/mark-as-paid/mark-as-paid
 import {FormsModule} from '@angular/forms';
 import {ShowTotalsComponent} from './shared/components/show-totals/show-totals.component';
 import {IonicModule} from '@ionic/angular';
-
+import {NgPipesModule} from 'ngx-pipes';
 
 @NgModule({
   declarations: [
@@ -42,6 +42,7 @@ import {IonicModule} from '@ionic/angular';
     MatCardModule,
     FormsModule,
     IonicModule,
+    NgPipesModule,
   ],
   exports: [
     DebounceClickDirective,
@@ -60,6 +61,7 @@ import {IonicModule} from '@ionic/angular';
     MatCardModule,
     MarkAsPaidComponent,
     ShowTotalsComponent,
+    NgPipesModule,
   ]
 })
 export class SharedModule {

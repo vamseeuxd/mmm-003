@@ -28,6 +28,7 @@ export interface IPayment {
   id: string | null;
   dueDateString: string;
   dueDate: number;
+  amount: number;
   paidOn: number | null;
   transactionId: string;
   paymentDoc?: IPaymentDoc;
@@ -302,6 +303,7 @@ export class TransactionService {
             dueDate: data.dueDate.toDate().getTime(),
             paidOn: paymentDoc ? paymentDoc.paidOn : null,
             paymentDoc,
+            amount: transaction.amount,
             transactionId: transaction.id,
             type: transaction.type,
             isPaid: transaction.payments && transaction.payments.map(d => d.dueDate).includes(data.dueDate.toDate().getTime()),

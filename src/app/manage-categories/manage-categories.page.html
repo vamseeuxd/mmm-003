@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="danger">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -8,8 +8,8 @@
       <ion-menu-button style="opacity: 0;pointer-events: none"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar>
-    <ion-segment #typeSegmentRef value="expenses">
+  <ion-toolbar color="danger" style="height: 46px;">
+    <ion-segment #typeSegmentRef class="transaction-type-segment" value="expenses">
       <ion-segment-button value="expenses">
         <ion-label>Expenses</ion-label>
       </ion-segment-button>
