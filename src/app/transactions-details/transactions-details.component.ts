@@ -6,11 +6,19 @@ import {MatDialog} from '@angular/material/dialog';
 import {MarkAsPaidComponent} from '../shared/components/mark-as-paid/mark-as-paid.component';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-transactions-details',
   templateUrl: './transactions-details.component.html',
   styleUrls: ['./transactions-details.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      state('in', style({ opacity: 1 })),
+      transition(':enter', [style({ opacity: '0' }), animate('.5s ease-out', style({ opacity: '1' }))]),
+      transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
+    ]),
+  ],
 })
 export class TransactionsDetailsComponent implements OnInit, OnDestroy {
   @Input() transaction: ITransaction;
@@ -25,6 +33,10 @@ export class TransactionsDetailsComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private route: ActivatedRoute,
   ) {
+  }
+
+  reduceAddCallBack(a: number, b: number): number {
+    return a + b;
   }
 
   ngOnInit() {
