@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'manage-categories',
     loadChildren: () => import('./manage-categories/manage-categories.module').then(m => m.ManageCategoriesPageModule)
+  },
+  {
+    path: 'transactions-details/:transactionId/:dueDate',
+    loadChildren: () => import('./transactions-details/transactions-details-page.module').then(m => m.TransactionsDetailsPageModule)
   }
 ];
 

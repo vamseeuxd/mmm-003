@@ -64,7 +64,8 @@
                 </ion-item-option>
               </ion-item-options>
 
-              <ion-item (click)="showMoreDetail(transaction, selectedDate)" button>
+              <!--<ion-item (click)="showMoreDetail(transaction, selectedDate)" button>-->
+              <ion-item button routerLink="/transactions-details/{{transaction.id}}/{{transaction.dueDate}}">
                 <ion-label>
                   <h2 class="mb-2">{{transaction.name}} ({{transaction.installment}})</h2>
                   <!--<p [class.text-danger]="!transaction.isPaid" [class.text-success]="transaction.isPaid">-->

@@ -7,7 +7,6 @@ import {
   TRANSACTION_TYPE,
   TransactionService
 } from '../shared/services/transaction-service/transaction.service';
-import {TransactionsDetailsComponent} from './transactions-details/transactions-details.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MarkAsPaidComponent} from '../shared/components/mark-as-paid/mark-as-paid.component';
 
@@ -42,20 +41,6 @@ export class ManageTransactionsPage implements OnInit {
 
   onTypeSegmentChange($event: any) {
     this.transactionService.updateSelectedTransactionType($event.detail.value ? $event.detail.value : 'expenses');
-  }
-
-  async showMoreDetail(transaction: ITransaction, selectedDate: Date) {
-
-    const modal = await this.modalController.create({
-      component: TransactionsDetailsComponent,
-      backdropDismiss: false,
-      componentProps: {
-        transaction,
-        selectedDate,
-      }
-    });
-    return await modal.present();
-
   }
 
   async editTransactionClick(transactionSliding: IonItemSliding, transaction: ITransaction, selectedDate: Date) {

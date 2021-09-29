@@ -1,13 +1,11 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AlertController, ModalController} from '@ionic/angular';
-import {
-  IPayment,
-  ITransaction,
-  TransactionService
-} from '../../shared/services/transaction-service/transaction.service';
+import {IPayment, ITransaction, TransactionService} from '../shared/services/transaction-service/transaction.service';
 import * as moment from 'moment';
 import {MatDialog} from '@angular/material/dialog';
-import {MarkAsPaidComponent} from '../../shared/components/mark-as-paid/mark-as-paid.component';
+import {MarkAsPaidComponent} from '../shared/components/mark-as-paid/mark-as-paid.component';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-transactions-details',
@@ -17,19 +15,34 @@ import {MarkAsPaidComponent} from '../../shared/components/mark-as-paid/mark-as-
 export class TransactionsDetailsComponent implements OnInit, OnDestroy {
   @Input() transaction: ITransaction;
   @Input() selectedDate: Date;
+  defaultHref = `/manage-transactions`;
+  transactionsChangedSubscription: Subscription;
 
   constructor(
     public modalController: ModalController,
     public alertController: AlertController,
     public transactionService: TransactionService,
     public dialog: MatDialog,
+    private route: ActivatedRoute,
   ) {
   }
 
   ngOnInit() {
   }
 
+  ionViewWillEnter() {
+    const transactionId = this.route.snapshot.paramMap.get('transactionId');
+    const dueDate = this.route.snapshot.paramMap.get('dueDate');
+    this.transactionsChangedSubscription = this.transactionService.transactionsChanged$.subscribe(() => {
+      this.transaction = this.transactionService.getTransactionById(transactionId, Number(dueDate));
+    });
+  }
+
   ngOnDestroy() {
+    if (this.transactionsChangedSubscription) {
+      this.transactionsChangedSubscription.unsubscribe();
+      console.log('this.transactionsChangedSubscription.unsubscribe();');
+    }
   }
 
   getFormattedDate(dueDate: number): string {

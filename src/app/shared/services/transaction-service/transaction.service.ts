@@ -181,6 +181,9 @@ export class TransactionService {
       }
     )
   );
+  private transactionsChangedAction: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  transactionsChanged$: Observable<Date> = this.transactionsChangedAction.asObservable();
 
   constructor(
     private auth: AngularFireAuth,
@@ -189,6 +192,7 @@ export class TransactionService {
   ) {
     this.getTransactions().subscribe(value => {
       this.transactions = value;
+      this.transactionsChangedAction.next(new Date());
     });
   }
 

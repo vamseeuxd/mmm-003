@@ -1,0 +1,182 @@
+<ion-header>
+  <ion-toolbar style="height:auto;">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="defaultHref"></ion-back-button>
+      <!--<ion-button (click)="modalController.dismiss()" class="ms-auto">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>-->
+    </ion-buttons>
+    <ion-title *ngIf="transaction" class="ion-text-left text-capitalize">
+      {{transactionService.getTransactionById(transaction.id, transaction.dueDate).name|titlecase}}
+    </ion-title>
+    <!--<ion-buttons slot="end">
+      <ion-button (click)="modalController.dismiss()" class="ms-auto">Close
+      </ion-button>
+    </ion-buttons>-->
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ng-container *ngIf="transaction">
+    <ng-container *ngIf="detailsPageSegment.value === '01'">
+      <div>
+        <div class="border p-2 mt-2 w-100 pb-0">
+          <p class="m-0 p-0 text-muted fw-bold">
+            {{selectedDate|date:'MMMM-yyyy'}}
+            Month Info :
+          </p>
+          <!--<pre>{{transaction.payments|json}}</pre>-->
+          <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+            <span class="text-truncate">Instalment :</span>
+            <span>{{transactionService.getTransactionById(transaction.id, transaction.dueDate).installment}}
+              Instalment</span>
+          </div>
+          <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+            <span class="text-truncate">Due Date :</span>
+            <span>{{transactionService.getTransactionById(transaction.id, transaction.dueDate)?.dueDate|date:'dd-MMMM-yyyy'}}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center w-100 py-1 px-2 pt-1">
+            <span class="text-truncate">Paid on :</span>
+            <span>
+            <span [class.bg-danger]="!transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid"
+                  [class.bg-success]="transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid"
+                  class="fs-6 badge rounded-pill fw-normal">
+                <ng-container
+                  *ngIf="transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid">{{transactionService.getTransactionById(transaction.id, transaction.dueDate).payment.paidOn|date:'dd-MMM-yyyy'}}</ng-container>
+                <ng-container *ngIf="!transactionService.getTransactionById(transaction.id,transaction.dueDate).isPaid">Pending</ng-container>
+            </span>
+          </span>
+          </div>
+        </div>
+        <div class="border p-2 mt-2 w-100">
+
+          <p class="m-0 p-0 text-muted fw-bold">Over-all Info</p>
+
+          <div class="d-flex flex-column justify-content-between w-100 py-1 px-2 pb-2 border-bottom">
+            <div class="d-flex justify-content-between w-100 py-1 px-2 mt-1 border border-bottom-0">
+              <span class="text-truncate">Installments :</span>
+              <span>
+          Repeat Every
+                {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatInterval > 1 ? transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatInterval : ''}}
+                {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatOption|titlecase}}
+        </span>
+            </div>
+            <div class="d-flex flex-row w-100">
+              <div
+                class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border border-end-0">
+                <span class="text-truncate text-primary">Total</span>
+                <span
+                  class="fw-bold text-primary">{{transactionService.getTransactionById(transaction.id, transaction.dueDate).noOfInstallments}} {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatOption|titlecase}}</span>
+              </div>
+              <div class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border">
+                <span class="text-truncate text-success">Paid</span>
+                <span
+                  class="fw-bold text-success">{{getNoOfPayment(transactionService.getTransactionById(transaction.id, transaction.dueDate).payments, true)}} {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatOption|titlecase}}</span>
+              </div>
+              <div
+                class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border border-start-0">
+                <span class="text-truncate text-danger">Pending</span>
+                <span
+                  class="fw-bold text-danger">{{getNoOfPayment(transactionService.getTransactionById(transaction.id, transaction.dueDate).payments, false)}} {{transactionService.getTransactionById(transaction.id, transaction.dueDate).repeatOption|titlecase}}</span>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="d-flex justify-content-between w-100 py-1 px-2 mt-1 border-bottom">
+            <span class="text-truncate">Start Date :</span>
+            <span>{{transactionService.getTransactionById(transaction.id, transaction.dueDate).dates.start}}</span>
+          </div>
+          <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+            <span class="text-truncate">End Date :</span>
+            <span>{{transactionService.getTransactionById(transaction.id, transaction.dueDate).dates.end}}</span>
+          </div>
+          <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+
+            <span class="text-truncate">Category :</span>
+            <!--<span>{{getLabelByList(transactionService.getTransactionById(transaction.id,transaction.dueDate).category, expensesCategories)}}</span>-->
+          </div>
+          <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+            <span class="text-truncate">Payee :</span>
+            <!--<span>{{getLabelByList(transactionService.getTransactionById(transaction.id,transaction.dueDate).payee, payees)}}</span>-->
+          </div>
+          <div class="d-flex justify-content-between w-100 py-1 px-2 border-bottom">
+            <span class="text-truncate">Spending For :</span>
+            <!--<span>{{getLabelByList(transactionService.getTransactionById(transaction.id,transaction.dueDate).for, expensesFor)}}</span>-->
+          </div>
+          <div class="d-flex justify-content-between w-100 py-1 px-2 pb-0">
+            <span class="text-truncate">Tax Savings :</span>
+            <!--<span>{{getLabelByList(transactionService.getTransactionById(transaction.id,transaction.dueDate).taxDeductionSection, taxDeductionSections)}}</span>-->
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="detailsPageSegment.value === '02'">
+      <ion-list>
+        <ion-item-sliding #transactionSliding
+                          *ngFor="let payment of transactionService.getTransactionById(transaction.id,transaction.dueDate).payments"
+                          lines="full">
+          <ion-item-options side="start">
+            <ion-item-option
+              (click)="markAsPaid(payment,transactionService.getTransactionById(transaction.id,transaction.dueDate));transactionSliding.close();"
+              *ngIf="!payment.isPaid" color="success"
+              style="width: 100px;">
+              <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+                <span class="d-block text-white w-100 text-center" style="font-size: 10px;">Mark as</span>
+                <ion-label class="fw-bold">Paid</ion-label>
+              </div>
+            </ion-item-option>
+            <ion-item-option (click)="makeAsNotPaid(payment);transactionSliding.close();" *ngIf="payment.isPaid"
+                             color="danger" style="width: 100px;margin-right: 15px;">
+              <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+                <span class="d-block text-white w-100 text-center" style="font-size: 10px;">Mark as</span>
+                <ion-label class="fw-bold">Not Paid</ion-label>
+              </div>
+            </ion-item-option>
+          </ion-item-options>
+          <ion-item lines="full">
+            <ion-avatar slot="start">
+              <div [class.border-danger]="!payment.isPaid"
+                   [class.border-success]="payment.isPaid"
+                   [class.text-danger]="!payment.isPaid"
+                   [class.text-success]="payment.isPaid"
+                   class="w-100 h-100 rounded-circle border d-flex justify-content-center align-items-center">
+                {{payment.instalment}}
+              </div>
+            </ion-avatar>
+            <ion-label>
+              <h2 class="d-flex justify-content-between align-items-center">
+                <!--{{payment.dueDate}}-->
+                {{getFormattedDate(payment.dueDate)}}
+                <!--<ion-badge [color]="payment.isPaid ? 'success' : 'danger'" class="fw-normal">
+                  {{payment.isPaid ? 'Paid' : 'Pending'}}
+                </ion-badge>-->
+                <span [class.bg-danger]="!payment.isPaid" [class.bg-success]="payment.isPaid"
+                      class="badge rounded-pill fw-normal">
+                <ng-container *ngIf="payment.isPaid">Paid: {{payment.paidOn|date:'dd-MMM-yyyy'}}</ng-container>
+                <ng-container *ngIf="!payment.isPaid">Pending</ng-container>
+              </span>
+              </h2>
+            </ion-label>
+          </ion-item>
+        </ion-item-sliding>
+      </ion-list>
+      <!--<pre>{{transactionService.getTransactionById(transaction.id,transaction.dueDate).id}}</pre>-->
+    </ng-container>
+  </ng-container>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="border-top" color="danger" style="--min-height: 40px;">
+    <ion-segment #detailsPageSegment class="transaction-type-segment" value="01">
+      <ion-segment-button value="01">
+        <ion-label>Basic Detail</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="02">
+        <ion-label>All Instalments</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>
+
