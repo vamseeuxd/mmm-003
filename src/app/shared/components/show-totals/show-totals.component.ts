@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ITransaction} from '../../services/transaction-service/transaction.service';
+import {Component, OnInit} from '@angular/core';
+import {ITransaction, TransactionService} from '../../services/transaction-service/transaction.service';
 
 @Component({
   selector: 'app-show-totals',
@@ -7,27 +7,29 @@ import {ITransaction} from '../../services/transaction-service/transaction.servi
   styleUrls: ['./show-totals.component.scss'],
 })
 export class ShowTotalsComponent implements OnInit {
-  @Input() transactions: { date: string; transactions: ITransaction[] }[] = [];
 
-  constructor() {
+  constructor(
+    public transactionService: TransactionService,
+  ) {
   }
 
   ngOnInit() {
   }
 
-  getTotals() {
-    return [].concat.apply([], this.transactions.map(t => t.transactions)).map(t => t.amount).reduce((prev, next) => prev + next);
+  getTotals(transactions: { date: string; transactions: ITransaction[] }[]) {
+    // eslint-disable-next-line max-len
+    return transactions.length ? ([].concat.apply([], transactions.map(t => t.transactions)).map(t => t.amount).reduce((prev, next) => prev + next)) : 0;
   }
 
-  getPaidTotals() {
-    return [].concat.apply([], this.transactions.map(t => t.transactions))
+  getPaidTotals(transactions: { date: string; transactions: ITransaction[] }[]) {
+    return transactions.length ? ([].concat.apply([], transactions.map(t => t.transactions))
       .filter(t => t.isPaid)
-      .map(t => t.amount).reduce((prev, next) => prev + next);
+      .map(t => t.amount).reduce((prev, next) => prev + next)) : 0;
   }
 
-  getNotPaidTotals() {
-    return [].concat.apply([], this.transactions.map(t => t.transactions))
+  getNotPaidTotals(transactions: { date: string; transactions: ITransaction[] }[]) {
+    return transactions.length ? ([].concat.apply([], transactions.map(t => t.transactions))
       .filter(t => !t.isPaid)
-      .map(t => t.amount).reduce((prev, next) => prev + next);
+      .map(t => t.amount).reduce((prev, next) => prev + next)) : 0;
   }
 }

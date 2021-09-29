@@ -76,6 +76,7 @@ export interface ITransaction {
 })
 export class TransactionService {
 
+  transactions: { date: string; transactions: ITransaction[] }[] = [];
   private transactionTypeAction: BehaviorSubject<TRANSACTION_TYPE> = new BehaviorSubject<TRANSACTION_TYPE>('expenses');
   private selectedTransactionType$: Observable<TRANSACTION_TYPE> = this.transactionTypeAction.asObservable();
   private selectedDateAction: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
@@ -186,7 +187,21 @@ export class TransactionService {
     private firestore: AngularFirestore,
     public loader: LoaderService,
   ) {
+    this.getTransactions().subscribe(value => {
+      this.transactions = value;
+    });
+  }
 
+  getTransactionById(transactionId: string, dueDate: number): ITransaction {
+    let transactionToReturn: ITransaction;
+    this.transactions.forEach(group => {
+      group.transactions.forEach(transaction => {
+        if (transactionId === transaction.id && dueDate === transaction.dueDate) {
+          transactionToReturn = transaction;
+        }
+      });
+    });
+    return transactionToReturn;
   }
 
   updateSelectedTransactionType(type: TRANSACTION_TYPE) {
@@ -195,10 +210,6 @@ export class TransactionService {
 
   getSelectedTransactionType(): Observable<TRANSACTION_TYPE> {
     return this.selectedTransactionType$;
-  }
-
-  getTransactions(): Observable<{ date: string; transactions: ITransaction[] }[]> {
-    return this.transactions$;
   }
 
   updateSelectedDateType(date: Date) {
@@ -254,6 +265,10 @@ export class TransactionService {
     } catch (e) {
       await this.loader.hide(loaderId);
     }
+  }
+
+  private getTransactions(): Observable<{ date: string; transactions: ITransaction[] }[]> {
+    return this.transactions$;
   }
 
   private getInstalmentsWithDueDate(transaction: any, selectedDate: Date, lastDate: Date) {
