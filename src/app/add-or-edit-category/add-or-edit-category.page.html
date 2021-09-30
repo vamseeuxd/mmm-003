@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar style="height:auto;">
+    <ion-buttons slot="start">
+      <ion-back-button #backButton [defaultHref]="defaultHref"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-left text-capitalize">
+      {{action}} {{type |titlecase }} Category
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding pt-5">
+  <mat-form-field class="w-100 mt-5" appearance="outline">
+    <mat-label>{{type |titlecase }} Category Name</mat-label>
+    <input matInput type="text" placeholder="{{type |titlecase }} Category Name">
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>{{type |titlecase }} Category Icon</mat-label>
+    <input type="text" #iconSearchText placeholder="{{type |titlecase }} Category Icon" matInput
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of (icons$ | async)|filterBy:['name']:iconSearchText.value" [value]="option">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">{{option.name}}</mat-icon>
+        {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-icon matSuffix>{{iconSearchText.value}}</mat-icon>
+  </mat-form-field>
+  <ion-button expand="full" color="danger">Save</ion-button>
+  <ion-button expand="full" [routerLink]="defaultHref" color="dark">Cancel</ion-button>
+
+</ion-content>

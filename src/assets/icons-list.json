@@ -1,0 +1,3011 @@
+[
+  {
+    "name": "3d_rotation"
+  },
+  {
+    "name": "accessibility"
+  },
+  {
+    "name": "accessibility_new"
+  },
+  {
+    "name": "accessible"
+  },
+  {
+    "name": "accessible_forward"
+  },
+  {
+    "name": "account_balance"
+  },
+  {
+    "name": "account_balance_wallet"
+  },
+  {
+    "name": "account_box"
+  },
+  {
+    "name": "account_circle"
+  },
+  {
+    "name": "add_shopping_cart"
+  },
+  {
+    "name": "alarm"
+  },
+  {
+    "name": "alarm_add"
+  },
+  {
+    "name": "alarm_off"
+  },
+  {
+    "name": "alarm_on"
+  },
+  {
+    "name": "all_out"
+  },
+  {
+    "name": "android"
+  },
+  {
+    "name": "announcement"
+  },
+  {
+    "name": "arrow_right_alt"
+  },
+  {
+    "name": "aspect_ratio"
+  },
+  {
+    "name": "assessment"
+  },
+  {
+    "name": "assignment"
+  },
+  {
+    "name": "assignment_ind"
+  },
+  {
+    "name": "assignment_late"
+  },
+  {
+    "name": "assignment_return"
+  },
+  {
+    "name": "assignment_returned"
+  },
+  {
+    "name": "assignment_turned_in"
+  },
+  {
+    "name": "autorenew"
+  },
+  {
+    "name": "backup"
+  },
+  {
+    "name": "book"
+  },
+  {
+    "name": "bookmark"
+  },
+  {
+    "name": "bookmark_border"
+  },
+  {
+    "name": "bug_report"
+  },
+  {
+    "name": "build"
+  },
+  {
+    "name": "cached"
+  },
+  {
+    "name": "calendar_today"
+  },
+  {
+    "name": "calendar_view_day"
+  },
+  {
+    "name": "camera_enhance"
+  },
+  {
+    "name": "card_giftcard"
+  },
+  {
+    "name": "card_membership"
+  },
+  {
+    "name": "card_travel"
+  },
+  {
+    "name": "change_history"
+  },
+  {
+    "name": "check_circle"
+  },
+  {
+    "name": "check_circle_outline"
+  },
+  {
+    "name": "chrome_reader_mode"
+  },
+  {
+    "name": "class"
+  },
+  {
+    "name": "code"
+  },
+  {
+    "name": "commute"
+  },
+  {
+    "name": "compare_arrows"
+  },
+  {
+    "name": "contact_support"
+  },
+  {
+    "name": "copyright"
+  },
+  {
+    "name": "credit_card"
+  },
+  {
+    "name": "dashboard"
+  },
+  {
+    "name": "date_range"
+  },
+  {
+    "name": "delete"
+  },
+  {
+    "name": "delete_forever"
+  },
+  {
+    "name": "delete_outline"
+  },
+  {
+    "name": "description"
+  },
+  {
+    "name": "dns"
+  },
+  {
+    "name": "done"
+  },
+  {
+    "name": "done_all"
+  },
+  {
+    "name": "done_outline"
+  },
+  {
+    "name": "donut_large"
+  },
+  {
+    "name": "donut_small"
+  },
+  {
+    "name": "drag_indicator"
+  },
+  {
+    "name": "eject"
+  },
+  {
+    "name": "euro_symbol"
+  },
+  {
+    "name": "event"
+  },
+  {
+    "name": "event_seat"
+  },
+  {
+    "name": "exit_to_app"
+  },
+  {
+    "name": "explore"
+  },
+  {
+    "name": "extension"
+  },
+  {
+    "name": "face"
+  },
+  {
+    "name": "favorite"
+  },
+  {
+    "name": "favorite_border"
+  },
+  {
+    "name": "feedback"
+  },
+  {
+    "name": "find_in_page"
+  },
+  {
+    "name": "find_replace"
+  },
+  {
+    "name": "fingerprint"
+  },
+  {
+    "name": "flight_land"
+  },
+  {
+    "name": "flight_takeoff"
+  },
+  {
+    "name": "flip_to_back"
+  },
+  {
+    "name": "flip_to_front"
+  },
+  {
+    "name": "g_translate"
+  },
+  {
+    "name": "gavel"
+  },
+  {
+    "name": "get_app"
+  },
+  {
+    "name": "gif"
+  },
+  {
+    "name": "grade"
+  },
+  {
+    "name": "group_work"
+  },
+  {
+    "name": "help"
+  },
+  {
+    "name": "help_outline"
+  },
+  {
+    "name": "highlight_off"
+  },
+  {
+    "name": "history"
+  },
+  {
+    "name": "home"
+  },
+  {
+    "name": "horizontal_split"
+  },
+  {
+    "name": "hourglass_empty"
+  },
+  {
+    "name": "hourglass_full"
+  },
+  {
+    "name": "http"
+  },
+  {
+    "name": "https"
+  },
+  {
+    "name": "important_devices"
+  },
+  {
+    "name": "info"
+  },
+  {
+    "name": "input"
+  },
+  {
+    "name": "invert_colors"
+  },
+  {
+    "name": "label"
+  },
+  {
+    "name": "label_important"
+  },
+  {
+    "name": "language"
+  },
+  {
+    "name": "launch"
+  },
+  {
+    "name": "line_style"
+  },
+  {
+    "name": "line_weight"
+  },
+  {
+    "name": "list"
+  },
+  {
+    "name": "lock"
+  },
+  {
+    "name": "lock_open"
+  },
+  {
+    "name": "loyalty"
+  },
+  {
+    "name": "markunread_mailbox"
+  },
+  {
+    "name": "maximize"
+  },
+  {
+    "name": "minimize"
+  },
+  {
+    "name": "motorcycle"
+  },
+  {
+    "name": "note_add"
+  },
+  {
+    "name": "offline_bolt"
+  },
+  {
+    "name": "offline_pin"
+  },
+  {
+    "name": "opacity"
+  },
+  {
+    "name": "open_in_browser"
+  },
+  {
+    "name": "open_in_new"
+  },
+  {
+    "name": "open_with"
+  },
+  {
+    "name": "pageview"
+  },
+  {
+    "name": "pan_tool"
+  },
+  {
+    "name": "payment"
+  },
+  {
+    "name": "perm_camera_mic"
+  },
+  {
+    "name": "perm_contact_calendar"
+  },
+  {
+    "name": "perm_data_setting"
+  },
+  {
+    "name": "perm_device_information"
+  },
+  {
+    "name": "perm_identity"
+  },
+  {
+    "name": "perm_media"
+  },
+  {
+    "name": "perm_phone_msg"
+  },
+  {
+    "name": "perm_scan_wifi"
+  },
+  {
+    "name": "pets"
+  },
+  {
+    "name": "picture_in_picture"
+  },
+  {
+    "name": "picture_in_picture_alt"
+  },
+  {
+    "name": "play_for_work"
+  },
+  {
+    "name": "polymer"
+  },
+  {
+    "name": "power_settings_new"
+  },
+  {
+    "name": "pregnant_woman"
+  },
+  {
+    "name": "print"
+  },
+  {
+    "name": "query_builder"
+  },
+  {
+    "name": "question_answer"
+  },
+  {
+    "name": "receipt"
+  },
+  {
+    "name": "record_voice_over"
+  },
+  {
+    "name": "redeem"
+  },
+  {
+    "name": "remove_shopping_cart"
+  },
+  {
+    "name": "reorder"
+  },
+  {
+    "name": "report_problem"
+  },
+  {
+    "name": "restore"
+  },
+  {
+    "name": "restore_from_trash"
+  },
+  {
+    "name": "restore_page"
+  },
+  {
+    "name": "room"
+  },
+  {
+    "name": "rounded_corner"
+  },
+  {
+    "name": "rowing"
+  },
+  {
+    "name": "schedule"
+  },
+  {
+    "name": "search"
+  },
+  {
+    "name": "settings"
+  },
+  {
+    "name": "settings_applications"
+  },
+  {
+    "name": "settings_backup_restore"
+  },
+  {
+    "name": "settings_bluetooth"
+  },
+  {
+    "name": "settings_brightness"
+  },
+  {
+    "name": "settings_cell"
+  },
+  {
+    "name": "settings_ethernet"
+  },
+  {
+    "name": "settings_input_antenna"
+  },
+  {
+    "name": "settings_input_component"
+  },
+  {
+    "name": "settings_input_composite"
+  },
+  {
+    "name": "settings_input_hdmi"
+  },
+  {
+    "name": "settings_input_svideo"
+  },
+  {
+    "name": "settings_overscan"
+  },
+  {
+    "name": "settings_phone"
+  },
+  {
+    "name": "settings_power"
+  },
+  {
+    "name": "settings_remote"
+  },
+  {
+    "name": "settings_voice"
+  },
+  {
+    "name": "shop"
+  },
+  {
+    "name": "shop_two"
+  },
+  {
+    "name": "shopping_basket"
+  },
+  {
+    "name": "shopping_cart"
+  },
+  {
+    "name": "speaker_notes"
+  },
+  {
+    "name": "speaker_notes_off"
+  },
+  {
+    "name": "spellcheck"
+  },
+  {
+    "name": "stars"
+  },
+  {
+    "name": "store"
+  },
+  {
+    "name": "subject"
+  },
+  {
+    "name": "supervised_user_circle"
+  },
+  {
+    "name": "supervisor_account"
+  },
+  {
+    "name": "swap_horiz"
+  },
+  {
+    "name": "swap_horizontal_circle"
+  },
+  {
+    "name": "swap_vert"
+  },
+  {
+    "name": "swap_vertical_circle"
+  },
+  {
+    "name": "tab"
+  },
+  {
+    "name": "tab_unselected"
+  },
+  {
+    "name": "text_rotate_up"
+  },
+  {
+    "name": "text_rotate_vertical"
+  },
+  {
+    "name": "text_rotation_down"
+  },
+  {
+    "name": "text_rotation_none"
+  },
+  {
+    "name": "theaters"
+  },
+  {
+    "name": "thumb_down"
+  },
+  {
+    "name": "thumb_up"
+  },
+  {
+    "name": "thumbs_up_down"
+  },
+  {
+    "name": "timeline"
+  },
+  {
+    "name": "toc"
+  },
+  {
+    "name": "today"
+  },
+  {
+    "name": "toll"
+  },
+  {
+    "name": "touch_app"
+  },
+  {
+    "name": "track_changes"
+  },
+  {
+    "name": "translate"
+  },
+  {
+    "name": "trending_down"
+  },
+  {
+    "name": "trending_flat"
+  },
+  {
+    "name": "trending_up"
+  },
+  {
+    "name": "turned_in"
+  },
+  {
+    "name": "turned_in_not"
+  },
+  {
+    "name": "update"
+  },
+  {
+    "name": "verified_user"
+  },
+  {
+    "name": "vertical_split"
+  },
+  {
+    "name": "view_agenda"
+  },
+  {
+    "name": "view_array"
+  },
+  {
+    "name": "view_carousel"
+  },
+  {
+    "name": "view_column"
+  },
+  {
+    "name": "view_day"
+  },
+  {
+    "name": "view_headline"
+  },
+  {
+    "name": "view_list"
+  },
+  {
+    "name": "view_module"
+  },
+  {
+    "name": "view_quilt"
+  },
+  {
+    "name": "view_stream"
+  },
+  {
+    "name": "view_week"
+  },
+  {
+    "name": "visibility"
+  },
+  {
+    "name": "visibility_off"
+  },
+  {
+    "name": "voice_over_off"
+  },
+  {
+    "name": "watch_later"
+  },
+  {
+    "name": "work"
+  },
+  {
+    "name": "work_off"
+  },
+  {
+    "name": "work_outline"
+  },
+  {
+    "name": "youtube_searched_for"
+  },
+  {
+    "name": "zoom_in"
+  },
+  {
+    "name": "zoom_out"
+  },
+  {
+    "name": "alternate_email"
+  },
+  {
+    "name": "business"
+  },
+  {
+    "name": "call"
+  },
+  {
+    "name": "call_end"
+  },
+  {
+    "name": "call_made"
+  },
+  {
+    "name": "call_merge"
+  },
+  {
+    "name": "call_missed"
+  },
+  {
+    "name": "call_missed_outgoing"
+  },
+  {
+    "name": "call_received"
+  },
+  {
+    "name": "call_split"
+  },
+  {
+    "name": "cancel_presentation"
+  },
+  {
+    "name": "cell_wifi"
+  },
+  {
+    "name": "chat"
+  },
+  {
+    "name": "chat_bubble"
+  },
+  {
+    "name": "chat_bubble_outline"
+  },
+  {
+    "name": "clear_all"
+  },
+  {
+    "name": "comment"
+  },
+  {
+    "name": "contact_mail"
+  },
+  {
+    "name": "contact_phone"
+  },
+  {
+    "name": "contacts"
+  },
+  {
+    "name": "dialer_sip"
+  },
+  {
+    "name": "dialpad"
+  },
+  {
+    "name": "domain_disabled"
+  },
+  {
+    "name": "email"
+  },
+  {
+    "name": "forum"
+  },
+  {
+    "name": "import_contacts"
+  },
+  {
+    "name": "import_export"
+  },
+  {
+    "name": "invert_colors_off"
+  },
+  {
+    "name": "list_alt"
+  },
+  {
+    "name": "live_help"
+  },
+  {
+    "name": "location_off"
+  },
+  {
+    "name": "location_on"
+  },
+  {
+    "name": "mail_outline"
+  },
+  {
+    "name": "message"
+  },
+  {
+    "name": "mobile_screen_share"
+  },
+  {
+    "name": "no_sim"
+  },
+  {
+    "name": "pause_presentation"
+  },
+  {
+    "name": "phone"
+  },
+  {
+    "name": "phonelink_erase"
+  },
+  {
+    "name": "phonelink_lock"
+  },
+  {
+    "name": "phonelink_ring"
+  },
+  {
+    "name": "phonelink_setup"
+  },
+  {
+    "name": "portable_wifi_off"
+  },
+  {
+    "name": "present_to_all"
+  },
+  {
+    "name": "ring_volume"
+  },
+  {
+    "name": "rss_feed"
+  },
+  {
+    "name": "screen_share"
+  },
+  {
+    "name": "sentiment_satisfied_alt"
+  },
+  {
+    "name": "speaker_phone"
+  },
+  {
+    "name": "stay_current_landscape"
+  },
+  {
+    "name": "stay_current_portrait"
+  },
+  {
+    "name": "stay_primary_landscape"
+  },
+  {
+    "name": "stay_primary_portrait"
+  },
+  {
+    "name": "stop_screen_share"
+  },
+  {
+    "name": "swap_calls"
+  },
+  {
+    "name": "textsms"
+  },
+  {
+    "name": "unsubscribe"
+  },
+  {
+    "name": "voicemail"
+  },
+  {
+    "name": "vpn_key"
+  },
+  {
+    "name": "4k"
+  },
+  {
+    "name": "add_to_queue"
+  },
+  {
+    "name": "airplay"
+  },
+  {
+    "name": "album"
+  },
+  {
+    "name": "art_track"
+  },
+  {
+    "name": "av_timer"
+  },
+  {
+    "name": "branding_watermark"
+  },
+  {
+    "name": "call_to_action"
+  },
+  {
+    "name": "closed_caption"
+  },
+  {
+    "name": "control_camera"
+  },
+  {
+    "name": "equalizer"
+  },
+  {
+    "name": "explicit"
+  },
+  {
+    "name": "fast_forward"
+  },
+  {
+    "name": "fast_rewind"
+  },
+  {
+    "name": "featured_play_list"
+  },
+  {
+    "name": "featured_video"
+  },
+  {
+    "name": "fiber_dvr"
+  },
+  {
+    "name": "fiber_manual_record"
+  },
+  {
+    "name": "fiber_new"
+  },
+  {
+    "name": "fiber_pin"
+  },
+  {
+    "name": "fiber_smart_record"
+  },
+  {
+    "name": "forward_10"
+  },
+  {
+    "name": "forward_30"
+  },
+  {
+    "name": "forward_5"
+  },
+  {
+    "name": "games"
+  },
+  {
+    "name": "hd"
+  },
+  {
+    "name": "hearing"
+  },
+  {
+    "name": "high_quality"
+  },
+  {
+    "name": "library_add"
+  },
+  {
+    "name": "library_books"
+  },
+  {
+    "name": "library_music"
+  },
+  {
+    "name": "loop"
+  },
+  {
+    "name": "mic"
+  },
+  {
+    "name": "mic_none"
+  },
+  {
+    "name": "mic_off"
+  },
+  {
+    "name": "missed_video_call"
+  },
+  {
+    "name": "movie"
+  },
+  {
+    "name": "music_video"
+  },
+  {
+    "name": "new_releases"
+  },
+  {
+    "name": "not_interested"
+  },
+  {
+    "name": "note"
+  },
+  {
+    "name": "pause"
+  },
+  {
+    "name": "pause_circle_filled"
+  },
+  {
+    "name": "pause_circle_outline"
+  },
+  {
+    "name": "play_arrow"
+  },
+  {
+    "name": "play_circle_filled"
+  },
+  {
+    "name": "play_circle_outline"
+  },
+  {
+    "name": "playlist_add"
+  },
+  {
+    "name": "playlist_add_check"
+  },
+  {
+    "name": "playlist_play"
+  },
+  {
+    "name": "queue"
+  },
+  {
+    "name": "queue_music"
+  },
+  {
+    "name": "queue_play_next"
+  },
+  {
+    "name": "radio"
+  },
+  {
+    "name": "recent_actors"
+  },
+  {
+    "name": "remove_from_queue"
+  },
+  {
+    "name": "repeat"
+  },
+  {
+    "name": "repeat_one"
+  },
+  {
+    "name": "replay"
+  },
+  {
+    "name": "replay_10"
+  },
+  {
+    "name": "replay_30"
+  },
+  {
+    "name": "replay_5"
+  },
+  {
+    "name": "shuffle"
+  },
+  {
+    "name": "skip_next"
+  },
+  {
+    "name": "skip_previous"
+  },
+  {
+    "name": "slow_motion_video"
+  },
+  {
+    "name": "snooze"
+  },
+  {
+    "name": "sort_by_alpha"
+  },
+  {
+    "name": "stop"
+  },
+  {
+    "name": "subscriptions"
+  },
+  {
+    "name": "subtitles"
+  },
+  {
+    "name": "surround_sound"
+  },
+  {
+    "name": "video_call"
+  },
+  {
+    "name": "video_label"
+  },
+  {
+    "name": "video_library"
+  },
+  {
+    "name": "videocam"
+  },
+  {
+    "name": "videocam_off"
+  },
+  {
+    "name": "volume_down"
+  },
+  {
+    "name": "volume_mute"
+  },
+  {
+    "name": "volume_off"
+  },
+  {
+    "name": "volume_up"
+  },
+  {
+    "name": "add"
+  },
+  {
+    "name": "add_box"
+  },
+  {
+    "name": "add_circle"
+  },
+  {
+    "name": "add_circle_outline"
+  },
+  {
+    "name": "archive"
+  },
+  {
+    "name": "backspace"
+  },
+  {
+    "name": "ballot"
+  },
+  {
+    "name": "block"
+  },
+  {
+    "name": "clear"
+  },
+  {
+    "name": "create"
+  },
+  {
+    "name": "delete_sweep"
+  },
+  {
+    "name": "drafts"
+  },
+  {
+    "name": "file_copy"
+  },
+  {
+    "name": "filter_list"
+  },
+  {
+    "name": "flag"
+  },
+  {
+    "name": "font_download"
+  },
+  {
+    "name": "forward"
+  },
+  {
+    "name": "gesture"
+  },
+  {
+    "name": "how_to_reg"
+  },
+  {
+    "name": "how_to_vote"
+  },
+  {
+    "name": "inbox"
+  },
+  {
+    "name": "link"
+  },
+  {
+    "name": "link_off"
+  },
+  {
+    "name": "low_priority"
+  },
+  {
+    "name": "mail"
+  },
+  {
+    "name": "markunread"
+  },
+  {
+    "name": "move_to_inbox"
+  },
+  {
+    "name": "next_week"
+  },
+  {
+    "name": "outlined_flag"
+  },
+  {
+    "name": "redo"
+  },
+  {
+    "name": "remove"
+  },
+  {
+    "name": "remove_circle"
+  },
+  {
+    "name": "remove_circle_outline"
+  },
+  {
+    "name": "reply"
+  },
+  {
+    "name": "reply_all"
+  },
+  {
+    "name": "report"
+  },
+  {
+    "name": "report_off"
+  },
+  {
+    "name": "save"
+  },
+  {
+    "name": "save_alt"
+  },
+  {
+    "name": "select_all"
+  },
+  {
+    "name": "send"
+  },
+  {
+    "name": "sort"
+  },
+  {
+    "name": "text_format"
+  },
+  {
+    "name": "unarchive"
+  },
+  {
+    "name": "undo"
+  },
+  {
+    "name": "waves"
+  },
+  {
+    "name": "weekend"
+  },
+  {
+    "name": "where_to_vote"
+  },
+  {
+    "name": "access_alarm"
+  },
+  {
+    "name": "access_alarms"
+  },
+  {
+    "name": "access_time"
+  },
+  {
+    "name": "add_alarm"
+  },
+  {
+    "name": "add_to_home_screen"
+  },
+  {
+    "name": "airplanemode_active"
+  },
+  {
+    "name": "airplanemode_inactive"
+  },
+  {
+    "name": "battery_alert"
+  },
+  {
+    "name": "battery_charging_full"
+  },
+  {
+    "name": "battery_full"
+  },
+  {
+    "name": "battery_std"
+  },
+  {
+    "name": "battery_unknown"
+  },
+  {
+    "name": "bluetooth"
+  },
+  {
+    "name": "bluetooth_connected"
+  },
+  {
+    "name": "bluetooth_disabled"
+  },
+  {
+    "name": "bluetooth_searching"
+  },
+  {
+    "name": "brightness_auto"
+  },
+  {
+    "name": "brightness_high"
+  },
+  {
+    "name": "brightness_low"
+  },
+  {
+    "name": "brightness_medium"
+  },
+  {
+    "name": "data_usage"
+  },
+  {
+    "name": "developer_mode"
+  },
+  {
+    "name": "devices"
+  },
+  {
+    "name": "dvr"
+  },
+  {
+    "name": "gps_fixed"
+  },
+  {
+    "name": "gps_not_fixed"
+  },
+  {
+    "name": "gps_off"
+  },
+  {
+    "name": "graphic_eq"
+  },
+  {
+    "name": "location_disabled"
+  },
+  {
+    "name": "location_searching"
+  },
+  {
+    "name": "mobile_friendly"
+  },
+  {
+    "name": "mobile_off"
+  },
+  {
+    "name": "network_cell"
+  },
+  {
+    "name": "network_wifi"
+  },
+  {
+    "name": "nfc"
+  },
+  {
+    "name": "screen_lock_landscape"
+  },
+  {
+    "name": "screen_lock_portrait"
+  },
+  {
+    "name": "screen_lock_rotation"
+  },
+  {
+    "name": "screen_rotation"
+  },
+  {
+    "name": "sd_storage"
+  },
+  {
+    "name": "settings_system_daydream"
+  },
+  {
+    "name": "signal_cellular_4_bar"
+  },
+  {
+    "name": "signal_cellular_alt"
+  },
+  {
+    "name": "signal_cellular_connected_no_internet_4_bar"
+  },
+  {
+    "name": "signal_cellular_no_sim"
+  },
+  {
+    "name": "signal_cellular_null"
+  },
+  {
+    "name": "signal_cellular_off"
+  },
+  {
+    "name": "signal_wifi_4_bar"
+  },
+  {
+    "name": "signal_wifi_4_bar_lock"
+  },
+  {
+    "name": "signal_wifi_off"
+  },
+  {
+    "name": "storage"
+  },
+  {
+    "name": "usb"
+  },
+  {
+    "name": "wallpaper"
+  },
+  {
+    "name": "widgets"
+  },
+  {
+    "name": "wifi_lock"
+  },
+  {
+    "name": "wifi_tethering"
+  },
+  {
+    "name": "add_comment"
+  },
+  {
+    "name": "attach_file"
+  },
+  {
+    "name": "attach_money"
+  },
+  {
+    "name": "bar_chart"
+  },
+  {
+    "name": "border_all"
+  },
+  {
+    "name": "border_bottom"
+  },
+  {
+    "name": "border_clear"
+  },
+  {
+    "name": "border_color"
+  },
+  {
+    "name": "border_horizontal"
+  },
+  {
+    "name": "border_inner"
+  },
+  {
+    "name": "border_left"
+  },
+  {
+    "name": "border_outer"
+  },
+  {
+    "name": "border_right"
+  },
+  {
+    "name": "border_style"
+  },
+  {
+    "name": "border_top"
+  },
+  {
+    "name": "border_vertical"
+  },
+  {
+    "name": "bubble_chart"
+  },
+  {
+    "name": "drag_handle"
+  },
+  {
+    "name": "format_align_center"
+  },
+  {
+    "name": "format_align_justify"
+  },
+  {
+    "name": "format_align_left"
+  },
+  {
+    "name": "format_align_right"
+  },
+  {
+    "name": "format_bold"
+  },
+  {
+    "name": "format_clear"
+  },
+  {
+    "name": "format_color_fill"
+  },
+  {
+    "name": "format_color_reset"
+  },
+  {
+    "name": "format_color_text"
+  },
+  {
+    "name": "format_indent_decrease"
+  },
+  {
+    "name": "format_indent_increase"
+  },
+  {
+    "name": "format_italic"
+  },
+  {
+    "name": "format_line_spacing"
+  },
+  {
+    "name": "format_list_bulleted"
+  },
+  {
+    "name": "format_list_numbered"
+  },
+  {
+    "name": "format_list_numbered_rtl"
+  },
+  {
+    "name": "format_paint"
+  },
+  {
+    "name": "format_quote"
+  },
+  {
+    "name": "format_shapes"
+  },
+  {
+    "name": "format_size"
+  },
+  {
+    "name": "format_strikethrough"
+  },
+  {
+    "name": "format_textdirection_l_to_r"
+  },
+  {
+    "name": "format_textdirection_r_to_l"
+  },
+  {
+    "name": "format_underlined"
+  },
+  {
+    "name": "functions"
+  },
+  {
+    "name": "highlight"
+  },
+  {
+    "name": "insert_chart"
+  },
+  {
+    "name": "insert_chart_outlined"
+  },
+  {
+    "name": "insert_comment"
+  },
+  {
+    "name": "insert_drive_file"
+  },
+  {
+    "name": "insert_emoticon"
+  },
+  {
+    "name": "insert_invitation"
+  },
+  {
+    "name": "insert_link"
+  },
+  {
+    "name": "insert_photo"
+  },
+  {
+    "name": "linear_scale"
+  },
+  {
+    "name": "merge_type"
+  },
+  {
+    "name": "mode_comment"
+  },
+  {
+    "name": "monetization_on"
+  },
+  {
+    "name": "money_off"
+  },
+  {
+    "name": "multiline_chart"
+  },
+  {
+    "name": "notes"
+  },
+  {
+    "name": "pie_chart"
+  },
+  {
+    "name": "publish"
+  },
+  {
+    "name": "scatter_plot"
+  },
+  {
+    "name": "score"
+  },
+  {
+    "name": "short_text"
+  },
+  {
+    "name": "show_chart"
+  },
+  {
+    "name": "space_bar"
+  },
+  {
+    "name": "strikethrough_s"
+  },
+  {
+    "name": "table_chart"
+  },
+  {
+    "name": "text_fields"
+  },
+  {
+    "name": "title"
+  },
+  {
+    "name": "vertical_align_bottom"
+  },
+  {
+    "name": "vertical_align_center"
+  },
+  {
+    "name": "vertical_align_top"
+  },
+  {
+    "name": "wrap_text"
+  },
+  {
+    "name": "attachment"
+  },
+  {
+    "name": "cloud"
+  },
+  {
+    "name": "cloud_circle"
+  },
+  {
+    "name": "cloud_done"
+  },
+  {
+    "name": "cloud_download"
+  },
+  {
+    "name": "cloud_off"
+  },
+  {
+    "name": "cloud_queue"
+  },
+  {
+    "name": "cloud_upload"
+  },
+  {
+    "name": "create_new_folder"
+  },
+  {
+    "name": "folder"
+  },
+  {
+    "name": "folder_open"
+  },
+  {
+    "name": "folder_shared"
+  },
+  {
+    "name": "cast"
+  },
+  {
+    "name": "cast_connected"
+  },
+  {
+    "name": "computer"
+  },
+  {
+    "name": "desktop_mac"
+  },
+  {
+    "name": "desktop_windows"
+  },
+  {
+    "name": "developer_board"
+  },
+  {
+    "name": "device_hub"
+  },
+  {
+    "name": "device_unknown"
+  },
+  {
+    "name": "devices_other"
+  },
+  {
+    "name": "dock"
+  },
+  {
+    "name": "gamepad"
+  },
+  {
+    "name": "headset"
+  },
+  {
+    "name": "headset_mic"
+  },
+  {
+    "name": "keyboard"
+  },
+  {
+    "name": "keyboard_arrow_down"
+  },
+  {
+    "name": "keyboard_arrow_left"
+  },
+  {
+    "name": "keyboard_arrow_right"
+  },
+  {
+    "name": "keyboard_arrow_up"
+  },
+  {
+    "name": "keyboard_backspace"
+  },
+  {
+    "name": "keyboard_capslock"
+  },
+  {
+    "name": "keyboard_hide"
+  },
+  {
+    "name": "keyboard_return"
+  },
+  {
+    "name": "keyboard_tab"
+  },
+  {
+    "name": "keyboard_voice"
+  },
+  {
+    "name": "laptop"
+  },
+  {
+    "name": "laptop_chromebook"
+  },
+  {
+    "name": "laptop_mac"
+  },
+  {
+    "name": "laptop_windows"
+  },
+  {
+    "name": "memory"
+  },
+  {
+    "name": "mouse"
+  },
+  {
+    "name": "phone_android"
+  },
+  {
+    "name": "phone_iphone"
+  },
+  {
+    "name": "phonelink"
+  },
+  {
+    "name": "phonelink_off"
+  },
+  {
+    "name": "power_input"
+  },
+  {
+    "name": "router"
+  },
+  {
+    "name": "scanner"
+  },
+  {
+    "name": "security"
+  },
+  {
+    "name": "sim_card"
+  },
+  {
+    "name": "smartphone"
+  },
+  {
+    "name": "speaker"
+  },
+  {
+    "name": "speaker_group"
+  },
+  {
+    "name": "tablet"
+  },
+  {
+    "name": "tablet_android"
+  },
+  {
+    "name": "tablet_mac"
+  },
+  {
+    "name": "toys"
+  },
+  {
+    "name": "tv"
+  },
+  {
+    "name": "videogame_asset"
+  },
+  {
+    "name": "watch"
+  },
+  {
+    "name": "add_a_photo"
+  },
+  {
+    "name": "add_photo_alternate"
+  },
+  {
+    "name": "add_to_photos"
+  },
+  {
+    "name": "adjust"
+  },
+  {
+    "name": "assistant"
+  },
+  {
+    "name": "assistant_photo"
+  },
+  {
+    "name": "audiotrack"
+  },
+  {
+    "name": "blur_circular"
+  },
+  {
+    "name": "blur_linear"
+  },
+  {
+    "name": "blur_off"
+  },
+  {
+    "name": "blur_on"
+  },
+  {
+    "name": "brightness_1"
+  },
+  {
+    "name": "brightness_2"
+  },
+  {
+    "name": "brightness_3"
+  },
+  {
+    "name": "brightness_4"
+  },
+  {
+    "name": "brightness_5"
+  },
+  {
+    "name": "brightness_6"
+  },
+  {
+    "name": "brightness_7"
+  },
+  {
+    "name": "broken_image"
+  },
+  {
+    "name": "brush"
+  },
+  {
+    "name": "burst_mode"
+  },
+  {
+    "name": "camera"
+  },
+  {
+    "name": "camera_alt"
+  },
+  {
+    "name": "camera_front"
+  },
+  {
+    "name": "camera_rear"
+  },
+  {
+    "name": "camera_roll"
+  },
+  {
+    "name": "center_focus_strong"
+  },
+  {
+    "name": "center_focus_weak"
+  },
+  {
+    "name": "collections"
+  },
+  {
+    "name": "collections_bookmark"
+  },
+  {
+    "name": "color_lens"
+  },
+  {
+    "name": "colorize"
+  },
+  {
+    "name": "compare"
+  },
+  {
+    "name": "control_point"
+  },
+  {
+    "name": "control_point_duplicate"
+  },
+  {
+    "name": "crop"
+  },
+  {
+    "name": "crop_16_9"
+  },
+  {
+    "name": "crop_3_2"
+  },
+  {
+    "name": "crop_5_4"
+  },
+  {
+    "name": "crop_7_5"
+  },
+  {
+    "name": "crop_din"
+  },
+  {
+    "name": "crop_free"
+  },
+  {
+    "name": "crop_landscape"
+  },
+  {
+    "name": "crop_original"
+  },
+  {
+    "name": "crop_portrait"
+  },
+  {
+    "name": "crop_rotate"
+  },
+  {
+    "name": "crop_square"
+  },
+  {
+    "name": "dehaze"
+  },
+  {
+    "name": "details"
+  },
+  {
+    "name": "edit"
+  },
+  {
+    "name": "exposure"
+  },
+  {
+    "name": "exposure_neg_1"
+  },
+  {
+    "name": "exposure_neg_2"
+  },
+  {
+    "name": "exposure_plus_1"
+  },
+  {
+    "name": "exposure_plus_2"
+  },
+  {
+    "name": "exposure_zero"
+  },
+  {
+    "name": "filter"
+  },
+  {
+    "name": "filter_1"
+  },
+  {
+    "name": "filter_2"
+  },
+  {
+    "name": "filter_3"
+  },
+  {
+    "name": "filter_4"
+  },
+  {
+    "name": "filter_5"
+  },
+  {
+    "name": "filter_6"
+  },
+  {
+    "name": "filter_7"
+  },
+  {
+    "name": "filter_8"
+  },
+  {
+    "name": "filter_9"
+  },
+  {
+    "name": "filter_9_plus"
+  },
+  {
+    "name": "filter_b_and_w"
+  },
+  {
+    "name": "filter_center_focus"
+  },
+  {
+    "name": "filter_drama"
+  },
+  {
+    "name": "filter_frames"
+  },
+  {
+    "name": "filter_hdr"
+  },
+  {
+    "name": "filter_none"
+  },
+  {
+    "name": "filter_tilt_shift"
+  },
+  {
+    "name": "filter_vintage"
+  },
+  {
+    "name": "flare"
+  },
+  {
+    "name": "flash_auto"
+  },
+  {
+    "name": "flash_off"
+  },
+  {
+    "name": "flash_on"
+  },
+  {
+    "name": "flip"
+  },
+  {
+    "name": "gradient"
+  },
+  {
+    "name": "grain"
+  },
+  {
+    "name": "grid_off"
+  },
+  {
+    "name": "grid_on"
+  },
+  {
+    "name": "hdr_off"
+  },
+  {
+    "name": "hdr_on"
+  },
+  {
+    "name": "hdr_strong"
+  },
+  {
+    "name": "hdr_weak"
+  },
+  {
+    "name": "healing"
+  },
+  {
+    "name": "image"
+  },
+  {
+    "name": "image_aspect_ratio"
+  },
+  {
+    "name": "image_search"
+  },
+  {
+    "name": "iso"
+  },
+  {
+    "name": "landscape"
+  },
+  {
+    "name": "leak_add"
+  },
+  {
+    "name": "leak_remove"
+  },
+  {
+    "name": "lens"
+  },
+  {
+    "name": "linked_camera"
+  },
+  {
+    "name": "looks"
+  },
+  {
+    "name": "looks_3"
+  },
+  {
+    "name": "looks_4"
+  },
+  {
+    "name": "looks_5"
+  },
+  {
+    "name": "looks_6"
+  },
+  {
+    "name": "looks_one"
+  },
+  {
+    "name": "looks_two"
+  },
+  {
+    "name": "loupe"
+  },
+  {
+    "name": "monochrome_photos"
+  },
+  {
+    "name": "movie_creation"
+  },
+  {
+    "name": "movie_filter"
+  },
+  {
+    "name": "music_note"
+  },
+  {
+    "name": "music_off"
+  },
+  {
+    "name": "nature"
+  },
+  {
+    "name": "nature_people"
+  },
+  {
+    "name": "navigate_before"
+  },
+  {
+    "name": "navigate_next"
+  },
+  {
+    "name": "palette"
+  },
+  {
+    "name": "panorama"
+  },
+  {
+    "name": "panorama_fish_eye"
+  },
+  {
+    "name": "panorama_horizontal"
+  },
+  {
+    "name": "panorama_vertical"
+  },
+  {
+    "name": "panorama_wide_angle"
+  },
+  {
+    "name": "photo"
+  },
+  {
+    "name": "photo_album"
+  },
+  {
+    "name": "photo_camera"
+  },
+  {
+    "name": "photo_filter"
+  },
+  {
+    "name": "photo_library"
+  },
+  {
+    "name": "photo_size_select_actual"
+  },
+  {
+    "name": "photo_size_select_large"
+  },
+  {
+    "name": "photo_size_select_small"
+  },
+  {
+    "name": "picture_as_pdf"
+  },
+  {
+    "name": "portrait"
+  },
+  {
+    "name": "remove_red_eye"
+  },
+  {
+    "name": "rotate_90_degrees_ccw"
+  },
+  {
+    "name": "rotate_left"
+  },
+  {
+    "name": "rotate_right"
+  },
+  {
+    "name": "shutter_speed"
+  },
+  {
+    "name": "slideshow"
+  },
+  {
+    "name": "straighten"
+  },
+  {
+    "name": "style"
+  },
+  {
+    "name": "switch_camera"
+  },
+  {
+    "name": "switch_video"
+  },
+  {
+    "name": "tag_faces"
+  },
+  {
+    "name": "texture"
+  },
+  {
+    "name": "timelapse"
+  },
+  {
+    "name": "timer"
+  },
+  {
+    "name": "timer_10"
+  },
+  {
+    "name": "timer_3"
+  },
+  {
+    "name": "timer_off"
+  },
+  {
+    "name": "tonality"
+  },
+  {
+    "name": "transform"
+  },
+  {
+    "name": "tune"
+  },
+  {
+    "name": "view_comfy"
+  },
+  {
+    "name": "view_compact"
+  },
+  {
+    "name": "vignette"
+  },
+  {
+    "name": "wb_auto"
+  },
+  {
+    "name": "wb_cloudy"
+  },
+  {
+    "name": "wb_incandescent"
+  },
+  {
+    "name": "wb_iridescent"
+  },
+  {
+    "name": "wb_sunny"
+  },
+  {
+    "name": ""
+  },
+  {
+    "name": "360"
+  },
+  {
+    "name": "add_location"
+  },
+  {
+    "name": "atm"
+  },
+  {
+    "name": "beenhere"
+  },
+  {
+    "name": "category"
+  },
+  {
+    "name": "compass_calibration"
+  },
+  {
+    "name": "departure_board"
+  },
+  {
+    "name": "directions"
+  },
+  {
+    "name": "directions_bike"
+  },
+  {
+    "name": "directions_boat"
+  },
+  {
+    "name": "directions_bus"
+  },
+  {
+    "name": "directions_car"
+  },
+  {
+    "name": "directions_railway"
+  },
+  {
+    "name": "directions_run"
+  },
+  {
+    "name": "directions_subway"
+  },
+  {
+    "name": "directions_transit"
+  },
+  {
+    "name": "directions_walk"
+  },
+  {
+    "name": "edit_attributes"
+  },
+  {
+    "name": "edit_location"
+  },
+  {
+    "name": "ev_station"
+  },
+  {
+    "name": "fastfood"
+  },
+  {
+    "name": "flight"
+  },
+  {
+    "name": "hotel"
+  },
+  {
+    "name": "layers"
+  },
+  {
+    "name": "layers_clear"
+  },
+  {
+    "name": "local_activity"
+  },
+  {
+    "name": "local_airport"
+  },
+  {
+    "name": "local_atm"
+  },
+  {
+    "name": "local_bar"
+  },
+  {
+    "name": "local_cafe"
+  },
+  {
+    "name": "local_car_wash"
+  },
+  {
+    "name": "local_convenience_store"
+  },
+  {
+    "name": "local_dining"
+  },
+  {
+    "name": "local_drink"
+  },
+  {
+    "name": "local_florist"
+  },
+  {
+    "name": "local_gas_station"
+  },
+  {
+    "name": "local_grocery_store"
+  },
+  {
+    "name": "local_hospital"
+  },
+  {
+    "name": "local_hotel"
+  },
+  {
+    "name": "local_laundry_service"
+  },
+  {
+    "name": "local_library"
+  },
+  {
+    "name": "local_mall"
+  },
+  {
+    "name": "local_movies"
+  },
+  {
+    "name": "local_offer"
+  },
+  {
+    "name": "local_parking"
+  },
+  {
+    "name": "local_pharmacy"
+  },
+  {
+    "name": "local_phone"
+  },
+  {
+    "name": "local_pizza"
+  },
+  {
+    "name": "local_play"
+  },
+  {
+    "name": "local_post_office"
+  },
+  {
+    "name": "local_printshop"
+  },
+  {
+    "name": "local_see"
+  },
+  {
+    "name": "local_shipping"
+  },
+  {
+    "name": "local_taxi"
+  },
+  {
+    "name": "map"
+  },
+  {
+    "name": "money"
+  },
+  {
+    "name": "my_location"
+  },
+  {
+    "name": "navigation"
+  },
+  {
+    "name": "near_me"
+  },
+  {
+    "name": "not_listed_location"
+  },
+  {
+    "name": "person_pin"
+  },
+  {
+    "name": "person_pin_circle"
+  },
+  {
+    "name": "pin_drop"
+  },
+  {
+    "name": "place"
+  },
+  {
+    "name": "rate_review"
+  },
+  {
+    "name": "restaurant"
+  },
+  {
+    "name": "restaurant_menu"
+  },
+  {
+    "name": "satellite"
+  },
+  {
+    "name": "store_mall_directory"
+  },
+  {
+    "name": "streetview"
+  },
+  {
+    "name": "subway"
+  },
+  {
+    "name": "terrain"
+  },
+  {
+    "name": "traffic"
+  },
+  {
+    "name": "train"
+  },
+  {
+    "name": "tram"
+  },
+  {
+    "name": "transfer_within_a_station"
+  },
+  {
+    "name": "transit_enterexit"
+  },
+  {
+    "name": "trip_origin"
+  },
+  {
+    "name": "zoom_out_map"
+  },
+  {
+    "name": "apps"
+  },
+  {
+    "name": "arrow_back"
+  },
+  {
+    "name": "arrow_back_ios"
+  },
+  {
+    "name": "arrow_downward"
+  },
+  {
+    "name": "arrow_drop_down"
+  },
+  {
+    "name": "arrow_drop_down_circle"
+  },
+  {
+    "name": "arrow_drop_up"
+  },
+  {
+    "name": "arrow_forward"
+  },
+  {
+    "name": "arrow_forward_ios"
+  },
+  {
+    "name": "arrow_left"
+  },
+  {
+    "name": "arrow_right"
+  },
+  {
+    "name": "arrow_upward"
+  },
+  {
+    "name": "cancel"
+  },
+  {
+    "name": "check"
+  },
+  {
+    "name": "chevron_left"
+  },
+  {
+    "name": "chevron_right"
+  },
+  {
+    "name": "close"
+  },
+  {
+    "name": "expand_less"
+  },
+  {
+    "name": "expand_more"
+  },
+  {
+    "name": "first_page"
+  },
+  {
+    "name": "fullscreen"
+  },
+  {
+    "name": "fullscreen_exit"
+  },
+  {
+    "name": "last_page"
+  },
+  {
+    "name": "menu"
+  },
+  {
+    "name": "more_horiz"
+  },
+  {
+    "name": "more_vert"
+  },
+  {
+    "name": "refresh"
+  },
+  {
+    "name": "subdirectory_arrow_left"
+  },
+  {
+    "name": "subdirectory_arrow_right"
+  },
+  {
+    "name": "unfold_less"
+  },
+  {
+    "name": "unfold_more"
+  },
+  {
+    "name": "adb"
+  },
+  {
+    "name": "airline_seat_flat"
+  },
+  {
+    "name": "airline_seat_flat_angled"
+  },
+  {
+    "name": "airline_seat_individual_suite"
+  },
+  {
+    "name": "airline_seat_legroom_extra"
+  },
+  {
+    "name": "airline_seat_legroom_normal"
+  },
+  {
+    "name": "airline_seat_legroom_reduced"
+  },
+  {
+    "name": "airline_seat_recline_extra"
+  },
+  {
+    "name": "airline_seat_recline_normal"
+  },
+  {
+    "name": "bluetooth_audio"
+  },
+  {
+    "name": "confirmation_number"
+  },
+  {
+    "name": "disc_full"
+  },
+  {
+    "name": "drive_eta"
+  },
+  {
+    "name": "enhanced_encryption"
+  },
+  {
+    "name": "event_available"
+  },
+  {
+    "name": "event_busy"
+  },
+  {
+    "name": "event_note"
+  },
+  {
+    "name": "folder_special"
+  },
+  {
+    "name": "live_tv"
+  },
+  {
+    "name": "mms"
+  },
+  {
+    "name": "more"
+  },
+  {
+    "name": "network_check"
+  },
+  {
+    "name": "network_locked"
+  },
+  {
+    "name": "no_encryption"
+  },
+  {
+    "name": "ondemand_video"
+  },
+  {
+    "name": "personal_video"
+  },
+  {
+    "name": "phone_bluetooth_speaker"
+  },
+  {
+    "name": "phone_callback"
+  },
+  {
+    "name": "phone_forwarded"
+  },
+  {
+    "name": "phone_in_talk"
+  },
+  {
+    "name": "phone_locked"
+  },
+  {
+    "name": "phone_missed"
+  },
+  {
+    "name": "phone_paused"
+  },
+  {
+    "name": "power"
+  },
+  {
+    "name": "power_off"
+  },
+  {
+    "name": "priority_high"
+  },
+  {
+    "name": "sd_card"
+  },
+  {
+    "name": "sms"
+  },
+  {
+    "name": "sms_failed"
+  },
+  {
+    "name": "sync"
+  },
+  {
+    "name": "sync_disabled"
+  },
+  {
+    "name": "sync_problem"
+  },
+  {
+    "name": "system_update"
+  },
+  {
+    "name": "tap_and_play"
+  },
+  {
+    "name": "time_to_leave"
+  },
+  {
+    "name": "tv_off"
+  },
+  {
+    "name": "vibration"
+  },
+  {
+    "name": "voice_chat"
+  },
+  {
+    "name": "vpn_lock"
+  },
+  {
+    "name": "wc"
+  },
+  {
+    "name": "wifi"
+  },
+  {
+    "name": "wifi_off"
+  },
+  {
+    "name": "ac_unit"
+  },
+  {
+    "name": "airport_shuttle"
+  },
+  {
+    "name": "all_inclusive"
+  },
+  {
+    "name": "beach_access"
+  },
+  {
+    "name": "business_center"
+  },
+  {
+    "name": "casino"
+  },
+  {
+    "name": "child_care"
+  },
+  {
+    "name": "child_friendly"
+  },
+  {
+    "name": "fitness_center"
+  },
+  {
+    "name": "free_breakfast"
+  },
+  {
+    "name": "golf_course"
+  },
+  {
+    "name": "hot_tub"
+  },
+  {
+    "name": "kitchen"
+  },
+  {
+    "name": "meeting_room"
+  },
+  {
+    "name": "no_meeting_room"
+  },
+  {
+    "name": "pool"
+  },
+  {
+    "name": "room_service"
+  },
+  {
+    "name": "rv_hookup"
+  },
+  {
+    "name": "smoke_free"
+  },
+  {
+    "name": "smoking_rooms"
+  },
+  {
+    "name": "spa"
+  },
+  {
+    "name": "check_box"
+  },
+  {
+    "name": "check_box_outline_blank"
+  },
+  {
+    "name": "indeterminate_check_box"
+  },
+  {
+    "name": "radio_button_checked"
+  },
+  {
+    "name": "radio_button_unchecked"
+  },
+  {
+    "name": "star"
+  },
+  {
+    "name": "star_border"
+  },
+  {
+    "name": "star_half"
+  },
+  {
+    "name": "add_alert"
+  },
+  {
+    "name": "error"
+  },
+  {
+    "name": "error_outline"
+  },
+  {
+    "name": "notification_important"
+  },
+  {
+    "name": "warning"
+  },
+  {
+    "name": "cake"
+  },
+  {
+    "name": "domain"
+  },
+  {
+    "name": "group"
+  },
+  {
+    "name": "group_add"
+  },
+  {
+    "name": "location_city"
+  },
+  {
+    "name": "mood"
+  },
+  {
+    "name": "mood_bad"
+  },
+  {
+    "name": "notifications"
+  },
+  {
+    "name": "notifications_active"
+  },
+  {
+    "name": "notifications_none"
+  },
+  {
+    "name": "notifications_off"
+  },
+  {
+    "name": "notifications_paused"
+  },
+  {
+    "name": "pages"
+  },
+  {
+    "name": "party_mode"
+  },
+  {
+    "name": "people"
+  },
+  {
+    "name": "people_outline"
+  },
+  {
+    "name": "person"
+  },
+  {
+    "name": "person_add"
+  },
+  {
+    "name": "person_outline"
+  },
+  {
+    "name": "plus_one"
+  },
+  {
+    "name": "poll"
+  },
+  {
+    "name": "public"
+  },
+  {
+    "name": "school"
+  },
+  {
+    "name": "sentiment_dissatisfied"
+  },
+  {
+    "name": "sentiment_satisfied"
+  },
+  {
+    "name": "sentiment_very_dissatisfied"
+  },
+  {
+    "name": "sentiment_very_satisfied"
+  },
+  {
+    "name": "share"
+  },
+  {
+    "name": "thumb_down_alt"
+  },
+  {
+    "name": "thumb_up_alt"
+  },
+  {
+    "name": "whatshot"
+  }
+]

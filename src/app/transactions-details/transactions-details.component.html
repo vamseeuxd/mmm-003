@@ -2,18 +2,10 @@
   <ion-toolbar style="height:auto;">
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="defaultHref"></ion-back-button>
-      <!--<ion-button (click)="modalController.dismiss()" class="ms-auto">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-      </ion-button>-->
     </ion-buttons>
     <ion-title *ngIf="transaction" class="ion-text-left text-capitalize">
       {{transaction.name|titlecase}}
     </ion-title>
-    <!--<ion-buttons slot="end">
-      <ion-button (click)="modalController.dismiss()" class="ms-auto">Close
-      </ion-button>
-    </ion-buttons>-->
-
   </ion-toolbar>
 </ion-header>
 
@@ -160,7 +152,7 @@
         </ion-avatar>
         <ion-label>
           <h2 class="d-flex justify-content-between align-items-center">
-            {{getFormattedDate(payment.dueDate)}}
+            {{payment.dueDate|date:'dd-MMM-yyyy'}}
             <span [class.bg-danger]="!payment.isPaid" [class.bg-success]="payment.isPaid" class="badge rounded-pill fw-normal">
                 <ng-container *ngIf="payment.isPaid">Paid: {{payment.paidOn|date:'dd-MMM-yyyy'}}</ng-container>
                 <ng-container *ngIf="!payment.isPaid">Pending</ng-container>

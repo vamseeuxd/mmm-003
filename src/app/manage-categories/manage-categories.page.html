@@ -20,24 +20,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <!--<pre>{{icons$|async|json}}</pre>-->
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>{{typeSegmentRef.value|titlecase}} Category Name</mat-label>
+    <input matInput type="text" placeholder="{{typeSegmentRef.value|titlecase}} Category Name">
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>{{typeSegmentRef.value|titlecase}} Category Icon</mat-label>
+    <input type="text" #iconSearchText placeholder="{{typeSegmentRef.value|titlecase}} Category Icon" matInput
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of (icons$ | async)|filterBy:['name']:iconSearchText.value" [value]="option">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">{{option.name}}</mat-icon>
+        {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-icon matSuffix>{{iconSearchText.value}}</mat-icon>
+  </mat-form-field>
+
+
+  <ion-fab [edge]="false"
+           cdkDrag
+           cdkDragLockAxis="x"
+           class="me-3 mb-3" color="danger"
+           horizontal="end" slot="fixed"
+           vertical="bottom">
+    <ion-fab-button routerLink="/add-or-edit-category/{{typeSegmentRef.value}}" color="danger">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-item>
-      <form #newItemForm="ngForm" class="w-100">
-        <mat-form-field appearance="outline" class="w-100 mt-2">
-          <mat-label>{{typeSegmentRef.value|titlecase}} Category Name</mat-label>
-          <input autocomplete="off" matInput maxlength="30" minlength="3" name="name"
-                 ngModel placeholder="{{typeSegmentRef.value|titlecase}} Category Name" required type="text">
-          <mat-hint align="start">required 3 to 30 characters</mat-hint>
-          <button [disabled]="newItemForm.invalid" mat-icon-button matSuffix>
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-form-field>
-      </form>
-    </ion-item>
-  </ion-toolbar>
-</ion-footer>

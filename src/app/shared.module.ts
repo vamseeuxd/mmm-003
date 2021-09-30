@@ -18,6 +18,8 @@ import {FormsModule} from '@angular/forms';
 import {ShowTotalsComponent} from './shared/components/show-totals/show-totals.component';
 import {IonicModule} from '@ionic/angular';
 import {NgPipesModule} from 'ngx-pipes';
+import {HttpClientModule} from '@angular/common/http';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import {NgPipesModule} from 'ngx-pipes';
     MatCardModule,
     FormsModule,
     IonicModule,
+    HttpClientModule,
+    MatAutocompleteModule,
     NgPipesModule,
   ],
   exports: [
@@ -61,6 +65,8 @@ import {NgPipesModule} from 'ngx-pipes';
     MatCardModule,
     MarkAsPaidComponent,
     ShowTotalsComponent,
+    HttpClientModule,
+    MatAutocompleteModule,
     NgPipesModule,
   ]
 })

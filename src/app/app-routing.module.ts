@@ -18,6 +18,14 @@ const routes: Routes = [
   {
     path: 'transactions-details/:transactionId/:dueDate',
     loadChildren: () => import('./transactions-details/transactions-details-page.module').then(m => m.TransactionsDetailsPageModule)
+  },
+  {
+    path: 'add-or-edit-category/:type',
+    loadChildren: () => import('./add-or-edit-category/add-or-edit-category.module').then( m => m.AddOrEditCategoryPageModule)
+  },
+  {
+    path: 'add-or-edit-category/:type/:id',
+    loadChildren: () => import('./add-or-edit-category/add-or-edit-category.module').then( m => m.AddOrEditCategoryPageModule)
   }
 ];
 
