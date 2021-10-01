@@ -10,6 +10,7 @@ import {
 import {MatDialog} from '@angular/material/dialog';
 import {MarkAsPaidComponent} from '../shared/components/mark-as-paid/mark-as-paid.component';
 import {ShowTotalsComponent} from '../shared/components/show-totals/show-totals.component';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-folder',
@@ -17,7 +18,7 @@ import {ShowTotalsComponent} from '../shared/components/show-totals/show-totals.
   styleUrls: ['./manage-transactions.page.scss'],
 })
 export class ManageTransactionsPage implements OnInit {
-
+  loaded = false;
   hideHeader = false;
 
   constructor(
@@ -26,6 +27,9 @@ export class ManageTransactionsPage implements OnInit {
     public alertController: AlertController,
     public transactionService: TransactionService,
   ) {
+    this.transactionService.transactionsChanged$.pipe(delay(1000)).subscribe(() => {
+      this.loaded = true;
+    });
   }
 
   ngOnInit() {
