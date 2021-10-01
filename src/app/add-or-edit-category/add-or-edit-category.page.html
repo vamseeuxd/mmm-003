@@ -10,24 +10,57 @@
 </ion-header>
 
 <ion-content class="ion-padding pt-5">
-  <mat-form-field class="w-100 mt-5" appearance="outline">
-    <mat-label>{{type |titlecase }} Category Name</mat-label>
-    <input matInput type="text" placeholder="{{type |titlecase }} Category Name">
-  </mat-form-field>
+  <form class="row" #sampleForm="ngForm">
+    <div class="col-md-8 offset-md-2">
+      <mat-form-field class="w-100 mt-5" appearance="outline">
+        <mat-label>{{type |titlecase }} Category Name</mat-label>
+        <input autocomplete="off" name="name" ngModel required minlength="3" maxlength="30" matInput type="text"
+               placeholder="{{type |titlecase }} Category Name">
+      </mat-form-field>
+    </div>
+    <div class="col-md-8 offset-md-2">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>{{type |titlecase }} Category Icon</mat-label>
+        <input autocomplete="off" name="icon" ngModel required type="text" #iconSearchText placeholder="{{type |titlecase }} Category Icon"
+               matInput
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let option of (icons$ | async)|filterBy:['name']:iconSearchText.value" [value]="option">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">{{option.name}}</mat-icon>
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-icon matSuffix>{{iconSearchText.value}}</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="col-md-8 offset-md-2">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>{{type |titlecase }} Description</mat-label>
+        <textarea autocomplete="off" ngModel name="description" minlength="3" maxlength="80" matInput
+                  placeholder="{{type |titlecase }} Description"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="col-md-8 offset-md-2">
+      <div class="row">
+        <div class="col-md-4">
+          <ion-button expand="full" (click)="saveCategory(sampleForm)" [disabled]="sampleForm.invalid"
+                      class="w-100 mt-2" color="danger">Save
+          </ion-button>
+        </div>
+        <div class="col-md-4">
+          <ion-button expand="full" (click)="saveAsCategory(sampleForm)" [disabled]="sampleForm.invalid"
+                      class="w-100 mt-2" color="primary">Save as Default
+          </ion-button>
+        </div>
+        <div class="col-md-4">
+          <ion-button expand="full" class="w-100 mt-2" [routerLink]="defaultHref" color="dark">Cancel</ion-button>
+        </div>
+      </div>
+    </div>
+  </form>
 
-  <mat-form-field class="w-100" appearance="outline">
-    <mat-label>{{type |titlecase }} Category Icon</mat-label>
-    <input type="text" #iconSearchText placeholder="{{type |titlecase }} Category Icon" matInput
-           [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let option of (icons$ | async)|filterBy:['name']:iconSearchText.value" [value]="option">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">{{option.name}}</mat-icon>
-        {{option.name}}
-      </mat-option>
-    </mat-autocomplete>
-    <mat-icon matSuffix>{{iconSearchText.value}}</mat-icon>
-  </mat-form-field>
-  <ion-button expand="full" color="danger">Save</ion-button>
-  <ion-button expand="full" [routerLink]="defaultHref" color="dark">Cancel</ion-button>
+  <pre style="height: 300px;overflow: hidden auto;">
+    {{categoriesService.categories|json}}
+  </pre>
 
 </ion-content>
