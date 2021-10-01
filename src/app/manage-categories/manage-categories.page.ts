@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {LoaderService} from '../shared/services/loader/loader.service';
 import {ICategory, ManageCategoriesService} from '../shared/services/manage-categories/manage-categories.service';
 import {AlertController, IonItemSliding} from '@ionic/angular';
+import {UsersService} from '../shared/services/users/users.service';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-manage-categories',
@@ -11,12 +13,18 @@ import {AlertController, IonItemSliding} from '@ionic/angular';
 })
 export class ManageCategoriesPage {
 
+  loaded = false;
+
   constructor(
     public http: HttpClient,
     public loader: LoaderService,
+    public usersService: UsersService,
     public alertController: AlertController,
     public categoriesService: ManageCategoriesService,
   ) {
+    this.categoriesService.categoriesChanged$.pipe(delay(1000)).subscribe(() => {
+      this.loaded = true;
+    });
   }
 
   async deleteCategory(category: ICategory, sliding: IonItemSliding) {

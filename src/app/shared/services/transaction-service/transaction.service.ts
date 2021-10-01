@@ -81,7 +81,7 @@ export class TransactionService {
   private selectedTransactionType$: Observable<TRANSACTION_TYPE> = this.transactionTypeAction.asObservable();
   private selectedDateAction: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
   private selectedDate$: Observable<Date> = this.selectedDateAction.asObservable();
-  private dataLoaderId: number;
+  private dataLoaderId: string;
   private readonly dateFormat = 'DD-MMM-yyyy';
   private transactions$: Observable<{ date: string; transactions: ITransaction[] }[]> = combineLatest([
     this.selectedDate$,
@@ -94,7 +94,7 @@ export class TransactionService {
           return of([]);
         }
         return this.firestore.collection<ITransactionDoc>('transactions', ref => {
-          this.dataLoaderId = this.loader.show();
+          this.dataLoaderId = this.loader.show(true,'get_transactions');
           selectedDate.setDate(1);
           selectedDate.setHours(0, 0, 0, 0);
           return ref.where('uid', '==', this.loader.user.providerData[0].uid)
@@ -225,7 +225,7 @@ export class TransactionService {
   }
 
   async addPayment(dueDate: Date, transactionId: string, paidOn: Date) {
-    const loaderId = this.loader.show();
+    const loaderId = this.loader.show(true,'addPayment');
     try {
       await this.firestore.collection('payments').add(
         {
@@ -242,7 +242,7 @@ export class TransactionService {
   }
 
   async deletePayment(paymentId: string) {
-    const loaderId = this.loader.show();
+    const loaderId = this.loader.show(true,'deletePayment');
     try {
       const docRef = this.firestore.collection('payments').doc(paymentId).ref;
       await docRef.delete();
@@ -253,7 +253,7 @@ export class TransactionService {
   }
 
   async deleteTransaction(transaction: ITransaction) {
-    const loaderId = this.loader.show();
+    const loaderId = this.loader.show(true,'deleteTransaction');
     try {
       const batch = this.firestore.firestore.batch();
       const docRef1 = this.firestore.collection<ITransactionDoc>('transactions').doc(transaction.id).ref;

@@ -42,17 +42,16 @@
     </div>
     <div class="col-md-8 offset-md-2">
       <div class="row">
-        <div  [class.col-md-4]="!isEdit" [class.col-md-6]="isEdit">
-          <ion-button expand="full" (click)="saveCategory(sampleForm)" [disabled]="sampleForm.invalid"
-                      class="w-100 mt-2" color="danger">Save
+        <div  [class.col-md-4]="!isEdit && usersService.role==='admin'" [class.col-md-6]="isEdit || usersService.role!=='admin'">
+          <ion-button expand="full" (click)="saveCategory(sampleForm)" [disabled]="sampleForm.invalid" class="w-100 mt-2" color="danger">Save
           </ion-button>
         </div>
-        <div  [class.col-md-4]="!isEdit" *ngIf="!isEdit" [class.col-md-6]="isEdit">
+        <div  [class.col-md-4]="!isEdit" *ngIf="!isEdit && usersService.role==='admin'" [class.col-md-6]="isEdit">
           <ion-button expand="full" (click)="saveAsCategory(sampleForm)" [disabled]="sampleForm.invalid"
                       class="w-100 mt-2" color="primary">Save Default
           </ion-button>
         </div>
-        <div  [class.col-md-4]="!isEdit" [class.col-md-6]="isEdit">
+        <div  [class.col-md-4]="!isEdit && usersService.role==='admin'" [class.col-md-6]="isEdit || usersService.role!=='admin'">
           <ion-button expand="full" class="w-100 mt-2" [routerLink]="defaultHref" color="dark">Cancel</ion-button>
         </div>
       </div>

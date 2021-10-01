@@ -3,6 +3,7 @@ import {LoaderService} from './shared/services/loader/loader.service';
 import {environment} from '../environments/environment';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
+import {UsersService} from './shared/services/users/users.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent {
 
   constructor(
     public auth: AngularFireAuth,
+    public usersService: UsersService,
     public loader: LoaderService) {
     window.loader = loader;
   }
@@ -27,15 +29,15 @@ export class AppComponent {
   }
 
   async login() {
-    const loaderId = window.loader.show();
+    const loaderId = this.loader.show(true,'Login');
     try {
       await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
       /*if (response && response.user && response.user.uid) {
         await this.router.navigate([this.usersService.pageBeforeLogOut]);
       }*/
-      await window.loader.hide(loaderId);
+      await this.loader.hide(loaderId);
     } catch (e) {
-      await window.loader.hide(loaderId);
+      await this.loader.hide(loaderId);
       console.log(e);
     }
   }

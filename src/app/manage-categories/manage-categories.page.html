@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="danger">
+  <ion-toolbar color="danger" style="height: auto;">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -22,28 +22,69 @@
 
 <ion-content class="ion-padding">
   <!--<pre>{{icons$|async|json}}</pre>-->
+      <ion-list id="skeleton" *ngIf="!loaded">
+        <ion-item-group sticky>
+        <ion-item-divider>
+          <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text>
+        </ion-item-divider>
+        <ion-item *ngFor="let i of [1,2,3]">
+          <ion-thumbnail slot="start">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <h2><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></h2>
+            <h3><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></h3>
+          </ion-label>
+        </ion-item>
+        </ion-item-group>
+        <ion-item-group sticky>
+          <ion-item-divider>
+            <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text>
+          </ion-item-divider>
+          <ion-item *ngFor="let i of [1,2,3]">
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <h2><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></h2>
+              <h3><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></h3>
+            </ion-label>
+          </ion-item>
+        </ion-item-group>
+      </ion-list>
 
-  <!--<pre>{{categoriesService.categories|json}}</pre>-->
+      <ion-list *ngIf="loaded">
+        <ion-item-group sticky>
+          <ion-item-divider sticky="">Default Categories</ion-item-divider>
+          <div class="alert alert-warning my-2 py-2 opacity-75" *ngIf="loaded && (categoriesService.categories | filterBy : ['type']:typeSegmentRef.value | filterBy : ['isDefault']:true).length===0"><i class="fa fa-exclamation-triangle me-2"></i>No Default Categories found</div>
+          <ion-item-sliding #sliding *ngFor="let category of categoriesService.categories | filterBy : ['type']:typeSegmentRef.value | filterBy : ['isDefault']:true">
+            <ion-item-options side="start" *ngIf="category.isDefault && usersService.role==='admin'">
+              <ion-item-option (click)="sliding.close();" routerLink="/add-or-edit-category/{{typeSegmentRef.value}}/{{category.id}}" color="warning" style="width: 70px;">Edit</ion-item-option>
+              <ion-item-option color="danger" (click)="deleteCategory(category, sliding)" style="width: 70px;">Delete</ion-item-option>
+            </ion-item-options>
+            <ion-item>
+              <ion-avatar slot="start"><div class="w-100 h-100 d-flex justify-content-center align-items-center"><mat-icon>{{category.icon}}</mat-icon></div></ion-avatar>
+              <ion-label><h2>{{category.name}}</h2><h3>{{category.description}}</h3></ion-label>
+            </ion-item>
+          </ion-item-sliding>
+        </ion-item-group>
 
-  <ion-list>
-    <ion-item-sliding #sliding *ngFor="let category of categoriesService.categories">
-      <ion-item-options side="start" *ngIf="!category.isDefault">
-        <ion-item-option (click)="sliding.close();" routerLink="/add-or-edit-category/{{typeSegmentRef.value}}/{{category.id}}" color="warning" style="width: 70px;">Edit</ion-item-option>
-        <ion-item-option color="danger" (click)="deleteCategory(category, sliding)" style="width: 70px;">Delete</ion-item-option>
-      </ion-item-options>
-      <ion-item>
-        <ion-avatar slot="start">
-          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
-            <mat-icon>{{category.icon}}</mat-icon>
-          </div>
-        </ion-avatar>
-        <ion-label>
-          <h2>{{category.name}}</h2>
-          <h3>{{category.description}}</h3>
-        </ion-label>
-      </ion-item>
-    </ion-item-sliding>
-  </ion-list>
+        <ion-item-group sticky>
+          <ion-item-divider sticky="">Custom Categories</ion-item-divider>
+          <div class="alert alert-warning my-2 py-2 opacity-75" *ngIf="loaded && (categoriesService.categories | filterBy : ['type']:typeSegmentRef.value | filterBy : ['isDefault']:false).length===0"><i class="fa fa-exclamation-triangle me-2"></i>No Custom Categories found</div>
+          <ion-item-sliding #sliding *ngFor="let category of categoriesService.categories | filterBy : ['type']:typeSegmentRef.value | filterBy : ['isDefault']:false ">
+            <ion-item-options side="start">
+              <ion-item-option (click)="sliding.close();" routerLink="/add-or-edit-category/{{typeSegmentRef.value}}/{{category.id}}" color="warning" style="width: 70px;">Edit</ion-item-option>
+              <ion-item-option color="danger" (click)="deleteCategory(category, sliding)" style="width: 70px;">Delete</ion-item-option>
+            </ion-item-options>
+            <ion-item>
+              <ion-avatar slot="start"><div class="w-100 h-100 d-flex justify-content-center align-items-center"><mat-icon>{{category.icon}}</mat-icon></div></ion-avatar>
+              <ion-label><h2>{{category.name}}</h2><h3>{{category.description}}</h3></ion-label>
+            </ion-item>
+          </ion-item-sliding>
+        </ion-item-group>
+      </ion-list>
+
 
   <ion-fab [edge]="false"
            cdkDrag

@@ -23,10 +23,9 @@ export interface ICategory {
 export class ManageCategoriesService {
   tableNameAction: BehaviorSubject<string> = new BehaviorSubject<string>('categories');
   tableName$: Observable<string> = this.tableNameAction.asObservable();
-
   categories: ICategory[] = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  dataLoaderId: number;
+  dataLoaderId: string;
   private categories$: Observable<ICategory[]> = combineLatest(
     [
       this.loader.auth.user,
@@ -39,7 +38,7 @@ export class ManageCategoriesService {
           return of([]);
         }
 
-        this.dataLoaderId = this.loader.show();
+        this.dataLoaderId = this.loader.show(true,'get Category');
         // eslint-disable-next-line max-len
         const userCategories$ = this.firestore.collection<ICategory>(
           tableName,
@@ -69,9 +68,9 @@ export class ManageCategoriesService {
       await this.loader.hide(this.dataLoaderId);
     })
   );
-  private categoriesChangedAction: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
+  private categoriesChangedAction: BehaviorSubject<Date | boolean> = new BehaviorSubject<Date | boolean>(true);
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  categoriesChanged$: Observable<Date> = this.categoriesChangedAction.asObservable().pipe(shareReplay());
+  categoriesChanged$: Observable<Date | boolean> = this.categoriesChangedAction.asObservable().pipe(shareReplay());
 
   constructor(
     private auth: AngularFireAuth,
@@ -80,7 +79,7 @@ export class ManageCategoriesService {
   ) {
     this.getCategories().subscribe(value => {
       this.categories = value;
-      this.categoriesChangedAction.next(new Date());
+      this.categoriesChangedAction.next(false);
     });
   }
 
@@ -95,12 +94,14 @@ export class ManageCategoriesService {
   }
 
   async deleteCategory(value: ICategory) {
-    const loaderId = this.loader.show();
+    const loaderId = this.loader.show(true,'deleteCategory');
     try {
-      const batch = this.firestore.firestore.batch();
-      const docRef1 = this.firestore.collection<ICategory>('categories').doc(value.id).ref;
-      batch.delete(docRef1);
-      await batch.commit();
+      let collectionRef = this.firestore.collection<ICategory>(`${this.tableNameAction.value}`);
+      if (value.isDefault) {
+        collectionRef = this.firestore.collection<ICategory>(`default-${this.tableNameAction.value}`);
+      }
+      const docRef = collectionRef.ref.doc(value.id);
+      await docRef.delete();
       await this.loader.hide(loaderId);
     } catch (e) {
       await this.loader.hide(loaderId);
@@ -108,7 +109,7 @@ export class ManageCategoriesService {
   }
 
   async addCategory(value: ICategory, isDefault = false) {
-    const loaderId = this.loader.show();
+    const loaderId = this.loader.show(true,'addCategory');
     let collectionRef = this.firestore.collection<ICategory>(`${this.tableNameAction.value}`);
     if (isDefault) {
       collectionRef = this.firestore.collection<ICategory>(`default-${this.tableNameAction.value}`);
@@ -129,7 +130,7 @@ export class ManageCategoriesService {
   }
 
   async updateCategory(value: ICategory, isDefault = false) {
-    const loaderId = this.loader.show();
+    const loaderId = this.loader.show(true,'updateCategory');
     let collectionRef = this.firestore.collection<ICategory>(`${this.tableNameAction.value}`);
     if (isDefault) {
       collectionRef = this.firestore.collection<ICategory>(`default-${this.tableNameAction.value}`);

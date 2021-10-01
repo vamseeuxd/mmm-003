@@ -1,12 +1,13 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {shareReplay} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ICategory, ManageCategoriesService} from '../shared/services/manage-categories/manage-categories.service';
 import {NgForm} from '@angular/forms';
 import {TRANSACTION_TYPE} from '../shared/services/transaction-service/transaction.service';
 import {LoaderService} from '../shared/services/loader/loader.service';
 import {Subscription} from 'rxjs';
+import {UsersService} from '../shared/services/users/users.service';
 
 @Component({
   selector: 'app-add-or-edit-category',
@@ -30,6 +31,8 @@ export class AddOrEditCategoryPage implements OnInit, OnDestroy {
     public http: HttpClient,
     public route: ActivatedRoute,
     public loader: LoaderService,
+    public router: Router,
+    public usersService: UsersService,
     public categoriesService: ManageCategoriesService,
   ) {
   }
@@ -93,8 +96,10 @@ export class AddOrEditCategoryPage implements OnInit, OnDestroy {
             icon: sampleForm.value.icon.name,
             type: this.type,
             uid: this.loader.user.providerData[0].uid,
-          }
+          },
+          this.defaultCategory.isDefault
         );
+        await this.router.navigate(['manage-categories']);
       } else {
         await this.categoriesService.addCategory(
           {
@@ -106,6 +111,7 @@ export class AddOrEditCategoryPage implements OnInit, OnDestroy {
           },
           false
         );
+        await this.router.navigate(['manage-categories']);
       }
       sampleForm.resetForm({});
     } catch (e) {
@@ -125,6 +131,7 @@ export class AddOrEditCategoryPage implements OnInit, OnDestroy {
         },
         true
       );
+      await this.router.navigate(['manage-categories']);
       sampleForm.resetForm({});
     } catch (e) {
       alert(e.message);

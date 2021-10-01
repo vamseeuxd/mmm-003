@@ -10,6 +10,7 @@ import {
   RepeatOption
 } from '../../shared/services/transaction-service/transaction.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {LoaderService} from '../../shared/services/loader/loader.service';
 
 @Component({
   selector: 'app-expenses-form',
@@ -52,6 +53,7 @@ export class TransactionsFormComponent implements OnInit {
     public modalController: ModalController,
     public dialog: MatDialog,
     public matSnackBar: MatSnackBar,
+    public loader: LoaderService,
     private firestore: AngularFirestore,
   ) {
     this.repeatDropDownConfig.day = Array.from(Array(30).keys());
@@ -118,14 +120,14 @@ export class TransactionsFormComponent implements OnInit {
         start,
         end
       },
-      uid: window.loader.user.providerData[0].uid,
+      uid: this.loader.user.providerData[0].uid,
       noOfInstallments: Number(expensesForm.value.noOfInstallments),
       startDate: expensesForm.value.startDate.getTime()
     };
   }
 
   async saveExpenses(expensesForm: NgForm) {
-    const loaderId = window.loader.show();
+    const loaderId = this.loader.show(true,'saveExpenses');
     const dataToSave = this.getDateToSave(expensesForm);
     delete dataToSave.endDate;
     delete dataToSave.id;
@@ -145,7 +147,7 @@ export class TransactionsFormComponent implements OnInit {
         this.matSnackBar.open(`Error while Adding ${this.type.toLocaleUpperCase()}`, this.type.toLocaleUpperCase(), {duration: 1000});
       }
     }
-    await window.loader.hide(loaderId);
+    await this.loader.hide(loaderId);
     await this.modalController.dismiss();
   }
 }

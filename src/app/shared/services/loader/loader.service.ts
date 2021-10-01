@@ -9,10 +9,12 @@ import firebase from 'firebase/compat/app';
 export class LoaderService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   user: firebase.User;
-  private loaderRequestsList: number[] = [];
+  public loaderRequestsList: string[] = [];
   private loaderSubject = new BehaviorSubject<boolean>(this.loaderRequestsList.length > 0);
   // eslint-disable-next-line @typescript-eslint/member-ordering
   private loading: HTMLIonLoadingElement;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  isLoader: boolean;
 
   constructor(
     public auth: AngularFireAuth,
@@ -28,47 +30,47 @@ export class LoaderService {
     });
   }
 
-  show(autoHide = true): number {
-    const id = new Date().getTime();
+  show(autoHide = true, prefix = ''): string {
+    const id = prefix + '+' + new Date().getTime();
     this.loaderRequestsList.push(id);
     this.loaderSubject.next(this.loaderRequestsList.length > 0);
-    if (this.loaderRequestsList.length > 0) {
-      this.presentLoading().then(() => {
+    if (this.loaderRequestsList.length > 0 && !this.loading) {
+      this.presentLoading(5000).then(() => {
         document.body.append(document.querySelector('ion-loading'));
       });
-    }
-    if (autoHide) {
-      setTimeout(async () => {
-        await this.hide(id);
-      }, 5000);
     }
     return id;
   }
 
-  showAsync(): Observable<number> {
-    const id = new Date().getTime();
+  showAsync(autoHide = true, prefix = ''): Observable<string> {
+    const id = prefix + '+' + new Date().getTime();
     this.loaderRequestsList.push(id);
     this.loaderSubject.next(this.loaderRequestsList.length > 0);
     if (this.loaderRequestsList.length > 0) {
-      this.presentLoading().then(() => {
+      this.presentLoading(5000).then(() => {
+        document.body.append(document.querySelector('ion-loading'));
       });
     }
     return of(id);
   }
 
-  async hide(loaderId: number): Promise<any> | undefined {
-    this.loaderRequestsList = this.loaderRequestsList.filter(id => id !== loaderId);
-    this.loaderSubject.next(this.loaderRequestsList.length > 0);
-    if (this.loaderRequestsList.length === 0 && this.loading) {
-      await this.loading.dismiss();
-      this.loading = null;
+  async hide(loaderId: string): Promise<any> | undefined {
+    if(this.loaderRequestsList.includes(loaderId)) {
+      this.loaderRequestsList = this.loaderRequestsList.filter(id => id !== loaderId);
+      this.loaderSubject.next(this.loaderRequestsList.length > 0);
+      if (this.loaderRequestsList.length === 0 && this.isLoader && this.loading) {
+        await this.loading.dismiss();
+        this.loading = null;
+        this.isLoader = false;
+      }
     }
   }
 
-  private async presentLoading() {
-    if (!this.loading) {
-      this.loading = await this.loadingController.create({message: 'Please wait...', duration: null});
+  private async presentLoading(duration) {
+    if (!this.isLoader) {
+      this.isLoader = true;
+      this.loading = await this.loadingController.create({message: 'Please wait...', duration});
+      await this.loading.present();
     }
-    await this.loading.present();
   }
 }
