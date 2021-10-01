@@ -24,7 +24,7 @@
         <input autocomplete="off" name="icon" ngModel required type="text" #iconSearchText placeholder="{{type |titlecase }} Category Icon"
                matInput
                [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-autocomplete  autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
           <mat-option *ngFor="let option of (icons$ | async)|filterBy:['name']:iconSearchText.value" [value]="option">
             <mat-icon aria-hidden="false" aria-label="Example home icon">{{option.name}}</mat-icon>
             {{option.name}}
@@ -42,25 +42,25 @@
     </div>
     <div class="col-md-8 offset-md-2">
       <div class="row">
-        <div class="col-md-4">
+        <div  [class.col-md-4]="!isEdit" [class.col-md-6]="isEdit">
           <ion-button expand="full" (click)="saveCategory(sampleForm)" [disabled]="sampleForm.invalid"
                       class="w-100 mt-2" color="danger">Save
           </ion-button>
         </div>
-        <div class="col-md-4">
+        <div  [class.col-md-4]="!isEdit" *ngIf="!isEdit" [class.col-md-6]="isEdit">
           <ion-button expand="full" (click)="saveAsCategory(sampleForm)" [disabled]="sampleForm.invalid"
-                      class="w-100 mt-2" color="primary">Save as Default
+                      class="w-100 mt-2" color="primary">Save Default
           </ion-button>
         </div>
-        <div class="col-md-4">
+        <div  [class.col-md-4]="!isEdit" [class.col-md-6]="isEdit">
           <ion-button expand="full" class="w-100 mt-2" [routerLink]="defaultHref" color="dark">Cancel</ion-button>
         </div>
       </div>
     </div>
   </form>
 
-  <pre style="height: 300px;overflow: hidden auto;">
+  <!--<pre style="height: 300px;overflow: hidden auto;">
     {{categoriesService.categories|json}}
-  </pre>
+  </pre>-->
 
 </ion-content>

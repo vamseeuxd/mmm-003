@@ -1,30 +1,43 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {shareReplay} from 'rxjs/operators';
+import {LoaderService} from '../shared/services/loader/loader.service';
+import {ICategory, ManageCategoriesService} from '../shared/services/manage-categories/manage-categories.service';
+import {AlertController, IonItemSliding} from '@ionic/angular';
 
 @Component({
   selector: 'app-manage-categories',
   templateUrl: './manage-categories.page.html',
   styleUrls: ['./manage-categories.page.scss'],
 })
-export class ManageCategoriesPage implements OnInit {
+export class ManageCategoriesPage {
 
-  icons$ = this.http.get<{name: string}[]>('./assets/icons-list.json').pipe(
-    /*map((value) => {
-      console.log(value);
-      return value.map(d=>d.name);
-    }),*/
-    shareReplay()
-  );
-
-  constructor(public http: HttpClient) {
+  constructor(
+    public http: HttpClient,
+    public loader: LoaderService,
+    public alertController: AlertController,
+    public categoriesService: ManageCategoriesService,
+  ) {
   }
 
-  ngOnInit() {
-  }
+  async deleteCategory(category: ICategory, sliding: IonItemSliding) {
+    await sliding.close();
+    const alert = await this.alertController.create({
+      header: 'Delete Confirmation',
+      message: `Are you sure! <br>Do you want to delete Category?`,
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Yes',
+          handler: () => {
+            this.categoriesService.deleteCategory(category);
+          }
+        }
+      ]
+    });
 
-  displayFn(icon: {name: string}): string {
-    return icon && icon.name ? icon.name : '';
+    await alert.present();
   }
-
 }

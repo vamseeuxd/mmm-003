@@ -71,7 +71,7 @@ export class ManageCategoriesService {
   );
   private categoriesChangedAction: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  categoriesChanged$: Observable<Date> = this.categoriesChangedAction.asObservable();
+  categoriesChanged$: Observable<Date> = this.categoriesChangedAction.asObservable().pipe(shareReplay());
 
   constructor(
     private auth: AngularFireAuth,
