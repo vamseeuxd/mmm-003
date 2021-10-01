@@ -15,7 +15,10 @@ export class AppComponent {
   public appPages = [
     {title: 'Manage Transactions', url: '/manage-transactions', icon: 'cash'},
     {title: 'Manage Categories', url: '/manage-categories', icon: 'apps'},
+    {title: 'Manage Payee', url: '/manage-payee', icon: 'person-remove'},
   ];
+
+  /*https://www.quora.com/What-do-payee-payer-mean*/
 
   constructor(
     public auth: AngularFireAuth,

@@ -10,7 +10,7 @@
     "build": "ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
-    "page": "ionic g page add-or-edit-category",
+    "page": "ionic g page manage-payee",
     "component": "ng generate component shared/components/showTotals --export",
     "directive": "ng generate directive shared/directives/MarkAsPaid --export",
     "service": "ng generate directive shared/services/MarkAsPaid",

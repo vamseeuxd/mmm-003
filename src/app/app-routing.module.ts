@@ -26,6 +26,18 @@ const routes: Routes = [
   {
     path: 'add-or-edit-category/:type/:id',
     loadChildren: () => import('./add-or-edit-category/add-or-edit-category.module').then( m => m.AddOrEditCategoryPageModule)
+  },
+  {
+    path: 'add-or-edit-payee',
+    loadChildren: () => import('./add-or-edit-payee/add-or-edit-payee.module').then( m => m.AddOrEditPayeePageModule)
+  },
+  {
+    path: 'add-or-edit-payee/:id',
+    loadChildren: () => import('./add-or-edit-payee/add-or-edit-payee.module').then( m => m.AddOrEditPayeePageModule)
+  },
+  {
+    path: 'manage-payee',
+    loadChildren: () => import('./manage-payee/manage-payee.module').then( m => m.ManagePayeePageModule)
   }
 ];
 

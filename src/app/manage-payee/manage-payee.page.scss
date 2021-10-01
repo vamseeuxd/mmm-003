@@ -1,0 +1,17 @@
+:host {
+  .transaction-type-segment {
+    --min-height: 36px;
+
+    ::ng-deep
+    ion-segment-button {
+      --min-height: 35px;
+      min-height: 35px;
+      height: 35px;
+
+      ion-label.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
