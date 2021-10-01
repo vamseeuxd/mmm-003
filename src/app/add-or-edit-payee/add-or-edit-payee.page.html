@@ -13,15 +13,15 @@
   <form class="row" #sampleForm="ngForm">
     <div class="col-md-8 offset-md-2">
       <mat-form-field class="w-100 mt-5" appearance="outline">
-        <mat-label>{{type |titlecase }} Payee Name</mat-label>
+        <mat-label>Payee Name</mat-label>
         <input autocomplete="off" name="name" ngModel required minlength="3" maxlength="30" matInput type="text"
-               placeholder="{{type |titlecase }} Payee Name">
+               placeholder="Payee Name">
       </mat-form-field>
     </div>
     <div class="col-md-8 offset-md-2">
       <mat-form-field class="w-100" appearance="outline">
-        <mat-label>{{type |titlecase }} Payee Icon</mat-label>
-        <input autocomplete="off" name="icon" ngModel required type="text" #iconSearchText placeholder="{{type |titlecase }} Payee Icon"
+        <mat-label>Payee Icon</mat-label>
+        <input autocomplete="off" name="icon" ngModel required type="text" #iconSearchText placeholder="Payee Icon"
                matInput
                [matAutocomplete]="auto">
         <mat-autocomplete  autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
@@ -35,9 +35,9 @@
     </div>
     <div class="col-md-8 offset-md-2">
       <mat-form-field class="w-100" appearance="outline">
-        <mat-label>{{type |titlecase }} Description</mat-label>
+        <mat-label>Description</mat-label>
         <textarea autocomplete="off" ngModel name="description" minlength="3" maxlength="80" matInput
-                  placeholder="{{type |titlecase }} Description"></textarea>
+                  placeholder="Description"></textarea>
       </mat-form-field>
     </div>
     <div class="col-md-8 offset-md-2">
