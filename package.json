@@ -10,7 +10,7 @@
     "build": "ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
-    "page1": "ionic g page manage-expenses-for",
+    "page1": "ionic g page login",
     "page2": "ionic g page add-or-expenses-for",
     "component": "ng generate component shared/components/showTotals --export",
     "directive": "ng generate directive shared/directives/MarkAsPaid --export",

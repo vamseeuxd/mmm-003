@@ -1,0 +1,17 @@
+<div *ngIf="auth.user | async as user; else showLogin">
+  <h1>Hello {{ user.displayName }}!</h1>
+  <button (click)="logout()">Logout</button>
+</div>
+<ng-template #showLogin>
+
+  <div class="vw-100 vh-100 bg-danger d-flex flex-column justify-content-center align-items-center">
+    <h1 class="m-0 p-0 text-center text-white">Welcome to</h1>
+    <h1 class="font-monospace fw-bold m-0 p-0 text-center text-white">Monthly Money Manager</h1>
+    <button (click)="login()" class="mt-5 text-danger py-1" mat-raised-button>
+      <i class="fa fa-google text-danger me-2" style="font-size: 2rem"></i>
+      Login with Google
+    </button>
+    <!--<button (click)="login()">Login with Google</button>-->
+  </div>
+
+</ng-template>

@@ -4,6 +4,7 @@ import {environment} from '../environments/environment';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import {UsersService} from './shared/services/users/users.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent {
     {title: 'Manage Categories', url: '/manage-categories', icon: 'apps'},
     {title: 'Manage Payees', url: '/manage-payee', icon: 'person-remove'},
     {title: 'Manage Payers', url: '/manage-payers', icon: 'person-add'},
-    {title: 'Manage Expenses For', url: '/manage-expenses-for', icon: 'person-add'},
+    {title: 'Manage Expenses For', url: '/manage-expenses-for', icon: 'people'},
   ];
 
   /*https://www.quora.com/What-do-payee-payer-mean*/
@@ -25,12 +26,14 @@ export class AppComponent {
   constructor(
     public auth: AngularFireAuth,
     public usersService: UsersService,
+    public router: Router,
     public loader: LoaderService) {
     window.loader = loader;
   }
 
   async logout() {
     await this.auth.signOut();
+    await this.router.navigate(['login']);
   }
 
   async login() {

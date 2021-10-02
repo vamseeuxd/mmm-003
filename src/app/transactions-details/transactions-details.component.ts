@@ -53,7 +53,6 @@ export class TransactionsDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.transactionsChangedSubscription) {
       this.transactionsChangedSubscription.unsubscribe();
-      console.log('this.transactionsChangedSubscription.unsubscribe();');
     }
   }
 
