@@ -38,6 +38,18 @@ const routes: Routes = [
   {
     path: 'manage-payee',
     loadChildren: () => import('./manage-payee/manage-payee.module').then( m => m.ManagePayeePageModule)
+  },
+  {
+    path: 'manage-payers',
+    loadChildren: () => import('./manage-payers/manage-payers.module').then( m => m.ManagePayersPageModule)
+  },
+  {
+    path: 'add-or-edit-payer',
+    loadChildren: () => import('./add-or-edit-payer/add-or-edit-payer.module').then( m => m.AddOrEditPayerPageModule)
+  },
+  {
+    path: 'add-or-edit-payer/:id',
+    loadChildren: () => import('./add-or-edit-payer/add-or-edit-payer.module').then( m => m.AddOrEditPayerPageModule)
   }
 ];
 
