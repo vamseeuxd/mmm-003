@@ -21,6 +21,7 @@ export class AppComponent implements OnDestroy {
     {title: 'Manage Payees', url: '/manage-payee', icon: 'person-remove'},
     {title: 'Manage Payers', url: '/manage-payers', icon: 'person-add'},
     {title: 'Manage Expenses For', url: '/manage-expenses-for', icon: 'people'},
+    {title: 'Manage Tax Deduction', url: '/manage-tax-deduction', icon: 'people'},
   ];
 
   /*https://www.quora.com/What-do-payee-payer-mean*/
@@ -33,7 +34,7 @@ export class AppComponent implements OnDestroy {
     window.loader = loader;
     this.userSubscription = this.auth.user.subscribe(async value => {
       if (value) {
-        await this.router.navigate([this.usersService.pageBeforeLogOut]);
+        // await this.router.navigate([this.usersService.pageBeforeLogOut]);
       }else {
         await this.router.navigate(['login']);
       }

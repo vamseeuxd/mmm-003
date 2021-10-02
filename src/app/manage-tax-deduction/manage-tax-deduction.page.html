@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar color="danger" style="height: auto;">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Manage Tax Deductions</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button style="opacity: 0;pointer-events: none"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list id="skeleton" *ngIf="!loaded">
+    <ion-item-group sticky>
+      <ion-item-divider>
+        <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text>
+      </ion-item-divider>
+      <ion-item *ngFor="let i of [1,2,3]">
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h2>
+          <h3>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h3>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+    <ion-item-group sticky>
+      <ion-item-divider>
+        <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text>
+      </ion-item-divider>
+      <ion-item *ngFor="let i of [1,2,3]">
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h2>
+          <h3>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h3>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+
+  <ion-list *ngIf="loaded">
+    <!--<ion-item-group sticky>-->
+      <!--<ion-item-divider sticky="">Default TaxDeductions</ion-item-divider>-->
+      <div class="alert alert-warning my-2 py-2 opacity-75" *ngIf="loaded && (taxDeductionsService.taxDeductions | filterBy : ['isDefault']:true).length===0">
+        <i class="fa fa-exclamation-triangle me-2"></i>
+        No TaxDeductions found
+      </div>
+      <ion-item-sliding #sliding *ngFor="let taxDeduction of taxDeductionsService.taxDeductions | orderBy:['name'] | filterBy : ['isDefault']:true">
+        <ion-item-options side="start" *ngIf="taxDeduction.isDefault && usersService.role==='admin'">
+          <ion-item-option (click)="sliding.close();" routerLink="/add-or-edit-tax-deduction/{{taxDeduction.id}}" color="warning" style="width: 70px;">Edit</ion-item-option>
+          <ion-item-option color="danger" (click)="deleteTaxDeduction(taxDeduction, sliding)" style="width: 70px;">Delete</ion-item-option>
+        </ion-item-options>
+        <ion-item (click)="selectedItem = taxDeduction">
+          <ion-avatar slot="start"><img [src]="taxDeduction.icon" alt=""></ion-avatar>
+          <ion-label>
+            <h2>{{taxDeduction.name.split('|')[0]}}</h2>
+            <p>{{taxDeduction.name.split('|')[1]}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-item-sliding>
+    <!--</ion-item-group>-->
+  </ion-list>
+
+
+  <ng-container *ngIf="!selectedItem">
+    <ion-fab [edge]="false" *ngIf="usersService.role === 'admin'" cdkDrag cdkDragLockAxis="x" class="me-3 mb-3" color="danger" horizontal="end" slot="fixed" vertical="bottom">
+      <ion-fab-button routerLink="/add-or-edit-tax-deduction" color="danger">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ng-container>
+
+  <div [class.close]="!selectedItem" class="d-flex align-items-end slider">
+    <div class="position-absolute w-100 h-100 bg-transparent" (click)="selectedItem=null"></div>
+    <ion-card class="shadow">
+      <ion-card-header>
+        <i class="fa fa-close position-absolute end-0 top-0 me-3 mt-3 fs-1 text-danger" style="z-index: 10" (click)="selectedItem=null"></i>
+        <div class="d-flex flex-row justify-content-start align-items-center">
+          <img [src]="selectedItem?.icon" style="width: 50px;margin-right: 8px;" alt="">
+          <div>
+            <ion-card-subtitle>{{selectedItem?.name?.split('|')[1]}}</ion-card-subtitle>
+            <ion-card-title>{{selectedItem?.name?.split('|')[0]}}</ion-card-title>
+          </div>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div style="height: calc(100vh - 330px);overflow: hidden auto;padding: 0 0 20px 0;" [innerHTML]="selectedItem?.description"></div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+
+</ion-content>

@@ -85,6 +85,18 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
     data: {authGuardPipe: redirectDashboard}
+  },
+  {
+    path: 'manage-tax-deduction',
+    loadChildren: () => import('./manage-tax-deduction/manage-tax-deduction.module').then( m => m.ManageTaxDeductionPageModule)
+  },
+  {
+    path: 'add-or-edit-tax-deduction',
+    loadChildren: () => import('./add-or-edit-tax-deduction/add-or-edit-tax-deduction.module').then( m => m.AddOrEditTaxDeductionPageModule)
+  },
+  {
+    path: 'add-or-edit-tax-deduction/:id',
+    loadChildren: () => import('./add-or-edit-tax-deduction/add-or-edit-tax-deduction.module').then( m => m.AddOrEditTaxDeductionPageModule)
   }
 ];
 
