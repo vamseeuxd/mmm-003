@@ -14,7 +14,6 @@ export interface IPayee {
   isDefault?: boolean;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +35,7 @@ export class ManagePayeeService {
           return of([]);
         }
 
-        this.dataLoaderId = this.loader.show(true,'get Payee');
+        this.dataLoaderId = this.loader.show(true, 'get Payee');
         // eslint-disable-next-line max-len
         const userPayees$ = this.firestore.collection<IPayee>(
           tableName,
@@ -92,7 +91,7 @@ export class ManagePayeeService {
   }
 
   async deletePayee(value: IPayee) {
-    const loaderId = this.loader.show(true,'deletePayee');
+    const loaderId = this.loader.show(true, 'deletePayee');
     try {
       let collectionRef = this.firestore.collection<IPayee>(`${this.tableNameAction.value}`);
       if (value.isDefault) {
@@ -107,7 +106,7 @@ export class ManagePayeeService {
   }
 
   async addPayee(value: IPayee, isDefault = false) {
-    const loaderId = this.loader.show(true,'addPayee');
+    const loaderId = this.loader.show(true, 'addPayee');
     let collectionRef = this.firestore.collection<IPayee>(`${this.tableNameAction.value}`);
     if (isDefault) {
       collectionRef = this.firestore.collection<IPayee>(`default-${this.tableNameAction.value}`);
@@ -128,7 +127,7 @@ export class ManagePayeeService {
   }
 
   async updatePayee(value: IPayee, isDefault = false) {
-    const loaderId = this.loader.show(true,'updatePayee');
+    const loaderId = this.loader.show(true, 'updatePayee');
     let collectionRef = this.firestore.collection<IPayee>(`${this.tableNameAction.value}`);
     if (isDefault) {
       collectionRef = this.firestore.collection<IPayee>(`default-${this.tableNameAction.value}`);
