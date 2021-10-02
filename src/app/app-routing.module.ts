@@ -50,6 +50,18 @@ const routes: Routes = [
   {
     path: 'add-or-edit-payer/:id',
     loadChildren: () => import('./add-or-edit-payer/add-or-edit-payer.module').then( m => m.AddOrEditPayerPageModule)
+  },
+  {
+    path: 'manage-expenses-for',
+    loadChildren: () => import('./manage-expenses-for/manage-expenses-for.module').then( m => m.ManageExpensesForPageModule)
+  },
+  {
+    path: 'add-or-expenses-for',
+    loadChildren: () => import('./add-or-expenses-for/add-or-expenses-for.module').then( m => m.AddOrExpensesForPageModule)
+  },
+  {
+    path: 'add-or-expenses-for/:id',
+    loadChildren: () => import('./add-or-expenses-for/add-or-expenses-for.module').then( m => m.AddOrExpensesForPageModule)
   }
 ];
 

@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar style="height:auto;">
+    <ion-buttons slot="start">
+      <ion-back-button #backButton [defaultHref]="defaultHref"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-left text-capitalize">
+      {{action}} ExpensesFor
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding pt-5">
+  <form class="row" #sampleForm="ngForm">
+    <div class="col-md-8 offset-md-2">
+      <mat-form-field class="w-100 mt-5" appearance="outline">
+        <mat-label>Expenses For Name</mat-label>
+        <input autocomplete="off" name="name" ngModel required minlength="3" maxlength="30" matInput type="text"
+               placeholder="ExpensesFor Name">
+      </mat-form-field>
+    </div>
+    <div class="col-md-8 offset-md-2">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Expenses For Icon</mat-label>
+        <input autocomplete="off" name="icon" ngModel required type="text" #iconSearchText placeholder="ExpensesFor Icon"
+               matInput
+               [matAutocomplete]="auto">
+        <mat-autocomplete  autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let option of (icons$ | async)|filterBy:['name']:iconSearchText.value" [value]="option">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">{{option.name}}</mat-icon>
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-icon matSuffix>{{iconSearchText.value}}</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="col-md-8 offset-md-2">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea autocomplete="off" ngModel name="description" minlength="3" maxlength="80" matInput
+                  placeholder="Description"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="col-md-8 offset-md-2">
+      <div class="row">
+        <div  [class.col-md-4]="!isEdit && usersService.role==='admin'" [class.col-md-6]="isEdit || usersService.role!=='admin'">
+          <ion-button expand="full" (click)="saveExpensesFor(sampleForm)" [disabled]="sampleForm.invalid" class="w-100 mt-2" color="danger">Save
+          </ion-button>
+        </div>
+        <div  [class.col-md-4]="!isEdit" *ngIf="!isEdit && usersService.role==='admin'" [class.col-md-6]="isEdit">
+          <ion-button expand="full" (click)="saveAsExpensesFor(sampleForm)" [disabled]="sampleForm.invalid"
+                      class="w-100 mt-2" color="primary">Save Default
+          </ion-button>
+        </div>
+        <div  [class.col-md-4]="!isEdit && usersService.role==='admin'" [class.col-md-6]="isEdit || usersService.role!=='admin'">
+          <ion-button expand="full" class="w-100 mt-2" [routerLink]="defaultHref" color="dark">Cancel</ion-button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</ion-content>

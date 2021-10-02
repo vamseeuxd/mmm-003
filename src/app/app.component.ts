@@ -15,8 +15,9 @@ export class AppComponent {
   public appPages = [
     {title: 'Manage Transactions', url: '/manage-transactions', icon: 'cash'},
     {title: 'Manage Categories', url: '/manage-categories', icon: 'apps'},
-    {title: 'Manage Payee', url: '/manage-payee', icon: 'person-remove'},
+    {title: 'Manage Payees', url: '/manage-payee', icon: 'person-remove'},
     {title: 'Manage Payers', url: '/manage-payers', icon: 'person-add'},
+    {title: 'Manage Expenses For', url: '/manage-expenses-for', icon: 'person-add'},
   ];
 
   /*https://www.quora.com/What-do-payee-payer-mean*/
