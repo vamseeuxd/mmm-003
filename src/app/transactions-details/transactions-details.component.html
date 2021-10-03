@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content [fullscreen]="true" [class.ion-padding-horizontal]="detailsPageSegment.value === '01'">
   <ng-container *ngIf="transaction">
     <ng-container *ngIf="detailsPageSegment.value === '01'">
       <div>
@@ -116,21 +116,23 @@
       </div>
     </ng-container>
     <ng-container *ngIf="detailsPageSegment.value === '02'">
-      <mat-tab-group mat-stretch-tabs animationDuration="0ms" headerPosition="below" color="warn">
-        <mat-tab label="All({{transaction.noOfInstallments}})">
-          <ng-container *ngTemplateOutlet="breakUpsTemplateRef; context: {transaction:transaction,payments:transaction.payments}"></ng-container>
-        </mat-tab>
-        <mat-tab label="Paid({{getNoOfPayment(transaction.payments, true)}})">
-          <ng-container *ngIf="transaction.payments|filterBy:['isPaid']:true as payments">
-            <ng-container *ngTemplateOutlet="breakUpsTemplateRef; context: {transaction:transaction,payments:payments}"></ng-container>
-          </ng-container>
-        </mat-tab>
-        <mat-tab label="Pending({{getNoOfPayment(transaction.payments, false)}})">
-          <ng-container *ngIf="transaction.payments|filterBy:['isPaid']:false as payments">
-            <ng-container *ngTemplateOutlet="breakUpsTemplateRef; context: {transaction:transaction,payments:payments}"></ng-container>
-          </ng-container>
-        </mat-tab>
-      </mat-tab-group>
+      <!--<div style="position: absolute;width: 90%;left: 5%;bottom: 35px;">-->
+        <mat-tab-group mat-stretch-tabs animationDuration="0ms" headerPosition="below" [color]="'warn'" [backgroundColor]="'warn'">
+          <mat-tab label="All ({{transaction.noOfInstallments}})">
+            <ng-container *ngTemplateOutlet="breakUpsTemplateRef; context: {transaction:transaction,payments:transaction.payments}"></ng-container>
+          </mat-tab>
+          <mat-tab label="Paid ({{getNoOfPayment(transaction.payments, true)}})">
+            <ng-container *ngIf="transaction.payments|filterBy:['isPaid']:true as payments">
+              <ng-container *ngTemplateOutlet="breakUpsTemplateRef; context: {transaction:transaction,payments:payments}"></ng-container>
+            </ng-container>
+          </mat-tab>
+          <mat-tab label="Pending ({{getNoOfPayment(transaction.payments, false)}})">
+            <ng-container *ngIf="transaction.payments|filterBy:['isPaid']:false as payments">
+              <ng-container *ngTemplateOutlet="breakUpsTemplateRef; context: {transaction:transaction,payments:payments}"></ng-container>
+            </ng-container>
+          </mat-tab>
+        </mat-tab-group>
+      <!--</div>-->
     </ng-container>
   </ng-container>
 </ion-content>
@@ -149,7 +151,7 @@
 </ion-footer>
 
 <ng-template #breakUpsTemplateRef let-transaction="transaction" let-payments="payments">
-  <ion-list style="overflow: hidden auto;max-height: calc(100vh - 180px);min-height: calc(100vh - 180px);height: calc(100vh - 180px);">
+  <ion-list style="overflow: hidden auto;max-height: calc(100vh - 144px);min-height: calc(100vh - 144px);height: calc(100vh - 144px);">
     <ion-item-sliding #transactionSliding *ngFor="let payment of payments" lines="full">
       <ion-item-options side="start">
         <ion-item-option (click)="markAsPaid(payment,transaction);transactionSliding.close();" *ngIf="!payment.isPaid" color="success" style="width: 100px;">

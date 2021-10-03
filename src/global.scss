@@ -25,6 +25,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 @import "~font-awesome/css/font-awesome.min.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 ion-toolbar {
   height: 40px;
@@ -46,4 +47,23 @@ ion-menu ion-item.selected {
   ion-icon {
     color: var(--ion-color-danger) !important;
   }
+}
+
+
+.mat-tab-group.mat-background-warn > .mat-tab-header, .mat-tab-group.mat-background-warn > .mat-tab-link-container, .mat-tab-group.mat-background-warn > .mat-tab-header-pagination, .mat-tab-nav-bar.mat-background-warn > .mat-tab-header, .mat-tab-nav-bar.mat-background-warn > .mat-tab-link-container, .mat-tab-nav-bar.mat-background-warn > .mat-tab-header-pagination {
+  background-color: #eb445a;
+}
+
+.mat-tab-label {
+  opacity: .6;
+  font-weight: normal;
+  &.mat-tab-label-active{
+    opacity: 1;
+  }
+}
+.mat-tab-group.mat-warn.mat-background-warn>.mat-tab-header .mat-ink-bar, .mat-tab-group.mat-warn.mat-background-warn>.mat-tab-link-container .mat-ink-bar, .mat-tab-nav-bar.mat-warn.mat-background-warn>.mat-tab-header .mat-ink-bar, .mat-tab-nav-bar.mat-warn.mat-background-warn>.mat-tab-link-container .mat-ink-bar {
+  background-color: #fff;
+  border-bottom: 1px solid #eb445a;
+  height: 3px;
+  top: 2px;
 }

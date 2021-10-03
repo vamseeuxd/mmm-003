@@ -14,9 +14,9 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   styleUrls: ['./transactions-details.component.scss'],
   animations: [
     trigger('inOutAnimation', [
-      state('in', style({ opacity: 1 })),
-      transition(':enter', [style({ opacity: '0' }), animate('.5s ease-out', style({ opacity: '1' }))]),
-      transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
+      state('in', style({opacity: 1})),
+      transition(':enter', [style({opacity: '0'}), animate('.5s ease-out', style({opacity: '1'}))]),
+      transition(':leave', [style({opacity: '1'}), animate('.5s ease-out', style({opacity: '0'}))]),
     ]),
   ],
 })
@@ -82,6 +82,7 @@ export class TransactionsDetailsComponent implements OnInit, OnDestroy {
   }
 
   getNoOfPayment(payments: IPayment[], isPaid: boolean) {
-    return payments.filter(p => (p.isPaid === isPaid)).length;
+    const returnValue = payments.filter(p => (p.isPaid === isPaid)).length;
+    return returnValue > 9 ? returnValue : ('0' + returnValue);
   }
 }
