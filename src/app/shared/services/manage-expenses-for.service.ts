@@ -23,6 +23,7 @@ export class ManageExpensesForService {
   expensesFor: IExpensesFor[] = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
   dataLoaderId: string;
+  lastAddedId = '';
   private expensesFor$: Observable<IExpensesFor[]> = combineLatest(
     [
       this.loader.auth.user,
@@ -112,6 +113,7 @@ export class ManageExpensesForService {
       collectionRef = this.firestore.collection<IExpensesFor>(`default-${this.tableNameAction.value}`);
     }
     const docRef = collectionRef.ref.doc();
+    this.lastAddedId = docRef.id;
     const uid = this.loader.user.providerData[0].uid;
     delete value.id;
     delete value.isDefault;

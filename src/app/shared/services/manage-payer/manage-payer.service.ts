@@ -23,6 +23,7 @@ export class ManagePayerService {
   payers: IPayer[] = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
   dataLoaderId: string;
+  lastAddedId: string;
   private payers$: Observable<IPayer[]> = combineLatest(
     [
       this.loader.auth.user,
@@ -111,7 +112,9 @@ export class ManagePayerService {
     if (isDefault) {
       collectionRef = this.firestore.collection<IPayer>(`default-payers`);
     }
+    console.log('------------------------- PAYERS ---------------------------------------');
     const docRef = collectionRef.ref.doc();
+    this.lastAddedId = docRef.id;
     const uid = this.loader.user.providerData[0].uid;
     delete value.id;
     delete value.isDefault;

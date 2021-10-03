@@ -26,6 +26,7 @@ export class ManageCategoriesService {
   categories: ICategory[] = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
   dataLoaderId: string;
+  lastAddedId = '';
   private categories$: Observable<ICategory[]> = combineLatest(
     [
       this.loader.auth.user,
@@ -38,7 +39,7 @@ export class ManageCategoriesService {
           return of([]);
         }
 
-        this.dataLoaderId = this.loader.show(true,'get Category');
+        this.dataLoaderId = this.loader.show(true, 'get Category');
         // eslint-disable-next-line max-len
         const userCategories$ = this.firestore.collection<ICategory>(
           tableName,
@@ -94,7 +95,7 @@ export class ManageCategoriesService {
   }
 
   async deleteCategory(value: ICategory) {
-    const loaderId = this.loader.show(true,'deleteCategory');
+    const loaderId = this.loader.show(true, 'deleteCategory');
     try {
       let collectionRef = this.firestore.collection<ICategory>(`${this.tableNameAction.value}`);
       if (value.isDefault) {
@@ -109,12 +110,13 @@ export class ManageCategoriesService {
   }
 
   async addCategory(value: ICategory, isDefault = false) {
-    const loaderId = this.loader.show(true,'addCategory');
+    const loaderId = this.loader.show(true, 'addCategory');
     let collectionRef = this.firestore.collection<ICategory>(`${this.tableNameAction.value}`);
     if (isDefault) {
       collectionRef = this.firestore.collection<ICategory>(`default-${this.tableNameAction.value}`);
     }
     const docRef = collectionRef.ref.doc();
+    this.lastAddedId = docRef.id;
     const uid = this.loader.user.providerData[0].uid;
     delete value.id;
     delete value.isDefault;
@@ -130,7 +132,7 @@ export class ManageCategoriesService {
   }
 
   async updateCategory(value: ICategory, isDefault = false) {
-    const loaderId = this.loader.show(true,'updateCategory');
+    const loaderId = this.loader.show(true, 'updateCategory');
     let collectionRef = this.firestore.collection<ICategory>(`${this.tableNameAction.value}`);
     if (isDefault) {
       collectionRef = this.firestore.collection<ICategory>(`default-${this.tableNameAction.value}`);

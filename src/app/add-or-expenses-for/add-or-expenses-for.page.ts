@@ -97,8 +97,8 @@ export class AddOrExpensesForPage implements OnInit, OnDestroy {
           },
           this.defaultExpensesFor.isDefault
         );
-        await this.router.navigate([this.defaultHref]);
-        // this.location.back();
+        // await this.router.navigate([this.defaultHref]);
+        this.location.back();
       } else {
         await this.expensesForService.addExpensesFor(
           {
@@ -109,8 +109,8 @@ export class AddOrExpensesForPage implements OnInit, OnDestroy {
           },
           false
         );
-        await this.router.navigate([this.defaultHref]);
-        // this.location.back();
+        // await this.router.navigate([this.defaultHref]);
+        this.location.back();
       }
       sampleForm.resetForm({});
     } catch (e) {
@@ -129,8 +129,8 @@ export class AddOrExpensesForPage implements OnInit, OnDestroy {
         },
         true
       );
-      await this.router.navigate([this.defaultHref]);
-      // this.location.back();
+      // await this.router.navigate([this.defaultHref]);
+      this.location.back();
       sampleForm.resetForm({});
     } catch (e) {
       alert(e.message);

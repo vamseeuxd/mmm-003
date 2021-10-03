@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="px-5">
+<ion-content [fullscreen]="true" #addOrEditTransactionContent class="px-5" [scrollEvents]="scrollEvents" (ionScroll)="saveScrollPosition($event)">
   <form #expensesForm="ngForm" *ngIf="showExpensesForm" class="transaction-form pt-4 px-4 d-flex flex-column align-items-center justify-content-center">
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>{{type|titlecase}} Title</mat-label>
@@ -20,19 +20,6 @@
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>{{type|titlecase}} Amount</mat-label>
       <input [(ngModel)]="transactionDoc.amount" autocomplete="off" matInput name="amount" ngModel placeholder="{{type|titlecase}} Amount" required type="number">
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
-      <mat-label>Start Date</mat-label>
-      <input (ngModelChange)="updateEndDate()" [(ngModel)]="transactionDoc.startDate" [matDatepicker]="picker"
-             autocomplete="off"
-             readonly
-             (click)="picker.open()"
-             matInput maxlength="50"
-             name="startDate" ngModel
-             placeholder="Start Date" required>
-      <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-      <mat-datepicker #picker touchUi></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
@@ -74,16 +61,32 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
+      <mat-label>Start Date</mat-label>
+      <input (ngModelChange)="updateEndDate()" [(ngModel)]="transactionDoc.startDate" [matDatepicker]="picker"
+             autocomplete="off"
+             readonly
+             (click)="picker.open()"
+             matInput maxlength="50"
+             name="startDate" ngModel
+             placeholder="Start Date" required>
+      <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+      <mat-datepicker #picker touchUi></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;height: 130px;">
       <mat-label>End Date</mat-label>
-      <input [(ngModel)]="transactionDoc.endDate" [matDatepicker]="endDatepicker" autocomplete="off" matInput maxlength="50" name="endDate" ngModel placeholder="End Date" readonly required>
+      <input [(ngModel)]="transactionDoc.endDate" [matDatepicker]="endDatepicker" autocomplete="off" matInput maxlength="50" name="endDate" placeholder="End Date" readonly required>
       <mat-datepicker-toggle [for]="endDatepicker" disabled matSuffix></mat-datepicker-toggle>
       <mat-datepicker #endDatepicker touchUi></mat-datepicker>
+      <mat-hint><span class="text-danger">calculated based on Start date & Installments</span></mat-hint>
     </mat-form-field>
+
+
 
     <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
       <ion-label position="floating">{{type|titlecase}} Category</ion-label>
-      <ion-select value="brown" okText="Okay" cancelText="Dismiss" placeholder="{{type|titlecase}} Category">
-        <ion-select-option *ngFor="let cat of manageCategoriesService.categories | filterBy : ['type']:type" [value]="cat.id">
+      <ion-select (ionChange)="manageCategoriesService.lastAddedId = transactionDoc.category" [(ngModel)]="transactionDoc.category" required name="category" placeholder="{{type|titlecase}} Category">
+        <ion-select-option *ngFor="let cat of manageCategoriesService.categories | orderBy : ['name'] | filterBy : ['type']:type" [value]="cat.id">
           {{cat.name}}
         </ion-select-option>
       </ion-select>
@@ -93,8 +96,8 @@
     </div>
     <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
       <ion-label position="floating">To whom Spending (Expenses For)</ion-label>
-      <ion-select [(ngModel)]="transactionDoc.expensesFor" required name="expensesFor" placeholder="To whom Spending">
-        <ion-select-option *ngFor="let cat of manageExpensesForService.expensesFor" [value]="cat.id">{{cat.name}}</ion-select-option>
+      <ion-select (ionChange)="manageExpensesForService.lastAddedId = transactionDoc.expensesFor" [(ngModel)]="transactionDoc.expensesFor" required name="expensesFor" placeholder="To whom Spending">
+        <ion-select-option *ngFor="let cat of manageExpensesForService.expensesFor | orderBy : ['name']" [value]="cat.id">{{cat.name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
@@ -102,8 +105,8 @@
     </div>
     <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
       <ion-label position="floating">To whom Paying (Payer)</ion-label>
-      <ion-select [(ngModel)]="transactionDoc.payer" required name="payer" placeholder="To whom Paying">
-        <ion-select-option *ngFor="let cat of managePayeeService.payees" [value]="cat.id">{{cat.name}}</ion-select-option>
+      <ion-select (ionChange)="managePayerService.lastAddedId = transactionDoc.payer" [(ngModel)]="transactionDoc.payer" required name="payer" placeholder="To whom Paying">
+        <ion-select-option *ngFor="let cat of managePayerService.payers | orderBy : ['name']" [value]="cat.id">{{cat.name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
@@ -111,8 +114,8 @@
     </div>
     <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
       <ion-label position="floating">Who are Paying (Payee)</ion-label>
-      <ion-select [(ngModel)]="transactionDoc.payee" required name="payee" placeholder="Who are Paying">
-        <ion-select-option *ngFor="let cat of managePayerService.payers" [value]="cat.id">{{cat.name}}</ion-select-option>
+      <ion-select (ionChange)="managePayeeService.lastAddedId = transactionDoc.payee" [(ngModel)]="transactionDoc.payee" required name="payee" placeholder="Who are Paying">
+        <ion-select-option *ngFor="let cat of managePayeeService.payees | orderBy : ['name']" [value]="cat.id">{{cat.name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">

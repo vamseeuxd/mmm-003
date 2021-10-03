@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {
   ITransaction,
   ITransactionDoc,
@@ -6,7 +6,7 @@ import {
   TransactionService
 } from '../shared/services/transaction-service/transaction.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {ModalController} from '@ionic/angular';
+import {IonContent, ModalController} from '@ionic/angular';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {LoaderService} from '../shared/services/loader/loader.service';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
@@ -64,6 +64,7 @@ export class AddOrEditTransactionPage {
   @Input() type: 'expenses' | 'income' = 'expenses';
   @Input() isEdit = false;
   @Input() transaction: ITransaction;
+  @ViewChild('addOrEditTransactionContent') addOrEditTransactionContent: IonContent;
   showExpensesForm = false;
   id = '';
   action = 'Add new';
@@ -96,6 +97,7 @@ export class AddOrEditTransactionPage {
     repeatOption: 'day',
   };
   oldRepeatOption: RepeatOption = 'month';
+  scrollEvents = false;
   private dialogRef: MatDialogRef<unknown>;
 
   constructor(
@@ -116,6 +118,23 @@ export class AddOrEditTransactionPage {
     this.repeatDropDownConfig.week = Array.from(Array(52).keys());
     this.repeatDropDownConfig.month = Array.from(Array(12).keys());
     this.repeatDropDownConfig.year = Array.from(Array(10).keys());
+  }
+
+  ionViewDidLeave(): void {
+    this.scrollEvents = false;
+  }
+
+  ionViewDidEnter(): void {
+    const addOrEditTransactionPageScrollTop = window.sessionStorage.getItem('addOrEditTransactionPageScrollTop');
+    if (addOrEditTransactionPageScrollTop) {
+      this.addOrEditTransactionContent.scrollByPoint(0, Number(addOrEditTransactionPageScrollTop), 0).then(() => {
+        this.scrollEvents = true;
+      });
+    }
+    this.transactionDoc.category = this.manageCategoriesService.lastAddedId;
+    this.transactionDoc.expensesFor = this.manageExpensesForService.lastAddedId;
+    this.transactionDoc.payer = this.managePayerService.lastAddedId;
+    this.transactionDoc.payee = this.managePayeeService.lastAddedId;
   }
 
   ionViewWillEnter(): void {
@@ -150,6 +169,7 @@ export class AddOrEditTransactionPage {
       this.transactionDoc = {
         ...this.transaction.fireStoreDoc,
         startDate: new Date(this.transaction.fireStoreDoc.startDate),
+        category: this.manageCategoriesService.lastAddedId,
       };
       this.modalData = {
         repeatInterval: this.transaction.fireStoreDoc.repeatInterval,
@@ -196,7 +216,7 @@ export class AddOrEditTransactionPage {
 
   getDateToSave(expensesForm: NgForm) {
     const end = expensesForm.value.endDate.getTime();
-    const start = expensesForm.value.startDate.getTime();
+    const start = expensesForm.value.startDate.toDate().getTime(); // expensesForm.value.startDate.getTime();
     return {
       ...expensesForm.value,
       dates: {
@@ -205,7 +225,7 @@ export class AddOrEditTransactionPage {
       },
       uid: this.loader.user.providerData[0].uid,
       noOfInstallments: Number(expensesForm.value.noOfInstallments),
-      startDate: expensesForm.value.startDate.getTime()
+      startDate: expensesForm.value.startDate.toDate().getTime() // expensesForm.value.startDate.getTime()
     };
   }
 
@@ -239,5 +259,9 @@ export class AddOrEditTransactionPage {
   async goToManageTransactionPage() {
     this.showExpensesForm = false;
     await this.router.navigate(['manage-transactions']);
+  }
+
+  saveScrollPosition($event: any) {
+    window.sessionStorage.setItem('addOrEditTransactionPageScrollTop', $event.detail.scrollTop);
   }
 }

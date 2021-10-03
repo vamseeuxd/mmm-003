@@ -51,14 +51,36 @@
               </div>
               <div class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border">
                 <span class="text-truncate text-success">Paid <small>({{getNoOfPayment(transaction.payments, true)}})</small></span>
-                <span class="fw-bold text-success">
-                  {{((transaction.payments|filterBy:['isPaid']:true) | pluck: 'amount').reduce(reduceAddCallBack)|currency:'INR'}}
-                </span>
+                <ng-container *ngIf="((transaction.payments|filterBy:['isPaid']:true) | pluck: 'amount') as paidPayments">
+                  <ng-container *ngIf="paidPayments.length>0">
+                    <span class="fw-bold text-success">
+                      {{paidPayments.reduce(reduceAddCallBack)|currency:'INR'}}
+                    </span>
+                  </ng-container>
+                  <ng-container *ngIf="paidPayments.length===0">
+                    <span class="fw-bold text-success">
+                      {{0|currency:'INR'}}
+                    </span>
+                  </ng-container>
+                </ng-container>
               </div>
               <div class="col-4 py-1 d-flex justify-content-between align-items-center flex-column border border-start-0">
-                <span class="text-truncate text-danger">Pending <small>({{getNoOfPayment(transaction.payments, false)}})</small></span>
+                <span class="text-truncate text-danger">
+                  Pending<small>({{getNoOfPayment(transaction.payments, false)}})</small>
+                </span>
                 <span class="fw-bold text-danger">
-                  {{((transaction.payments|filterBy:['isPaid']:false) | pluck: 'amount').reduce(reduceAddCallBack)|currency:'INR'}}
+                  <ng-container *ngIf="((transaction.payments|filterBy:['isPaid']:false) | pluck: 'amount') as notPaidPayments">
+                  <ng-container *ngIf="notPaidPayments.length>0">
+                    <span class="fw-bold text-danger">
+                      {{notPaidPayments.reduce(reduceAddCallBack)|currency:'INR'}}
+                    </span>
+                  </ng-container>
+                  <ng-container *ngIf="notPaidPayments.length===0">
+                    <span class="fw-bold text-danger">
+                      {{0|currency:'INR'}}
+                    </span>
+                  </ng-container>
+                </ng-container>
                 </span>
               </div>
             </div>
@@ -109,7 +131,6 @@
           </ng-container>
         </mat-tab>
       </mat-tab-group>
-
     </ng-container>
   </ng-container>
 </ion-content>

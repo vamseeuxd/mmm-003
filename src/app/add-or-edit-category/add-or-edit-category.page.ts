@@ -102,7 +102,7 @@ export class AddOrEditCategoryPage implements OnInit, OnDestroy {
           this.defaultCategory.isDefault
         );
         // await this.router.navigate(['manage-categories']);
-        // this.location.back();
+        this.location.back();
       } else {
         await this.categoriesService.addCategory(
           {
@@ -115,7 +115,7 @@ export class AddOrEditCategoryPage implements OnInit, OnDestroy {
           false
         );
         // await this.router.navigate(['manage-categories']);
-        // this.location.back();
+        this.location.back();
       }
       sampleForm.resetForm({});
     } catch (e) {
@@ -136,7 +136,7 @@ export class AddOrEditCategoryPage implements OnInit, OnDestroy {
         true
       );
       // await this.router.navigate(['manage-categories']);
-      // this.location.back();
+      this.location.back();
       sampleForm.resetForm({});
     } catch (e) {
       alert(e.message);

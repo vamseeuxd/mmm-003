@@ -73,7 +73,6 @@ export class AddOrEditPayeePage implements OnInit, OnDestroy {
               icon: {name: this.defaultPayee.icon},
               description: this.defaultPayee.description,
             });
-            // console.log(this.defaultPayee);
           }
         });
       }
@@ -98,7 +97,7 @@ export class AddOrEditPayeePage implements OnInit, OnDestroy {
           this.defaultPayee.isDefault
         );
         // await this.router.navigate([this.defaultHref]);
-        // this.location.back();
+        this.location.back();
       } else {
         await this.payeesService.addPayee(
           {
@@ -110,7 +109,7 @@ export class AddOrEditPayeePage implements OnInit, OnDestroy {
           false
         );
         // await this.router.navigate([this.defaultHref]);
-        // this.location.back();
+        this.location.back();
       }
       sampleForm.resetForm({});
     } catch (e) {
@@ -130,7 +129,7 @@ export class AddOrEditPayeePage implements OnInit, OnDestroy {
         true
       );
       // await this.router.navigate([this.defaultHref]);
-      // this.location.back();
+      this.location.back();
       sampleForm.resetForm({});
     } catch (e) {
       alert(e.message);

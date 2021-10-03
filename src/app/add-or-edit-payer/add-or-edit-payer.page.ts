@@ -98,7 +98,7 @@ export class AddOrEditPayerPage implements OnInit, OnDestroy {
           this.defaultPayer.isDefault
         );
         // await this.router.navigate([this.defaultHref]);
-        // this.location.back();
+        this.location.back();
       } else {
         await this.payersService.addPayer(
           {
@@ -110,7 +110,7 @@ export class AddOrEditPayerPage implements OnInit, OnDestroy {
           false
         );
         // await this.router.navigate([this.defaultHref]);
-        // this.location.back();
+        this.location.back();
       }
       sampleForm.resetForm({});
     } catch (e) {
@@ -130,7 +130,7 @@ export class AddOrEditPayerPage implements OnInit, OnDestroy {
         true
       );
       // await this.router.navigate([this.defaultHref]);
-      // this.location.back();
+      this.location.back();
       sampleForm.resetForm({});
     } catch (e) {
       alert(e.message);
