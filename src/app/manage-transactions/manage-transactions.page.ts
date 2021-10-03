@@ -37,12 +37,6 @@ export class ManageTransactionsPage implements OnInit {
   }
 
   async addNewExpenses(type: TRANSACTION_TYPE) {
-    /*const modal = await this.modalController.create({
-      component: TransactionsFormComponent,
-      backdropDismiss: false,
-      componentProps: {type}
-    });
-    return await modal.present();*/
     await this.router.navigate(['add-or-edit-transaction', type]);
   }
 
@@ -51,17 +45,6 @@ export class ManageTransactionsPage implements OnInit {
   }
 
   async editTransactionClick(transactionSliding: IonItemSliding, transaction: ITransaction, selectedDate: Date) {
-    /*await transactionSliding.close();
-    const modal = await this.modalController.create({
-      component: TransactionsFormComponent,
-      backdropDismiss: false,
-      componentProps: {
-        transaction,
-        selectedDate,
-        isEdit: true,
-      }
-    });
-    return await modal.present();*/
     console.log(selectedDate);
     await this.router.navigate(['add-or-edit-transaction', transaction.type, transaction.id]);
     await transactionSliding.close();

@@ -4,7 +4,7 @@ import {LoaderService} from '../shared/services/loader/loader.service';
 import {UsersService} from '../shared/services/users/users.service';
 import {AlertController, IonItemSliding} from '@ionic/angular';
 import {delay} from 'rxjs/operators';
-import {IPayer, ManagePayerService} from '../shared/services/manage-payer.service';
+import {IPayer, ManagePayerService} from '../shared/services/manage-payer/manage-payer.service';
 
 @Component({
   selector: 'app-manage-payers',

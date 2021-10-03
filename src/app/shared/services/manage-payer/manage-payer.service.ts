@@ -3,7 +3,7 @@ import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {shareReplay, switchMap, tap} from 'rxjs/operators';
-import {LoaderService} from './loader/loader.service';
+import {LoaderService} from '../loader/loader.service';
 
 export interface IPayer {
   id?: string | null;
@@ -93,9 +93,9 @@ export class ManagePayerService {
   async deletePayer(value: IPayer) {
     const loaderId = this.loader.show(true, 'deletePayer');
     try {
-      let collectionRef = this.firestore.collection<IPayer>(`${this.tableNameAction.value}`);
+      let collectionRef = this.firestore.collection<IPayer>(`payers`);
       if (value.isDefault) {
-        collectionRef = this.firestore.collection<IPayer>(`default-${this.tableNameAction.value}`);
+        collectionRef = this.firestore.collection<IPayer>(`default-payers`);
       }
       const docRef = collectionRef.ref.doc(value.id);
       await docRef.delete();
@@ -107,9 +107,9 @@ export class ManagePayerService {
 
   async addPayer(value: IPayer, isDefault = false) {
     const loaderId = this.loader.show(true, 'addPayer');
-    let collectionRef = this.firestore.collection<IPayer>(`${this.tableNameAction.value}`);
+    let collectionRef = this.firestore.collection<IPayer>(`payers`);
     if (isDefault) {
-      collectionRef = this.firestore.collection<IPayer>(`default-${this.tableNameAction.value}`);
+      collectionRef = this.firestore.collection<IPayer>(`default-payers`);
     }
     const docRef = collectionRef.ref.doc();
     const uid = this.loader.user.providerData[0].uid;
@@ -128,9 +128,9 @@ export class ManagePayerService {
 
   async updatePayer(value: IPayer, isDefault = false) {
     const loaderId = this.loader.show(true, 'updatePayer');
-    let collectionRef = this.firestore.collection<IPayer>(`${this.tableNameAction.value}`);
+    let collectionRef = this.firestore.collection<IPayer>(`payers`);
     if (isDefault) {
-      collectionRef = this.firestore.collection<IPayer>(`default-${this.tableNameAction.value}`);
+      collectionRef = this.firestore.collection<IPayer>(`default-payers`);
     }
     const docRef = collectionRef.ref.doc(value.id);
     const uid = this.loader.user.providerData[0].uid;

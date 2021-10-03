@@ -93,9 +93,9 @@ export class ManagePayeeService {
   async deletePayee(value: IPayee) {
     const loaderId = this.loader.show(true, 'deletePayee');
     try {
-      let collectionRef = this.firestore.collection<IPayee>(`${this.tableNameAction.value}`);
+      let collectionRef = this.firestore.collection<IPayee>('payees');
       if (value.isDefault) {
-        collectionRef = this.firestore.collection<IPayee>(`default-${this.tableNameAction.value}`);
+        collectionRef = this.firestore.collection<IPayee>(`default-payees`);
       }
       const docRef = collectionRef.ref.doc(value.id);
       await docRef.delete();
@@ -107,9 +107,9 @@ export class ManagePayeeService {
 
   async addPayee(value: IPayee, isDefault = false) {
     const loaderId = this.loader.show(true, 'addPayee');
-    let collectionRef = this.firestore.collection<IPayee>(`${this.tableNameAction.value}`);
+    let collectionRef = this.firestore.collection<IPayee>(`payees`);
     if (isDefault) {
-      collectionRef = this.firestore.collection<IPayee>(`default-${this.tableNameAction.value}`);
+      collectionRef = this.firestore.collection<IPayee>(`default-payees`);
     }
     const docRef = collectionRef.ref.doc();
     const uid = this.loader.user.providerData[0].uid;
@@ -128,9 +128,9 @@ export class ManagePayeeService {
 
   async updatePayee(value: IPayee, isDefault = false) {
     const loaderId = this.loader.show(true, 'updatePayee');
-    let collectionRef = this.firestore.collection<IPayee>(`${this.tableNameAction.value}`);
+    let collectionRef = this.firestore.collection<IPayee>(`payees`);
     if (isDefault) {
-      collectionRef = this.firestore.collection<IPayee>(`default-${this.tableNameAction.value}`);
+      collectionRef = this.firestore.collection<IPayee>(`default-payees`);
     }
     const docRef = collectionRef.ref.doc(value.id);
     const uid = this.loader.user.providerData[0].uid;

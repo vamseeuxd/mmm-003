@@ -6,7 +6,8 @@ import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoaderService} from '../shared/services/loader/loader.service';
 import {UsersService} from '../shared/services/users/users.service';
-import {IPayer, ManagePayerService} from '../shared/services/manage-payer.service';
+import {IPayer, ManagePayerService} from '../shared/services/manage-payer/manage-payer.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-add-or-edit-payer',
@@ -30,6 +31,7 @@ export class AddOrEditPayerPage implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public loader: LoaderService,
     public router: Router,
+    public location: Location,
     public usersService: UsersService,
     public payersService: ManagePayerService,
   ) {
@@ -95,7 +97,8 @@ export class AddOrEditPayerPage implements OnInit, OnDestroy {
           },
           this.defaultPayer.isDefault
         );
-        await this.router.navigate([this.defaultHref]);
+        // await this.router.navigate([this.defaultHref]);
+        // this.location.back();
       } else {
         await this.payersService.addPayer(
           {
@@ -106,7 +109,8 @@ export class AddOrEditPayerPage implements OnInit, OnDestroy {
           },
           false
         );
-        await this.router.navigate([this.defaultHref]);
+        // await this.router.navigate([this.defaultHref]);
+        // this.location.back();
       }
       sampleForm.resetForm({});
     } catch (e) {
@@ -125,7 +129,8 @@ export class AddOrEditPayerPage implements OnInit, OnDestroy {
         },
         true
       );
-      await this.router.navigate([this.defaultHref]);
+      // await this.router.navigate([this.defaultHref]);
+      // this.location.back();
       sampleForm.resetForm({});
     } catch (e) {
       alert(e.message);

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {
   ITransaction,
   ITransactionDoc,
@@ -10,24 +10,69 @@ import {ModalController} from '@ionic/angular';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {LoaderService} from '../shared/services/loader/loader.service';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
+// tslint:disable-next-line:no-duplicate-imports
+// Depending on whether rollup is used, moment needs to be imported differently.
+// Since Moment.js doesn't have a default export, we normally need to import using the `* as`
+// syntax. However, rollup creates a synthetic default module and we thus need to import it using
+// the `default as` syntax.
+// tslint:disable-next-line:no-duplicate-imports
+// @ts-ignore
+// @ts-ignore
 import * as moment from 'moment';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {ManageCategoriesService} from '../shared/services/manage-categories/manage-categories.service';
+import {ManageExpensesForService} from '../shared/services/manage-expenses-for.service';
+import {ManagePayerService} from '../shared/services/manage-payer/manage-payer.service';
+import {ManagePayeeService} from '../shared/services/manage-payee/manage-payee.service';
+
+// See the Moment.js docs for the meaning of these formats:
+// https://momentjs.com/docs/#/displaying/format/
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-add-or-edit-transaction',
   templateUrl: './add-or-edit-transaction.page.html',
   styleUrls: ['./add-or-edit-transaction.page.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
-export class AddOrEditTransactionPage implements OnInit {
+export class AddOrEditTransactionPage {
 
   @Input() type: 'expenses' | 'income' = 'expenses';
   @Input() isEdit = false;
   @Input() transaction: ITransaction;
+  showExpensesForm = false;
   id = '';
   action = 'Add new';
   transactionDoc: ITransactionDoc = {
     name: '',
+    category: '',
+    expensesFor: '',
+    payer: '',
+    payee: '',
     amount: null,
     type: 'expenses',
     startDate: null,
@@ -61,6 +106,10 @@ export class AddOrEditTransactionPage implements OnInit {
     public matSnackBar: MatSnackBar,
     public loader: LoaderService,
     public transactionService: TransactionService,
+    public manageCategoriesService: ManageCategoriesService,
+    public manageExpensesForService: ManageExpensesForService,
+    public managePayerService: ManagePayerService,
+    public managePayeeService: ManagePayeeService,
     private firestore: AngularFirestore,
   ) {
     this.repeatDropDownConfig.day = Array.from(Array(30).keys());
@@ -69,7 +118,8 @@ export class AddOrEditTransactionPage implements OnInit {
     this.repeatDropDownConfig.year = Array.from(Array(10).keys());
   }
 
-  ngOnInit(): void {
+  ionViewWillEnter(): void {
+    this.showExpensesForm = false;
     this.isEdit = false;
     this.type = this.route.snapshot.paramMap.get('type') === 'expenses' ? 'expenses' : 'income';
     this.id = this.route.snapshot.paramMap.get('id');
@@ -87,12 +137,16 @@ export class AddOrEditTransactionPage implements OnInit {
         });
       }
     } else {
+      setTimeout(() => {
+        this.showExpensesForm = true;
+      });
       this.action = 'Add New';
     }
   }
 
   getDataForUpdate() {
     if (this.isEdit && this.transaction) {
+      this.showExpensesForm = true;
       this.transactionDoc = {
         ...this.transaction.fireStoreDoc,
         startDate: new Date(this.transaction.fireStoreDoc.startDate),
@@ -165,12 +219,10 @@ export class AddOrEditTransactionPage implements OnInit {
         const docRef = this.firestore.collection<ITransactionDoc>('transactions').doc(this.transaction.fireStoreDoc.id).ref;
         await docRef.update(dataToSave);
         this.matSnackBar.open(`${this.type.toLocaleUpperCase()} Updated successfully`, this.type.toLocaleUpperCase(), {duration: 1000});
-        expensesForm.resetForm({});
         await this.router.navigate(['manage-transactions']);
       } else {
         await this.firestore.collection<ITransactionDoc>('transactions').add(dataToSave);
         this.matSnackBar.open(`New ${this.type.toLocaleUpperCase()} added successfully`, this.type.toLocaleUpperCase(), {duration: 1000});
-        expensesForm.resetForm({});
         await this.router.navigate(['manage-transactions']);
       }
     } catch (e) {
@@ -184,8 +236,8 @@ export class AddOrEditTransactionPage implements OnInit {
     await this.modalController.dismiss();
   }
 
-  async goToManageTransactionPage(expensesForm: NgForm) {
-    expensesForm.resetForm({});
+  async goToManageTransactionPage() {
+    this.showExpensesForm = false;
     await this.router.navigate(['manage-transactions']);
   }
 }

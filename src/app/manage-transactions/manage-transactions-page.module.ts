@@ -7,7 +7,6 @@ import {IonicModule} from '@ionic/angular';
 import {ManageTransactionsRoutingModule} from './manage-transactions-routing.module';
 
 import {ManageTransactionsPage} from './manage-transactions.page';
-import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
 import {SharedModule} from '../shared.module';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
@@ -22,7 +21,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
   ],
   declarations: [
     ManageTransactionsPage,
-    TransactionsFormComponent
   ],
 })
 export class ManageTransactionsPageModule {

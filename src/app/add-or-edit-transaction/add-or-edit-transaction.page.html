@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar style="height: auto;">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'manage-transactions'"></ion-back-button>
+    </ion-buttons>
     <ion-title class="ion-text-center text-capitalize">
       {{isEdit ? 'Edit' : 'Add New'}} {{type}}
     </ion-title>
@@ -7,7 +10,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="px-5">
-  <form #expensesForm="ngForm" class="transaction-form pt-4 px-4 d-flex flex-column align-items-center justify-content-center">
+  <form #expensesForm="ngForm" *ngIf="showExpensesForm" class="transaction-form pt-4 px-4 d-flex flex-column align-items-center justify-content-center">
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>{{type|titlecase}} Title</mat-label>
       <input #title [(ngModel)]="transactionDoc.name" autocomplete="off" matInput maxlength="50" name="name" placeholder="Provide {{type|titlecase}} Time" required type="text">
@@ -20,9 +23,11 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
-      <mat-label>Start Date {{transactionDoc.startDate | date:'dd-MMMM-yyyy'}}</mat-label>
+      <mat-label>Start Date</mat-label>
       <input (ngModelChange)="updateEndDate()" [(ngModel)]="transactionDoc.startDate" [matDatepicker]="picker"
              autocomplete="off"
+             readonly
+             (click)="picker.open()"
              matInput maxlength="50"
              name="startDate" ngModel
              placeholder="Start Date" required>
@@ -65,27 +70,61 @@
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
       <mat-label>No of Installments</mat-label>
-      <input (ngModelChange)="updateEndDate()" [(ngModel)]="transactionDoc.noOfInstallments" autocomplete="off" matInput
-             maxlength="50" min="1" name="noOfInstallments"
-             ngModel placeholder="No of Installments" required type="number">
+      <input (ngModelChange)="updateEndDate()" [(ngModel)]="transactionDoc.noOfInstallments" autocomplete="off" matInput maxlength="50" min="1" name="noOfInstallments" ngModel placeholder="No of Installments" required type="number">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100" style="margin-top: -10px;">
-      <mat-label>End Date {{transactionDoc.endDate | date:'dd-MMMM-yyyy'}}</mat-label>
-      <input [(ngModel)]="transactionDoc.endDate" [matDatepicker]="endDatepicker" autocomplete="off" matInput
-             maxlength="50"
-             name="endDate" ngModel placeholder="End Date" readonly required>
+      <mat-label>End Date</mat-label>
+      <input [(ngModel)]="transactionDoc.endDate" [matDatepicker]="endDatepicker" autocomplete="off" matInput maxlength="50" name="endDate" ngModel placeholder="End Date" readonly required>
       <mat-datepicker-toggle [for]="endDatepicker" disabled matSuffix></mat-datepicker-toggle>
       <mat-datepicker #endDatepicker touchUi></mat-datepicker>
     </mat-form-field>
 
+    <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
+      <ion-label position="floating">{{type|titlecase}} Category</ion-label>
+      <ion-select value="brown" okText="Okay" cancelText="Dismiss" placeholder="{{type|titlecase}} Category">
+        <ion-select-option *ngFor="let cat of manageCategoriesService.categories | filterBy : ['type']:type" [value]="cat.id">
+          {{cat.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
+      <button type="button" mat-button color="primary" (click)="router.navigate(['add-or-edit-category',type])">Add Category</button>
+    </div>
+    <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
+      <ion-label position="floating">To whom Spending (Expenses For)</ion-label>
+      <ion-select [(ngModel)]="transactionDoc.expensesFor" required name="expensesFor" placeholder="To whom Spending">
+        <ion-select-option *ngFor="let cat of manageExpensesForService.expensesFor" [value]="cat.id">{{cat.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
+      <button type="button" mat-button color="primary" (click)="router.navigate(['add-or-expenses-for'])">Add Expenses For</button>
+    </div>
+    <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
+      <ion-label position="floating">To whom Paying (Payer)</ion-label>
+      <ion-select [(ngModel)]="transactionDoc.payer" required name="payer" placeholder="To whom Paying">
+        <ion-select-option *ngFor="let cat of managePayeeService.payees" [value]="cat.id">{{cat.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
+      <button type="button" mat-button color="primary" (click)="router.navigate(['add-or-edit-payer'])">Add Payer</button>
+    </div>
+    <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
+      <ion-label position="floating">Who are Paying (Payee)</ion-label>
+      <ion-select [(ngModel)]="transactionDoc.payee" required name="payee" placeholder="Who are Paying">
+        <ion-select-option *ngFor="let cat of managePayerService.payers" [value]="cat.id">{{cat.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
+      <button type="button" mat-button color="primary" (click)="router.navigate(['add-or-edit-payee'])">Add Payee</button>
+    </div>
     <input [ngModel]="transactionDoc.repeatInterval" name="repeatInterval" type="hidden">
     <input [ngModel]="type" name="type" type="hidden">
 
-    <div class="d-flex w-100 flex-row justify-content-between">
+    <div class="d-flex w-100 flex-row justify-content-between mb-5">
       <div class="d-flex w-100 flex-row justify-content-between">
         <div class="col-5">
-          <button (click)="goToManageTransactionPage(expensesForm)" class="w-100" mat-raised-button>Cancel</button>
+          <button (click)="goToManageTransactionPage()" class="w-100" mat-raised-button>Cancel</button>
         </div>
         <div class="col-5">
           <button (click)="saveExpenses(expensesForm)" [disabled]="expensesForm.invalid" class="w-100" color="primary" mat-raised-button>Save</button>
@@ -94,9 +133,6 @@
     </div>
 
   </form>
-
-  <!--<pre>{{transactionDoc|json}}</pre>-->
-
 
 </ion-content>
 

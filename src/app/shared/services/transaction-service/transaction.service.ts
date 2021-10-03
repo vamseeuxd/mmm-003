@@ -46,6 +46,10 @@ export interface ITransactionDoc {
   startDate: number | Date;
   endDate: number | Date;
   dates?: { start: number | Date; end: number | Date };
+  category: string;
+  expensesFor: string;
+  payer: string;
+  payee: string;
   repeatInterval: number;
   repeatOption: RepeatOption;
   noOfInstallments: number;
@@ -61,6 +65,10 @@ export interface ITransaction {
   amount: number;
   installment: string;
   dates: IDates;
+  category: string;
+  expensesFor: string;
+  payer: string;
+  payee: string;
   uid: string;
   noOfInstallments: number;
   type: TRANSACTION_TYPE;
@@ -94,7 +102,7 @@ export class TransactionService {
           return of([]);
         }
         return this.firestore.collection<ITransactionDoc>('transactions', ref => {
-          this.dataLoaderId = this.loader.show(true,'get_transactions');
+          this.dataLoaderId = this.loader.show(true, 'get_transactions');
           selectedDate.setDate(1);
           selectedDate.setHours(0, 0, 0, 0);
           return ref.where('uid', '==', this.loader.user.providerData[0].uid)
@@ -202,8 +210,7 @@ export class TransactionService {
       group.transactions.forEach(transaction => {
         if (transactionId === transaction.id && dueDate === transaction.dueDate) {
           transactionToReturn = transaction;
-        }
-        else if(transactionId === transaction.id && dueDate === null){
+        } else if (transactionId === transaction.id && dueDate === null) {
           transactionToReturn = transaction;
         }
       });
@@ -228,7 +235,7 @@ export class TransactionService {
   }
 
   async addPayment(dueDate: Date, transactionId: string, paidOn: Date) {
-    const loaderId = this.loader.show(true,'addPayment');
+    const loaderId = this.loader.show(true, 'addPayment');
     try {
       await this.firestore.collection('payments').add(
         {
@@ -245,7 +252,7 @@ export class TransactionService {
   }
 
   async deletePayment(paymentId: string) {
-    const loaderId = this.loader.show(true,'deletePayment');
+    const loaderId = this.loader.show(true, 'deletePayment');
     try {
       const docRef = this.firestore.collection('payments').doc(paymentId).ref;
       await docRef.delete();
@@ -256,7 +263,7 @@ export class TransactionService {
   }
 
   async deleteTransaction(transaction: ITransaction) {
-    const loaderId = this.loader.show(true,'deleteTransaction');
+    const loaderId = this.loader.show(true, 'deleteTransaction');
     try {
       const batch = this.firestore.firestore.batch();
       const docRef1 = this.firestore.collection<ITransactionDoc>('transactions').doc(transaction.id).ref;
@@ -341,6 +348,10 @@ export class TransactionService {
       amount: fireStoreDoc.amount,
       id: fireStoreDoc.id,
       name: fireStoreDoc.name,
+      category: fireStoreDoc.category,
+      expensesFor: fireStoreDoc.expensesFor,
+      payer: fireStoreDoc.payer,
+      payee: fireStoreDoc.payee,
       noOfInstallments: fireStoreDoc.noOfInstallments,
       repeatInterval: fireStoreDoc.repeatInterval,
       repeatOption: fireStoreDoc.repeatOption,

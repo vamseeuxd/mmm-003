@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LoaderService} from '../shared/services/loader/loader.service';
 import {UsersService} from '../shared/services/users/users.service';
 import {IPayee, ManagePayeeService} from '../shared/services/manage-payee/manage-payee.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-add-or-edit-payee',
@@ -30,6 +31,7 @@ export class AddOrEditPayeePage implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public loader: LoaderService,
     public router: Router,
+    public location: Location,
     public usersService: UsersService,
     public payeesService: ManagePayeeService,
   ) {
@@ -95,7 +97,8 @@ export class AddOrEditPayeePage implements OnInit, OnDestroy {
           },
           this.defaultPayee.isDefault
         );
-        await this.router.navigate([this.defaultHref]);
+        // await this.router.navigate([this.defaultHref]);
+        // this.location.back();
       } else {
         await this.payeesService.addPayee(
           {
@@ -106,7 +109,8 @@ export class AddOrEditPayeePage implements OnInit, OnDestroy {
           },
           false
         );
-        await this.router.navigate([this.defaultHref]);
+        // await this.router.navigate([this.defaultHref]);
+        // this.location.back();
       }
       sampleForm.resetForm({});
     } catch (e) {
@@ -125,7 +129,8 @@ export class AddOrEditPayeePage implements OnInit, OnDestroy {
         },
         true
       );
-      await this.router.navigate([this.defaultHref]);
+      // await this.router.navigate([this.defaultHref]);
+      // this.location.back();
       sampleForm.resetForm({});
     } catch (e) {
       alert(e.message);
