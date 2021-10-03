@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AlertController, IonItemSliding, ModalController} from '@ionic/angular';
-import {TransactionsFormComponent} from './transactions -form/transactions -form.component';
 import {
   IPayment,
   ITransaction,
@@ -11,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MarkAsPaidComponent} from '../shared/components/mark-as-paid/mark-as-paid.component';
 import {ShowTotalsComponent} from '../shared/components/show-totals/show-totals.component';
 import {delay} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-folder',
@@ -24,6 +24,7 @@ export class ManageTransactionsPage implements OnInit {
   constructor(
     public modalController: ModalController,
     public dialog: MatDialog,
+    public router: Router,
     public alertController: AlertController,
     public transactionService: TransactionService,
   ) {
@@ -36,12 +37,13 @@ export class ManageTransactionsPage implements OnInit {
   }
 
   async addNewExpenses(type: TRANSACTION_TYPE) {
-    const modal = await this.modalController.create({
+    /*const modal = await this.modalController.create({
       component: TransactionsFormComponent,
       backdropDismiss: false,
       componentProps: {type}
     });
-    return await modal.present();
+    return await modal.present();*/
+    await this.router.navigate(['add-or-edit-transaction', type]);
   }
 
   onTypeSegmentChange($event: any) {
@@ -49,7 +51,7 @@ export class ManageTransactionsPage implements OnInit {
   }
 
   async editTransactionClick(transactionSliding: IonItemSliding, transaction: ITransaction, selectedDate: Date) {
-    await transactionSliding.close();
+    /*await transactionSliding.close();
     const modal = await this.modalController.create({
       component: TransactionsFormComponent,
       backdropDismiss: false,
@@ -59,7 +61,10 @@ export class ManageTransactionsPage implements OnInit {
         isEdit: true,
       }
     });
-    return await modal.present();
+    return await modal.present();*/
+    console.log(selectedDate);
+    await this.router.navigate(['add-or-edit-transaction', transaction.type, transaction.id]);
+    await transactionSliding.close();
   }
 
   async makeAsNotPaid(transaction: ITransaction) {

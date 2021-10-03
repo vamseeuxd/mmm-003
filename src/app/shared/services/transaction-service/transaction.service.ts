@@ -196,11 +196,14 @@ export class TransactionService {
     });
   }
 
-  getTransactionById(transactionId: string, dueDate: number): ITransaction {
+  getTransactionById(transactionId: string, dueDate: number | null = null): ITransaction | undefined {
     let transactionToReturn: ITransaction;
     this.transactions.forEach(group => {
       group.transactions.forEach(transaction => {
         if (transactionId === transaction.id && dueDate === transaction.dueDate) {
+          transactionToReturn = transaction;
+        }
+        else if(transactionId === transaction.id && dueDate === null){
           transactionToReturn = transaction;
         }
       });

@@ -11,7 +11,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "page1": "ionic g page manage-tax-deduction",
-    "page2": "ionic g page add-or-edit-tax-deduction",
+    "page2": "ionic g page add-or-edit-transaction",
     "component": "ng generate component shared/components/showTotals --export",
     "service": "ng generate service shared/services/manage-tax-deduction",
     "directive": "ng generate directive shared/directives/MarkAsPaid --export",

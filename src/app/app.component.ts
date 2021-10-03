@@ -21,7 +21,7 @@ export class AppComponent implements OnDestroy {
     {title: 'Manage Payees', url: '/manage-payee', icon: 'person-remove'},
     {title: 'Manage Payers', url: '/manage-payers', icon: 'person-add'},
     {title: 'Manage Expenses For', url: '/manage-expenses-for', icon: 'people'},
-    {title: 'Manage Tax Deduction', url: '/manage-tax-deduction', icon: 'people'},
+    {title: 'Tax Deductions', url: '/manage-tax-deduction', icon: 'grid'},
   ];
 
   /*https://www.quora.com/What-do-payee-payer-mean*/
