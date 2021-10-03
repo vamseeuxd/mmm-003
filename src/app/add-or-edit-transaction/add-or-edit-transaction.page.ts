@@ -27,6 +27,7 @@ import {ManageCategoriesService} from '../shared/services/manage-categories/mana
 import {ManageExpensesForService} from '../shared/services/manage-expenses-for.service';
 import {ManagePayerService} from '../shared/services/manage-payer/manage-payer.service';
 import {ManagePayeeService} from '../shared/services/manage-payee/manage-payee.service';
+import {ManageTaxDeductionService} from '../shared/services/manage-tax-deduction/manage-tax-deduction.service';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -75,6 +76,8 @@ export class AddOrEditTransactionPage {
     payer: '',
     payee: '',
     amount: null,
+    includeInTax: true,
+    taxSavingSection: '',
     type: 'expenses',
     startDate: null,
     endDate: null,
@@ -112,6 +115,7 @@ export class AddOrEditTransactionPage {
     public manageExpensesForService: ManageExpensesForService,
     public managePayerService: ManagePayerService,
     public managePayeeService: ManagePayeeService,
+    public manageTaxDeductionService: ManageTaxDeductionService,
     private firestore: AngularFirestore,
   ) {
     this.repeatDropDownConfig.day = Array.from(Array(30).keys());
@@ -215,8 +219,9 @@ export class AddOrEditTransactionPage {
   }
 
   getDateToSave(expensesForm: NgForm) {
-    const end = expensesForm.value.endDate.getTime();
-    const start = expensesForm.value.startDate.toDate().getTime(); // expensesForm.value.startDate.getTime();
+    const end = !!expensesForm.value.endDate.getTime ? expensesForm.value.endDate.getTime() : expensesForm.value.endDate.toDate().getTime();
+    // eslint-disable-next-line max-len
+    const start = !!expensesForm.value.startDate.getTime ? expensesForm.value.startDate.getTime() : expensesForm.value.startDate.toDate().getTime();
     return {
       ...expensesForm.value,
       dates: {
@@ -225,7 +230,8 @@ export class AddOrEditTransactionPage {
       },
       uid: this.loader.user.providerData[0].uid,
       noOfInstallments: Number(expensesForm.value.noOfInstallments),
-      startDate: expensesForm.value.startDate.toDate().getTime() // expensesForm.value.startDate.getTime()
+      // eslint-disable-next-line max-len
+      startDate: expensesForm.value.startDate.getTime ? expensesForm.value.startDate.getTime() : expensesForm.value.startDate.toDate().getTime()
     };
   }
 

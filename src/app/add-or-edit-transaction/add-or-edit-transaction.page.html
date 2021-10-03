@@ -81,8 +81,6 @@
       <mat-hint><span class="text-danger">calculated based on Start date & Installments</span></mat-hint>
     </mat-form-field>
 
-
-
     <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
       <ion-label position="floating">{{type|titlecase}} Category</ion-label>
       <ion-select (ionChange)="manageCategoriesService.lastAddedId = transactionDoc.category" [(ngModel)]="transactionDoc.category" required name="category" placeholder="{{type|titlecase}} Category">
@@ -94,33 +92,54 @@
     <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
       <button type="button" mat-button color="primary" (click)="router.navigate(['add-or-edit-category',type])">Add Category</button>
     </div>
-    <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
+
+    <ion-item *ngIf="type==='expenses'" class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
       <ion-label position="floating">To whom Spending (Expenses For)</ion-label>
       <ion-select (ionChange)="manageExpensesForService.lastAddedId = transactionDoc.expensesFor" [(ngModel)]="transactionDoc.expensesFor" required name="expensesFor" placeholder="To whom Spending">
         <ion-select-option *ngFor="let cat of manageExpensesForService.expensesFor | orderBy : ['name']" [value]="cat.id">{{cat.name}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
+    <div *ngIf="type==='expenses'" class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
       <button type="button" mat-button color="primary" (click)="router.navigate(['add-or-expenses-for'])">Add Expenses For</button>
     </div>
-    <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
-      <ion-label position="floating">To whom Paying (Payer)</ion-label>
+
+    <ion-item *ngIf="type==='income'" class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
+      <ion-label position="floating">Who are Paying (Payer)</ion-label>
       <ion-select (ionChange)="managePayerService.lastAddedId = transactionDoc.payer" [(ngModel)]="transactionDoc.payer" required name="payer" placeholder="To whom Paying">
         <ion-select-option *ngFor="let cat of managePayerService.payers | orderBy : ['name']" [value]="cat.id">{{cat.name}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
+    <div *ngIf="type==='income'" class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
       <button type="button" mat-button color="primary" (click)="router.navigate(['add-or-edit-payer'])">Add Payer</button>
     </div>
-    <ion-item class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
-      <ion-label position="floating">Who are Paying (Payee)</ion-label>
+
+    <ion-item *ngIf="type==='income'" class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
+      <ion-label position="floating">Include in Income-Tax</ion-label>
+      <ion-select [(ngModel)]="transactionDoc.includeInTax" required name="payer" placeholder="To whom Paying">
+        <ion-select-option [value]="true">Yes</ion-select-option>
+        <ion-select-option [value]="false">No</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="type==='expenses'" class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
+      <ion-label position="floating">To whom Paying (Payee)</ion-label>
       <ion-select (ionChange)="managePayeeService.lastAddedId = transactionDoc.payee" [(ngModel)]="transactionDoc.payee" required name="payee" placeholder="Who are Paying">
         <ion-select-option *ngFor="let cat of managePayeeService.payees | orderBy : ['name']" [value]="cat.id">{{cat.name}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <div class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
+    <div *ngIf="type==='expenses'" class="d-flex justify-content-end w-100 mb-4" style="margin-top: -25px;">
       <button type="button" mat-button color="primary" (click)="router.navigate(['add-or-edit-payee'])">Add Payee</button>
     </div>
+
+    <ion-item *ngIf="type==='expenses'" class="w-100 border mb-4 rounded border-bottom-0" style="margin-top: -10px;">
+      <ion-label position="floating">Income-Tax Deductions Section</ion-label>
+      <ion-select (ionChange)="manageTaxDeductionService.lastAddedId = transactionDoc.taxSavingSection" [(ngModel)]="transactionDoc.taxSavingSection" required name="payee" placeholder="Who are Paying">
+        <ion-select-option *ngFor="let cat of manageTaxDeductionService.taxDeductions | orderBy : ['name']" [value]="cat.id">
+          {{cat.name.split('|')[0]}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <input [ngModel]="transactionDoc.repeatInterval" name="repeatInterval" type="hidden">
     <input [ngModel]="type" name="type" type="hidden">
 

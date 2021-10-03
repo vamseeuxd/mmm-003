@@ -21,6 +21,7 @@ export interface ITaxDeduction {
 export class ManageTaxDeductionService {
   tableNameAction: BehaviorSubject<string> = new BehaviorSubject<string>('taxDeductions');
   tableName$: Observable<string> = this.tableNameAction.asObservable();
+  lastAddedId = '';
   taxDeductions: ITaxDeduction[] = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
   dataLoaderId: string;

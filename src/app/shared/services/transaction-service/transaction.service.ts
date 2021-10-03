@@ -49,6 +49,8 @@ export interface ITransactionDoc {
   category: string;
   expensesFor: string;
   payer: string;
+  includeInTax: boolean;
+  taxSavingSection: string;
   payee: string;
   repeatInterval: number;
   repeatOption: RepeatOption;
@@ -69,6 +71,8 @@ export interface ITransaction {
   expensesFor: string;
   payer: string;
   payee: string;
+  includeInTax: boolean;
+  taxSavingSection: string;
   uid: string;
   noOfInstallments: number;
   type: TRANSACTION_TYPE;
@@ -355,6 +359,8 @@ export class TransactionService {
       noOfInstallments: fireStoreDoc.noOfInstallments,
       repeatInterval: fireStoreDoc.repeatInterval,
       repeatOption: fireStoreDoc.repeatOption,
+      includeInTax: fireStoreDoc.includeInTax,
+      taxSavingSection: fireStoreDoc.taxSavingSection,
       type: fireStoreDoc.type,
       fireStoreDoc,
       uid,
