@@ -42,11 +42,11 @@
     </div>
     <div class="col-md-8 offset-md-2">
       <div class="row">
-        <div  [class.col-md-4]="!isEdit && usersService.role==='admin'" [class.col-md-6]="isEdit || usersService.role!=='admin'">
+        <div  [class.col-md-6]="!isEdit && usersService.role==='admin'" [class.col-md-12]="isEdit || usersService.role!=='admin'">
           <ion-button expand="full" (click)="savePayer(sampleForm)" [disabled]="sampleForm.invalid" class="w-100 mt-2" color="danger">Save
           </ion-button>
         </div>
-        <div  [class.col-md-4]="!isEdit" *ngIf="!isEdit && usersService.role==='admin'" [class.col-md-6]="isEdit">
+        <div  [class.col-md-6]="!isEdit" *ngIf="!isEdit && usersService.role==='admin'" [class.col-md-12]="isEdit">
           <ion-button expand="full" (click)="saveAsPayer(sampleForm)" [disabled]="sampleForm.invalid"
                       class="w-100 mt-2" color="primary">Save Default
           </ion-button>

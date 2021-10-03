@@ -136,7 +136,7 @@ export class AddOrEditCategoryPage implements OnInit, OnDestroy {
         true
       );
       // await this.router.navigate(['manage-categories']);
-      this.location.back();
+      // this.location.back();
       sampleForm.resetForm({});
     } catch (e) {
       alert(e.message);
