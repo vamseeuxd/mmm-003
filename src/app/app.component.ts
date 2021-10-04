@@ -6,6 +6,7 @@ import firebase from 'firebase/compat/app';
 import {UsersService} from './shared/services/users/users.service';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {PromptUpdateServiceService} from './shared/services/service-worker/prompt-update-service/prompt-update-service.service';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ export class AppComponent implements OnDestroy {
     public auth: AngularFireAuth,
     public usersService: UsersService,
     public router: Router,
+    public promptUpdateServiceService: PromptUpdateServiceService,
     public loader: LoaderService) {
     window.loader = loader;
     this.userSubscription = this.auth.user.subscribe(async value => {
